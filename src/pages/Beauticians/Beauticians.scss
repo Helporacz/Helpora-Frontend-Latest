@@ -1,0 +1,58 @@
+#providers-container {
+    background: white;
+    border-radius: 10px;
+
+    .providers-header-block {
+        .content-block {
+            // background: #FFFFFF;
+            border-radius: 10px;
+
+            .title-value-block {
+                .value-block {
+                    background-color: #EEEFF0;
+                    border-radius: 10px;
+                }
+            }
+
+            .header-buttons-block {
+                .download-toggle {
+                    border: 0.5px solid #718095 !important;
+                    border-radius: 5px;
+                    height: 48px;
+                }
+            }
+        }
+
+        .next-slide-block {
+            background: #FFFFFF;
+
+            .next-slide-button {
+                border: 1px solid #718095;
+                border-radius: 20px;
+            }
+        }
+
+        .user-profile {
+            width: 40px;
+            height: 40px;
+        }
+
+        .bottom-block {
+            border: 1px solid #E7E7E7;
+
+            .bottom-sort-button {
+                background: #E2E5E8;
+                border-radius: 10px;
+            }
+
+            .pagination-block {
+                .number-content {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+            }
+
+        }
+    }
+}

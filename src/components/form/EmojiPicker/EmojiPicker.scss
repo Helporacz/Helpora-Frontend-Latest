@@ -1,0 +1,30 @@
+#emoji-picker-container {
+  position: absolute;
+  display: flex;
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown {
+    button {
+      background-color: unset;
+      color: unset;
+      border: unset;
+      padding: unset;
+    }
+  }
+
+  .emoji-list-container {
+    height: 250px;
+    overflow: auto;
+  }
+
+  .dropdown-menu {
+    width: 280px;
+  }
+
+  .active-block {
+    border-bottom: 2px solid var(--new-car);
+  }
+}

@@ -1,0 +1,1512 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact",
+    "message": "Message",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "header": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "profile": {
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "accountPassword": "Account Password",
+    "profileDetails": "Profile Details",
+    "changePasswordDescription": "You can change your account password as often as you need.",
+    "editProfileDescription": "You can update your profile details anytime.",
+    "noImage": "No Image",
+    "changeImage": "Change Image"
+  },
+  "common": {
+    "status": "Status",
+    "action": "Action",
+    "active": "Active",
+    "deactive": "Deactive",
+    "deactivated": "Deactivated",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "completed": "Completed",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "all": "All",
+    "filterBy": "Filter By",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes",
+    "update": "Update",
+    "submit": "Submit",
+    "save": "Save",
+    "delete": "Delete",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "continue": "Continue",
+    "services": "Services",
+    "currentlyAvailable": "Currently available",
+    "loading": "Loading..."
+  },
+  "messages": {
+    "profileUpdatedSuccessfully": "Profile Updated Successfully",
+    "profileImageUploadFailed": "Profile Image Upload Failed.",
+    "updateFailed": "Update Failed",
+    "unexpectedError": "Unexpected Error Occurred During Save.",
+    "passwordChangedSuccessfully": "Password Changed Successfully",
+    "categoryAddedSuccessfully": "Category Added Successfully",
+    "categoryUpdatedSuccessfully": "Category Updated Successfully",
+    "categoryDeletedSuccessfully": "Category Deleted Successfully",
+    "serviceAddedSuccessfully": "Service Added Successfully",
+    "serviceUpdatedSuccessfully": "Service Updated Successfully",
+    "serviceDeletedSuccessfully": "Service Deleted Successfully",
+    "reviewAddedSuccessfully": "Review Added Successfully",
+    "reviewUpdatedSuccessfully": "Review Updated Successfully",
+    "reviewDeletedSuccessfully": "Review Deleted Successfully.",
+    "providerAddedSuccessfully": "Provider Added Successfully.",
+    "providerUpdatedSuccessfully": "Provider Updated Successfully.",
+    "providerDeletedSuccessfully": "Provider Deleted Successfully.",
+    "bookingStatusUpdatedSuccessfully": "Booking Status Updated Successfully",
+    "imageUploadFailed": "Image Upload Failed",
+    "uploadingImage": "Uploading image...",
+    "somethingWentWrong": "Something went wrong",
+    "emailAlreadyExists": "Email Already Exists.",
+    "errorSavingProvider": "An error occurred while saving provider.",
+    "bookingSuccessfully": "Booking successfully.",
+    "addRegion": "Add Region Successfully",
+    "updateRegion": "Update Region Successfully",
+    "deleteRegion": "Region Deleted Successfully",
+    "addCity": "Add City Successfully",
+    "updateCity": "Update City Successfully",
+    "deleteCity": "City Deleted Successfully",
+    "addDistrict": "Add District Successfully",
+    "updateDistrict": "Update District Successfully",
+    "deleteDistrict": "District Deleted Successfully"
+  },
+  "profileDetails": {
+    "title": "Profile Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "name": "Name",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "phoneNumberOptional": "Phone Number (Optional)",
+    "role": "Role"
+  },
+  "homepage": {
+    "miniTitle": "Trusted by early users. Built for reliability",
+    "title-1": "Find Trusted",
+    "title-2": "Help",
+    "title-3": "For Everyday Needs",
+    "para-1": "From cleaning and moving to beauty care, event planning, repairs, and tutoring. Helpora connects you with trusted, verified local professionals who get things done quickly and reliably.",
+    "title-4": "All In One Place",
+    "btn-1": "Book a service",
+    "btn-2": "Become a provider",
+    "search": "Search",
+    "searchCity": "Search City",
+    "cityOptionalPlaceholder": "City (optional)",
+    "selectCategoryFirst": "Please Select Category First",
+    "selectCategory": "Select Category"
+  },
+  "section1": {
+    "text1": "Limited Time Offer",
+    "text2": "Join Our Growing",
+    "text3": "Network",
+    "text4": "Today",
+    "text5": "Become a founding provider and enjoy",
+    "text6": "6 months free. Then just 99 CZK/month (Early Access)",
+    "text7": " ",
+    "text8": "Get Started Free"
+  },
+  "section2": {
+    "text1": "Browse Popular Service Categories",
+    "text2": "Choose from a wide range of home, beauty, fitness, and childcare services — all in one place.",
+    "text3": "Find help now"
+  },
+  "section3": {
+    "text1": "Premium Home Services, Delivered with Care",
+    "text2": "We connect you with trained, verified professionals for all your daily needs. From cleaning to repairs, from tutoring to wellness — get trusted help whenever you need it.",
+    "text3": "100% Verified & Background Checked Professionals",
+    "text4": "Safe, Reliable & Affordable",
+    "text5": "Easy Online Booking",
+    "text6": "24/7 Customer Support",
+    "text7": "Book a service"
+  },
+  "section4": {
+    "text1": "Customer Reviews",
+    "text2": "Real Stories From Our Customers"
+  },
+  "section5": {
+    "text1": "Your journey begins here. Explore more and enjoy a seamless experience.",
+    "text2": "Get Started",
+    "text3": "Learn More"
+  },
+  "section6": {
+    "text1": "Solutions Made",
+    "text2": "Easy",
+    "text3": "Discover our comprehensive range of professional services tailored to meet your needs",
+    "text4": "Explore Service",
+    "text5": "Can't find what you're looking for?",
+    "text6": "Contact us for custom service solutions",
+    "text7": "Get In Touch"
+  },
+  "section7": {
+    "text1": "COMMUNITY IMPACT",
+    "text2": "Supporting Local Jobs & Skills",
+    "text3": "Helpora.cz is more than a digital marketplace — it’s a growing network of local service providers, homeowners, and professionals who collaborate to make life simpler.",
+    "text4": "Families find verified cleaners, movers, and tutors",
+    "text5": "Freelancers & tradespeople access stable income",
+    "text6": "Communities grow through cooperation & digital innovation",
+    "text7": "Each job done well strengthens trust — and builds a more connected, supportive economy.",
+    "text8": "Learn More"
+  },
+  "section8": {
+    "text1": "FUTURE",
+    "text2": "We’re Growing — Join Us",
+    "text3": "We’re expanding across Czech cities and regions, adding more services and opportunities each month.",
+    "text4": "Whether you’re a professional looking to grow your business, or someone who simply wants life made easier, Helpora.cz is here to help.",
+    "text5": "Join us in building a better, smarter way to get things done — locally, simply, and together.",
+    "text6": "Join Our Network"
+  },
+  "section9": {
+    "text1": "Who We Are",
+    "text2": "Helpora was created with a simple vision: to make it effortless for people to find trusted help for everyday tasks, while giving skilled individuals a platform to earn and grow their work.",
+    "text3": " We believe in fairness, transparency, and community. Every service request supports local professionals from cleaners and technicians to tutors and beauty specialists.",
+    "text4": "Helpora blends technology with a human touch, making everyday tasks easier and life more convenient."
+  },
+  "section10": {
+    "text1": "OUR STORY",
+    "text2": "How Helpora.cz Started",
+    "text3": "Helpora.cz was founded by a small team of operations and technology professionals who saw a gap — people struggle to find trusted help for daily tasks, while skilled individuals lack visibility and stable work.",
+    "text4": "Inspired by global service platforms and the Czech spirit of reliability, we started developing an ecosystem that brings both sides together — fair, local, and digital.",
+    "text5": "Our founder envisioned a platform where technology empowers people, not replaces them. Every service request creates an opportunity for customers to save time and for professionals to grow their livelihood."
+  },
+  "section11": {
+    "text1": "OUR MISSION",
+    "text2": "What Drives Our Brand",
+    "text3": "Our mission is to make trusted local help accessible to everyone while empowering professionals to thrive through honest work.",
+    "text4": "Reliability",
+    "text5": "Every booking and interaction is built on trust.",
+    "text6": "Transparency",
+    "text7": "Clear pricing, verified partners, and visible feedback.",
+    "text8": "Empowerment",
+    "text9": "Fair opportunities for workers & small businesses.",
+    "text10": "Simplicity",
+    "text11": "Seamless booking, fast support, smooth experience."
+  },
+  "section12": {
+    "text1": "Get In Touch",
+    "text2": "Let’s connect and find the best solution for you.",
+    "text3": "Send Message"
+  },
+  "section13": {
+    "text1": "name",
+    "text2": "Name",
+    "text3": "Enter Name",
+    "text4": "email",
+    "text5": "Email",
+    "text6": "Enter Email",
+    "text7": "subject",
+    "text8": "Subject",
+    "text9": "Enter Subject",
+    "text10": "message",
+    "text11": "Message",
+    "text12": "Enter Your Message",
+    "text13": "Prague, Czechia",
+    "text14": " ",
+    "text15": "Call us for your query",
+    "text16": "Email us your query",
+    "validation": {
+      "name": "Name is required",
+      "subject": "Subject is required",
+      "email1": "Invalid email",
+      "email2": "Email is required",
+      "message": "Message is required"
+    },
+    "messagePopup": {
+      "success": "Success",
+      "error": "Error",
+      "successMessage": "Message sent successfully!",
+      "errorMessage": "Failed to send message. Please try again."
+    }
+  },
+  "section14": {
+    "text1": "Your trusted marketplace for everyday services across the Czech Republic.",
+    "text2": "Services",
+    "text3": "Education",
+    "text4": "Gym Instructor",
+    "text5": "Home Tutoring",
+    "text6": "Painting & Repairing",
+    "text7": "Standard Cleaning",
+    "text8": "Pages",
+    "text9": "Home",
+    "text10": "Service",
+    "text11": "About",
+    "text12": "Contact",
+    "text13": "Language",
+    "text14": "English",
+    "text15": "Czech",
+    "text16": "Follow Us",
+    "text17": "Helpora.cz — All Rights Reserved.",
+    "text18": "Privacy Policy",
+    "text19": "Terms of Service"
+  },
+  "section15": {
+    "text1": "Signup",
+    "text2": "Book Trusted Help in Minutes",
+    "text3": "Create a free Helpora account with your email.",
+    "text4": "Fill in basic info: name, city/region, contact details, and choose “Provider” role.",
+    "text5": "Complete Your Profile",
+    "text6": "Upload a profile photo (professional) ",
+    "text7": "Add your skills, services you offer, availability schedule, and hourly/rate price (or price tiers).",
+    "text8": "Write a short bio describing your experience and specialties.",
+    "text9": "Verification & Approval",
+    "text10": "Submit required documents (ID verification, any required licenses or certifications, if applicable).",
+    "text11": "Helpora checks and approves your profile to ensure trust & quality.",
+    "text12": "Accept Our Terms & Guidelines",
+    "text13": "Read and accept Helpora’s provider agreement and code of conduct.",
+    "text14": "Confirm that you will follow platform rules for quality, conduct, and service delivery.",
+    "text15": "Go Live & Start Receiving Jobs",
+    "text16": "Once approved, your profile becomes visible to clients.",
+    "text17": "Clients can book you directly; you’ll get notifications and start getting service requests.",
+    "text18": "Login"
+  },
+  "section16": {
+    "text1": "Book a service",
+    "text2": "Book Trusted Help In Minutes",
+    "text3": "Get fast, reliable, and verified support for your home, family, and daily tasks. Choose a service, tell us what you need, and get matched with trusted providers near you.",
+    "text4": "How It Works ",
+    "text5": "1. Choose Your Service",
+    "text6": "Select the service type you need.",
+    "text7": "Cleaning, moving, repairs, caregiving, tutoring, IT help, and more.",
+    "text8": "2. Tell Us What You Need ",
+    "text9": "Describe your request.",
+    "text10": "Share your location, preferred time, and any details that matter.",
+    "text11": "3. Get Matched With Providers ",
+    "text12": "We notify trusted providers close to you.",
+    "text13": "You receive offers or a direct confirmation.",
+    "text15": "4. Enjoy Stress-Free Service ",
+    "text16": "Your provider arrives at the scheduled time.",
+    "text17": "You pay securely only after the service is completed.",
+    "text18": "Popular Services ",
+    "text19": "Home cleaning",
+    "text20": "Deep cleaning",
+    "text21": "Moving help",
+    "text22": "Home repairs ",
+    "text23": "Painting and fixing",
+    "text24": "Elder support ",
+    "text25": "Babysitting ",
+    "text26": "Pet care",
+    "text27": "Tutoring ",
+    "text28": "IT support ",
+    "text29": "Start Your Booking",
+    "text30": "Fill out a short form to help us match you with the right provider.",
+    "text31": "Service Selection",
+    "text32": "Please choose a service category.",
+    "text33": "Service Details ",
+    "text34": "What do you need?",
+    "text35": "When do you need it? ",
+    "text36": "Where should the service take place? ",
+    "text37": "Do you have any special requests?",
+    "text38": "Your Contact",
+    "text39": "Enter your name, email, or phone number so we can confirm your booking.",
+    "text40": "Matching",
+    "text41": "We search for trusted providers near your location.",
+    "text42": "You will see available offers with profiles, ratings, and price estimates.",
+    "text43": "Choose Your Provider",
+    "text44": "Review the options and select the provider that fits your needs.",
+    "text45": "Confirm Your Booking ",
+    "text46": "Check the details and confirm the booking.",
+    "text47": "You will receive a confirmation message with all the information.",
+    "text48": "Absolutely — here are clean, friendly, and future-proof FAQ answers you can add to your “Book a service” page.",
+    "text49": "They work even if you don’t have payments enabled yet, and they set the right expectation for when you introduce payments later.",
+    "text50": "They are written in:",
+    "text51": "simple language",
+    "text52": "short sentences ",
+    "text53": "easy to translate ",
+    "text54": "reassuring and professional",
+    "text55": "Customer FAQ — Ready to use"
+  },
+  "section17": {
+    "text1": "Login",
+    "text2": "Enter Email",
+    "text3": "Enter Password",
+    "text4": "Don't have an account?",
+    "text5": "Sign Up",
+    "text6": "Forgot password"
+  },
+  "section18": {
+    "text1": "Sign-In",
+    "text2": "Welcome to Helpora Admin Portal",
+    "text3": "Enter Email",
+    "text4": "Enter Password"
+  },
+  "section19": {
+    "text1": "Helpora",
+    "text2": "Sign In Your Account",
+    "text3": "Sign in to manage your account.",
+    "text4": "Email Address",
+    "text5": "Password",
+    "text6": "Don't have account ",
+    "text7": "Sign Up",
+    "text8": "Signing In...",
+    "text9": "Sign In",
+    "text10": "By signing in, you agree to our terms of service and privacy policy.",
+    "text11": "Forgot password",
+    "text12": "Forgot Your Password",
+    "text13": "Submit"
+  },
+  "ResetPassword": {
+    "heading": "Reset Your Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "label1": "Enter new password",
+    "label2": "Enter confirm password",
+    "errormessage1": "New password and confirm password should be same",
+    "passwordRequired": "Password is required",
+    "confirmRequired": "Confirm password is required",
+    "button": "Submit",
+    "button2": "ResetPassword..."
+  },
+  "section20": {
+    "text1": "Helpora",
+    "text2": "Create Your Account",
+    "text3": "Join us today and start your journey",
+    "text4": "Full Name",
+    "text5": "Email Address",
+    "text6": "Password",
+    "text7": "Already have an account? ",
+    "text8": "Sign In",
+    "text9": "Creating Account...",
+    "text10": "Sign Up ",
+    "text11": "By signing up, you agree to our terms of service and privacy policy",
+    "text12": "I agree to the Terms & SLA",
+    "text13": "You must accept the Terms & SLA to continue.",
+    "text14": "Read Terms & SLA",
+    "text15": "I agree to the Privacy Policy & GDPR consent",
+    "text16": "Read Privacy Policy & GDPR",
+    "text17": "Regions is required",
+    "text18": "City is required",
+    "regions": "Select Regions",
+    "city": "Select City",
+    "district": "Select District"
+  },
+  "section21": {
+    "text1": "Enter Name",
+    "text2": "Enter Email",
+    "text3": "Enter Password",
+    "text4": "Enter Confirm Password",
+    "text5": "Already have an account?",
+    "text6": "Sign In",
+    "text7": "Sign Up"
+  },
+  "section22": {
+    "text1": "Forgot Password",
+    "text2": "New Password",
+    "text3": "Confirm Password",
+    "text4": "Submit",
+    "text5": "Back To Login"
+  },
+  "section23": {
+    "text1": "Welcome to Helpora admin portal",
+    "text2": "Change to password of you choice",
+    "text3": "Enter New Password",
+    "text4": "Confirm New Password",
+    "text5": "SIGN IN",
+    "text6": "CHANGE PASSWORD"
+  },
+  "section24": {
+    "text1": "Do I pay before the service?",
+    "text2": "No. At this moment, all payments are handled directly between you and the provider.",
+    "text3": "In the future, we will offer secure online payments through the platform.",
+    "text4": "What if the payment does not work? ",
+    "text5": "If you ever experience a problem with payment, you can contact us for help.",
+    "text6": "You can also pay the provider directly as a backup method.",
+    "text7": "When online payments become available, we will offer clear instructions and support.",
+    "text8": "What if no provider accepts my request? ",
+    "text9": "If no provider is available, we will notify you.",
+    "text10": "You can choose to wait, try another time, or select a different service category.",
+    "text11": "You can also save your request so we can contact you when someone becomes available.",
+    "text12": "Can i cancel or change my booking? ",
+    "text13": "Yes. You can cancel or change your booking before the service starts.",
+    "text14": "If you have questions, we will help you make the change.",
+    "text15": "Are the providers verified? ",
+    "text16": "Yes. All providers go through a review and verification process before joining our platform.",
+    "text17": "This helps ensure safety and quality for all customers.",
+    "text18": "How do i know the price? ",
+    "text19": "You will see an estimated price or hourly rate before booking.",
+    "text20": "The final cost will be confirmed with the provider before the service.",
+    "text21": "How can i communicate with the provider? ",
+    "text22": "After sending your request, you will be connected with your provider.",
+    "text23": "You can discuss details, ask questions, and confirm any changes.",
+    "text24": "Is my personal information safe? ",
+    "text25": "Yes. We only share the information needed to complete the service.",
+    "text26": "Your details are kept secure and private.",
+    "text27": "What if i have a problem with the service?",
+    "text28": "You can contact us anytime.",
+    "text29": "We will work with you and the provider to solve the issue.",
+    "text30": "Do i need an account to book a service? ",
+    "text31": "You can book with your email or phone number.",
+    "text32": "A full account will give you more features in the future."
+  },
+  "section25": {
+    "text1": "Contact Us",
+    "text2": "About Helpora",
+    "text3": "Services"
+  },
+  "section26": {
+    "text1": "Full name is required.",
+    "text2": "Please enter valid email address.",
+    "text3": "Password must be at least 6 characters",
+    "text4": "Email is required.",
+    "text5": "Password is required.",
+    "text6": "Register Successfully.",
+    "text7": "Registration failed. Please try again.",
+    "text8": "Something went wrong."
+  },
+  "section27": {
+    "text1": "Email must be a valid",
+    "text2": "Email is required.",
+    "text3": "Password is required."
+  },
+  "section28": {
+    "text1": "Name is required.",
+    "text2": "Email is required.",
+    "text3": "Please enter valid email address.",
+    "text4": "Password is required.",
+    "text5": "Password must be at least 8 characters.",
+    "text6": "Password must contain uppercase, lowercase, number, and special character.",
+    "text7": "Confirm password is required.",
+    "text8": "Passwords must match."
+  },
+  "section29": {
+    "text1": "Email must be a valid email.",
+    "text2": "Email is required.",
+    "text3": "Password must be at least 8 characters.",
+    "text4": "Password is required.",
+    "text5": "Provider Login Successfully.",
+    "text6": "Invalid email or password",
+    "text7": "Something went wrong",
+    "text8": "Reset Password Email Send Successfully"
+  },
+  "section30": {
+    "text1": "Name is required.",
+    "text2": "Email must be a valid email.",
+    "text3": "Email is required.",
+    "text4": "Password must be at least 8 characters.",
+    "text5": "Password is required.",
+    "text6": "Passwords must match.",
+    "text7": "Confirm password is required."
+  },
+  "section31": {
+    "text1": "Email must be a valid email.",
+    "text2": "Email is required.",
+    "text3": "Password must be at least 8 characters.",
+    "text4": "Password is required."
+  },
+  "section32": {
+    "text1": "Name is required.",
+    "text2": "Email is required.",
+    "text3": "Please enter valid email address.",
+    "text4": "Password is required.",
+    "text5": "Password must be at least 6 characters.",
+    "text6": "Password must contain uppercase, lowercase, number, and special character.",
+    "text7": "Confirm password is required.",
+    "text8": "Passwords must match.",
+    "text9": "Email Already Exist",
+    "text10": "Something went wrong while signing up"
+  },
+  "section33": {
+    "text1": "Back",
+    "text2": "Select a chat to start messaging"
+  },
+  "section34": {
+    "text1": "No chats available",
+    "text2": "Typing...",
+    "text3": "Online",
+    "text4": "Last seen:",
+    "text5": "No messages"
+  },
+  "section35": {
+    "text1": "Enter your name",
+    "text2": "Enter your email address",
+    "text3": "Enter your password",
+    "text4": "Enter your confirm password"
+  },
+  "section36": {
+    "text1": "Enter your full name",
+    "text2": "Create a strong password"
+  },
+  "section37": {
+    "text1": "Enter your email",
+    "text2": "Enter your password"
+  },
+  "section38": {
+    "text1": "My Profile",
+    "text2": "My Bookings",
+    "text3": "Logout",
+    "text4": "Login",
+    "text5": "Messages"
+  },
+  "section39": {
+    "text1": "Hair Styling",
+    "text2": "I booked a hair styling session and was amazed at the result. The stylist understood exactly what I wanted and delivered it better than expected.",
+    "text3": "Facial Treatment",
+    "text4": "The facial treatment was relaxing and professional. My skin feels brighter and healthier. I’m coming back for sure.",
+    "text5": "Beauty & Care (Nails)",
+    "text6": "Beautiful nail work! Very neat, long-lasting, and exactly the style I wanted. Highly recommended.",
+    "text7": "Beauty & Care",
+    "text8": "One of the best massages I’ve had. The therapist knew where the tension was and relieved it perfectly.",
+    "text9": "Cleaning Service",
+    "text10": "The cleaning was spotless! The team worked efficiently and left the apartment looking fresh and organized.",
+    "text11": "Gym Instructor",
+    "text12": "Great trainer! Motivating, knowledgeable, and patient. I finally feel progress with my workouts.",
+    "text13": "Home Tutor",
+    "text14": "My son improved quickly thanks to the tutor’s clear explanations and friendly approach. Very satisfied.",
+    "text15": "Towing Truck Service",
+    "text16": "Fast and reliable towing service. They arrived sooner than expected and handled the car professionally."
+  },
+  "section40": {
+    "text1": "Klara Novotna",
+    "text2": "Marek Dolezal",
+    "text3": "Adela Hruskova",
+    "text4": "Tomas Cerny",
+    "text5": "Petra Konecna",
+    "text6": "Ondrej Slanina",
+    "text7": "Jana Vesela",
+    "text8": "David Kral"
+  },
+  "section41": {
+    "text1": "Error fetching categories:",
+    "text2": "Failed to load categories. Please try again."
+  },
+  "section42": {
+    "text1": "Services in",
+    "text2": "Filters",
+    "text3": "Category",
+    "text4": "Age",
+    "text5": "Languages",
+    "text6": "Can Also...",
+    "text7": "Verification",
+    "text8": "Date:",
+    "text9": "From:",
+    "text10": "Select Time",
+    "text11": "To:",
+    "text12": "Select Time",
+    "text13": "Search",
+    "text14": "Cancel",
+    "text15": "Provider:",
+    "text16": "Price:",
+    "text17": "Kyc Verified",
+    "text18": " MOJEID VERIFICATION",
+    "text19": "Book Service",
+    "text20": "View Profile",
+    "text21": "View Slots",
+    "text22": "Weekly Availability",
+    "text23": "Not Working",
+    "text24": "No providers found in this service category.",
+    "text25": "Results found",
+    "text26": "Search city…",
+    "text27": "Error fetching categories:",
+    "text28": "Sunday",
+    "text29": "Monday",
+    "text30": "Tuesday",
+    "text31": "Wednesday",
+    "text32": "Thursday",
+    "text33": "Friday",
+    "text34": "Saturday",
+    "text35": "Error fetching services:",
+    "text36": "Cleaning",
+    "text37": "Driving",
+    "text38": "Baby Sitting",
+    "text39": "Cooking",
+    "text40": "Pet Care",
+    "text41": "ID Verified",
+    "text42": "Background Checked",
+    "text43": "Phone Verified",
+    "text44": "Address Verified",
+    "text45": "Service:"
+  },
+  "myService": {
+    "heading": "My Services",
+    "searchbarPlaceholder": "Search services",
+    "addButton": "ADD SERVICE",
+    "table": {
+      "header1": "Service Name",
+      "header2": "Category",
+      "header3": "Price",
+      "header4": "Price Type",
+      "header5": "Image",
+      "header6": "Status",
+      "header7": "Action"
+    }
+  },
+  "category": {
+    "heading": "Categories",
+    "searchbarPlaceholder": "Search categories",
+    "addButton": "ADD CATEGORY",
+    "addTitle": "Add Category",
+    "updateTitle": "Update Category",
+    "nameEn": "Name (EN)",
+    "nameCz": "Name (CZ)",
+    "nameEnPlaceholder": "Enter Name in English",
+    "nameCzPlaceholder": "Enter Name in Czech",
+    "position": "Position",
+    "positionPlaceholder": "Enter Position",
+    "status": "Status",
+    "shortDescEn": "Short Description (EN)",
+    "shortDescCz": "Short Description (CZ)",
+    "shortDescEnPlaceholder": "Enter Short Description in English",
+    "shortDescCzPlaceholder": "Enter Short Description in Czech",
+    "longDescEn": "Long Description (EN)",
+    "longDescCz": "Long Description (CZ)",
+    "longDescEnPlaceholder": "Enter Long Description in English",
+    "longDescCzPlaceholder": "Enter Long Description in Czech",
+    "image": "Image",
+    "table": {
+      "header1": "Category Name",
+      "header2": "Image",
+      "header3": "Status",
+      "header4": "Position",
+      "header5": "Action"
+    }
+  },
+  "services": {
+    "heading": "All Services",
+    "searchbarPlaceholder": "Search services",
+    "addButton": "ADD SERVICE",
+    "table": {
+      "header1": "Title",
+      "header2": "Category",
+      "header3": "Image",
+      "header4": "Status",
+      "header5": "Position",
+      "header6": "Action"
+    },
+    "statusOption": {
+      "active": "Active",
+      "deactive": "Deactive"
+    }
+  },
+  "providerServiceForm": {
+    "priceFrom": "From",
+    "perHour": "hr",
+    "subServiceName": {
+      "title": "Service type (optional)",
+      "placeHolder": "e.g., Deep cleaning, Window cleaning, Couples massage, TV mounting"
+    },
+    "description": {
+      "title": "Description",
+      "placeHolder": "Describe what is included, duration, location, requirements, etc."
+    },
+    "heading": "Add Service",
+    "heading2": "Update Service",
+    "addButton": " ADD SERVICE",
+    "category": {
+      "title": "Cateogy",
+      "placeHolder": "Select category"
+    },
+    "service": {
+      "title": "Service",
+      "placeHolder": "Select service"
+    },
+    "status": {
+      "title": "Status",
+      "option1": "Active",
+      "option2": "Dective",
+      "helpActive": "Service will be visible to customers",
+      "helpInactive": "Service will be hidden from customers"
+    },
+    "price": {
+      "title": "Price",
+      "placeHolder": "Enter Price"
+    },
+    "subCategories": {
+      "title": "Sub categories",
+      "placeHolder": "e.g., Deep cleaning, Window cleaning, TV mounting",
+      "addButton": "Add"
+    },
+    "priceType": {
+      "title": "Price Type",
+      "fixed": "Fixed",
+      "hourly": "Hourly",
+      "fixedHelp": "One-time fixed price for the service",
+      "hourlyHelp": "Price per hour of service",
+      "range": "Range",
+      "rangeHelp": "Set a price range (from?to)"
+    },
+    "validation": {
+      "category": "Category is required",
+      "service": "Service is required",
+      "price1": "Price must be a valid number",
+      "price2": "Price is required",
+      "price3": "Price must be greater than 0",
+      "price4": "Price must be a whole number",
+      "priceType": "Price type is required"
+    },
+    "sections": {
+      "basic": {
+        "title": "Basic Information"
+      },
+      "subCategories": {
+        "title": "Sub categories (optional)",
+        "helper": "Add specific service variations or specialties",
+        "addedLabel": "Added sub categories"
+      },
+      "description": {
+        "title": "Description & Media"
+      },
+      "pricing": {
+        "title": "Pricing & Status"
+      },
+      "submit": {
+        "subtitleAdd": "Ready to add new service?",
+        "subtitleUpdate": "Update your service",
+        "titleAdd": "Review and publish",
+        "titleUpdate": "Review and update"
+      }
+    },
+    "image": {
+      "title": "Service Image (Optional)",
+      "recommended": "Recommended: Square image, 500x500px",
+      "defaultNote": "If not uploaded, default service image will be used."
+    },
+    "priceHint": {
+      "fixed": "Enter total price (CZK)",
+      "hourly": "Enter price per hour (CZK)",
+      "range": "Enter a price range (CZK)"
+    },
+    "priceRange": {
+      "fromPlaceholder": "From",
+      "toPlaceholder": "To"
+    }
+  },
+  "table": {
+    "pagination": {
+      "noResult": "No Records Found.",
+      "results": "Results:",
+      "prev": "Prev",
+      "next": "Next"
+    }
+  },
+  "allOrder": {
+    "heading": "All Orders",
+    "searchbarPlaceholder": "Search orders",
+    "status": {
+      "all": "All",
+      "rejected": "Rejected",
+      "accepted": "Accepted",
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "table": {
+      "header1": "Service Name",
+      "header2": "Price",
+      "header3": "User",
+      "header4": "Status",
+      "header5": "Provider",
+      "header8": "Booking By",
+      "header6": "Order Date",
+      "header7": "Updated At"
+    }
+  },
+  "order": {
+    "heading": "My Orders",
+    "searchbarPlaceholder": "Search orders",
+    "status": {
+      "all": "All",
+      "rejected": "Rejected",
+      "accepted": "Accepted",
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "table": {
+      "header1": "Service Name",
+      "header2": "Price",
+      "header3": "User",
+      "header4": "Status",
+      "header5": "Provider",
+      "header8": "Booking By",
+      "header6": "Order Date",
+      "header7": "Updated At"
+    }
+  },
+  "sidebar": {
+    "title1": "Dashboard",
+    "title2": "Providers",
+    "title3": "Clients",
+    "title4": "Category",
+    "title5": "Services",
+    "title6": "Orders",
+    "title7": "My Services",
+    "title8": "All Order",
+    "title9": "Messages",
+    "title10": "Slot Managment",
+    "title11": "KYC Profile",
+    "title12": "KYC Status",
+    "title13": "Reviews",
+    "title14": "Inquiry",
+    "title15": "Configration",
+    "regions": "Regions",
+    "city": "City",
+    "district": "District",
+    "approvedKYC": "Approved KYC",
+    "KYCApproval": "KYC Approval",
+    "subscription": "Subscription",
+    "subscribers": "Subscribers"
+  },
+  "client": {
+    "heading": "Clients",
+    "searchbarPlaceholder": "Search client",
+    "table": {
+      "header1": "Client Name",
+      "header2": "Email",
+      "header3": "Phone Number",
+      "header4": "Number Of Orders",
+      "header5": "Spend Amount",
+      "header6": "Last Login",
+      "header7": "Actions"
+    },
+    "deleteAction": "Delete",
+    "deleteConfirm": "Delete this client?",
+    "deleteSuccess": "Client removed successfully.",
+    "deleteError": "Failed to delete client."
+  },
+  "providers": {
+    "heading": "Providers",
+    "searchbarPlaceholder": "Search provider",
+    "addButton": " ADD PROVIDER",
+    "table": {
+      "header1": "Provider Name",
+      "header2": "Email",
+      "header3": "Address",
+      "header4": "Phone Number",
+      "header6": "Number Of Orders",
+      "header7": "Total Earning",
+      "header8": "Last Login",
+      "header9": "Status",
+      "header5": "Action",
+      "header10": "Region",
+      "header11": "City",
+      "header12": "District",
+      "editProvider": "Edit Provider",
+      "deleteProvider": "Delete Provider",
+      "active": "Active",
+      "suspend": "suspend"
+    }
+  },
+  "myBooking": {
+    "reviewPromptTitle": "Leave a review for this service",
+    "reviewPromptBody": "How was your experience with this service?",
+    "allReviewed": "A review has already been submitted for this service.",
+    "heading": "My Booking",
+    "searchbarPlaceholder": "search order",
+    "table": {
+      "header1": "Service Name",
+      "header2": "Price",
+      "header3": "Status",
+      "header4": "Provider",
+      "header5": "Booking Date & Time",
+      "header6": "Updated Date & Time"
+    },
+    "reviewModalTitle": "Leave a review",
+    "reviewRatingLabel": "Rating",
+    "reviewTextLabel": "Your review",
+    "reviewTextPlaceholder": "Share details about the service and provider...",
+    "reviewSubmit": "Submit review",
+    "leaveReview": "Leave a review",
+    "reviewPromptBodyWithDate": "Your most recent completed booking was on",
+    "repeatSuccess": "Booking repeated successfully",
+    "bookAgain": "Book again",
+    "reviewedLabel": "Reviewed",
+    "reviewSuccessPlaceholder": "Review submitted successfully"
+  },
+  "review": {
+    "heading": "All Reviews",
+    "searchbarPlaceholder": "search review by name",
+    "addButton": "ADD REVIEW",
+    "table": {
+      "header1": "Name",
+      "header2": "Service",
+      "header3": "Image",
+      "header4": "Review",
+      "header5": "Position",
+      "header6": "Action"
+    }
+  },
+  "addReviewModel": {
+    "addHeading": "Add Review",
+    "updateHeading": "Update Review",
+    "form": {
+      "header1": "Name",
+      "header2": "Position",
+      "header3": "Review",
+      "header4": "Image",
+      "header5": "Service",
+      "header6": "Rating",
+      "TitlePlaceholder": "Enter Name",
+      "PositionPlaceholder": "Enter Position",
+      "ServicePlaceholder": "Select Service",
+      "DescriptionPlaceholder": "Enter Review"
+    }
+  },
+  "addServiceModel": {
+    "addHeading": "Add Service",
+    "updateHeading": "Update Service",
+    "form": {
+      "header1": "Title (EN) ",
+      "header2": "Title (CZ)",
+      "header3": "Position",
+      "header4": "Status",
+      "header5": "Description (EN)",
+      "header6": "Description (CZ)",
+      "header7": "Image",
+      "header8": "Category",
+      "TitlePlaceholder": "Enter Title",
+      "PositionPlaceholder": "Enter Position",
+      "CategoryPlaceholder": "Select Category",
+      "DescriptionPlaceholder": "Enter Description"
+    },
+    "statusOption": {
+      "active": "Active",
+      "deactive": "Deactive"
+    }
+  },
+  "inquiry": {
+    "heading": "Inquiry",
+    "table": {
+      "header1": "User Name",
+      "header2": "Email",
+      "header3": "Subject",
+      "header4": "Message",
+      "header5": "Action",
+      "header6": "Inquiry Date"
+    }
+  },
+  "showProfile": {
+    "verification": {
+      "emailAndPhoneNumber": "Verified e-mail and phone number",
+      "verifiedAddress": "Verified address",
+      "verifiedIdentity": "Verified identity",
+      "documents": "Passed document verification (ID or DL)",
+      "verificationDate": "Check against duplicate registrations · validation date verification"
+    }
+  },
+  "kycProfile": {
+    "header": "Provider KYC",
+    "headingText": "Start your KYC",
+    "headingSubText": "Complete your KYC to activate your provider account.",
+    "startButton": "Start KYC Process",
+    "step1": {
+      "heading": "Step 1: Basic Details",
+      "fullname": "Full Name",
+      "validation": {
+        "dob": "Date of birth is required",
+        "phoneNumber": "Phone number is required",
+        "address": "Address is required"
+      },
+      "button": "Save & Next",
+      "updatebutton": "Update & Next"
+    },
+    "step2": {
+      "heading": "Step 2: Documents",
+      "detaial": "Upload JPG, JPEG, or PNG files only (Max 5MB each)",
+      "identity": "Upload government-issued ID (Aadhaar, Passport, Driver's License)",
+      "address": "Upload recent utility bill, bank statement, or rental agreement",
+      "submitButton": "Submit Documents",
+      "resubmitButton": "Resubmit Documents",
+      "backButton": "Back"
+    },
+    "detail": {
+      "header": "KYC Application Details",
+      "name": "Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "dob": "Date Of Birth",
+      "address": "Address",
+      "submitted": "Submitted",
+      "identityProof": "Identity Proof",
+      "addressProof": "Address Proof",
+      "viewDocument": "View Document"
+    },
+    "result": {
+      "success": "Your KYC is Accepted. Please add your services."
+    },
+    "popup": {
+      "success": "Documents submitted successfully!",
+      "failed": "Failed to submit documents. Please try again.",
+      "sTitle": "Success",
+      "fTitle": "Submission Failed"
+    }
+  },
+  "approvedKYC": {
+    "header": "Approved KYC",
+    "placeHolder": "Search provider",
+    "tabel": {
+      "name": "Provider Name",
+      "email": "Provider Email",
+      "submitted": "Submitted Date",
+      "status": "Status",
+      "action": "Action"
+    }
+  },
+  "kycApproval": {
+    "header": "KYC Approval Pending"
+  },
+  "terms": {
+    "disclaimerTitle": "Marketplace Disclaimer",
+    "title": "Terms & SLA",
+    "updated": "Last updated: January 1, 2026",
+    "section1": {
+      "title": "1. Agreement",
+      "body": "By using our platform, you agree to these Terms and our Service Level Agreement (SLA)."
+    },
+    "section2": {
+      "title": "2. Provider Responsibilities",
+      "body": "Providers must deliver services professionally, communicate clearly with clients, and keep their availability accurate."
+    },
+    "section3": {
+      "title": "3. Billing and Subscriptions",
+      "body": "Provider access to the dashboard requires an active subscription. Billing is handled securely by Stripe."
+    },
+    "section4": {
+      "title": "4. Cancellations",
+      "body": "You can cancel your subscription in the Stripe billing portal. Access continues until the current billing period ends."
+    },
+    "section5": {
+      "title": "5. Support",
+      "body": "If you have questions about these terms, contact our support team."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "brand": "Helpora.cz",
+    "lastUpdated": "Last updated: January 1, 2026",
+    "sections": [
+      {
+        "id": "1",
+        "title": "1. Introduction",
+        "paragraphs": [
+          "This Privacy Policy explains how Helpora.cz (“we”, “us”, or “our”) collects, uses, stores, and protects personal data in accordance with the General Data Protection Regulation (GDPR).",
+          "By using the Helpora.cz website and services, you acknowledge that you have read and understood this Privacy Policy."
+        ]
+      },
+      {
+        "id": "2",
+        "title": "2. Data Controller",
+        "paragraphs": [
+          "The data controller responsible for the processing of personal data is:",
+          "Helpora.cz",
+          "Country: Czech Republic",
+          "Contact email: info@helpora.cz"
+        ]
+      },
+      {
+        "id": "3",
+        "title": "3. Personal Data We Process",
+        "paragraphs": [
+          "We may collect and process the following categories of personal data:"
+        ],
+        "bullets": [
+          "Identification data (first name, last name)",
+          "Contact details (email address, phone number)",
+          "Business information (company name, service category, location)",
+          "User account credentials",
+          "Technical data (IP address, browser type, device information)",
+          "Billing and subscription information (subscription status, invoices)",
+          "We do not store payment card details. All payments are processed securely by Stripe."
+        ]
+      },
+      {
+        "id": "4",
+        "title": "4. Purposes of Processing",
+        "paragraphs": [
+          "We process personal data for the following purposes:"
+        ],
+        "bullets": [
+          "Creating and managing user accounts",
+          "Providing access to the Helpora.cz platform",
+          "Managing subscriptions and billing",
+          "Sending service-related and operational communications",
+          "Providing customer support",
+          "Ensuring platform security and preventing misuse",
+          "Complying with legal and regulatory obligations"
+        ]
+      },
+      {
+        "id": "5",
+        "title": "5. Legal Basis for Processing",
+        "paragraphs": [
+          "Personal data is processed based on one or more of the following legal grounds:"
+        ],
+        "bullets": [
+          "Contractual necessity – to provide our services",
+          "Legitimate interest – to operate, secure, and improve the platform",
+          "Consent – for marketing communications",
+          "Legal obligation – where required by applicable law"
+        ]
+      },
+      {
+        "id": "6",
+        "title": "6. Marketing Communications",
+        "paragraphs": [
+          "We send marketing or promotional communications only if you have provided explicit consent.",
+          "You may withdraw your consent at any time by:"
+        ],
+        "bullets": [
+          "Clicking the unsubscribe link in marketing emails",
+          "Contacting us at info@helpora.cz",
+          "Service-related emails, such as account notifications or billing updates, are sent regardless of marketing consent."
+        ]
+      },
+      {
+        "id": "7",
+        "title": "7. Data Sharing and Third Parties",
+        "paragraphs": [
+          "We may share personal data with trusted third parties only when necessary to provide our services, including:"
+        ],
+        "bullets": [
+          "Hosting and infrastructure providers",
+          "Email communication service providers",
+          "Stripe for payment processing",
+          "Analytics or security service providers (where applicable)",
+          "All third parties process personal data in compliance with GDPR."
+        ]
+      },
+      {
+        "id": "8",
+        "title": "8. Data Retention",
+        "paragraphs": [
+          "We retain personal data only for as long as necessary to:"
+        ],
+        "bullets": [
+          "Provide our services",
+          "Fulfill legal obligations",
+          "Resolve disputes",
+          "Protect our legal rights and legitimate interests",
+          "Users may request account deletion and data erasure at any time."
+        ]
+      },
+      {
+        "id": "9",
+        "title": "9. Data Security",
+        "paragraphs": [
+          "We implement appropriate technical and organizational measures to protect personal data, including:"
+        ],
+        "bullets": [
+          "Secure servers and infrastructure",
+          "Access control mechanisms",
+          "Encrypted communications",
+          "Ongoing security monitoring"
+        ]
+      },
+      {
+        "id": "10",
+        "title": "10. Your Rights Under GDPR",
+        "paragraphs": [
+          "Under GDPR, you have the right to:"
+        ],
+        "bullets": [
+          "Access your personal data",
+          "Request correction of inaccurate or incomplete data",
+          "Request deletion of personal data",
+          "Restrict or object to data processing",
+          "Withdraw consent at any time",
+          "Lodge a complaint with a supervisory authority",
+          "Requests may be sent to: info@helpora.cz"
+        ]
+      },
+      {
+        "id": "11",
+        "title": "11. Cookies",
+        "paragraphs": [
+          "Helpora.cz uses cookies that are necessary for website functionality.",
+          "Analytical or marketing cookies are used only with user consent. Further details are provided in our Cookie Policy."
+        ]
+      },
+      {
+        "id": "12",
+        "title": "12. Changes to This Privacy Policy",
+        "paragraphs": [
+          "We may update this Privacy Policy from time to time. Any changes will be published on this page with an updated revision date."
+        ]
+      },
+      {
+        "id": "13",
+        "title": "13. Contact",
+        "paragraphs": [
+          "If you have any questions regarding this Privacy Policy or the processing of personal data, please contact:"
+        ],
+        "contactEmail": "info@helpora.cz"
+      }
+    ]
+  },
+  "subscription": {
+    "title": "Activate Your Provider Plan",
+    "subtitle": "Subscribe to unlock the provider dashboard and start receiving bookings.",
+    "description": "Monthly subscription for service providers on helpora.cz. This plan allows providers to create and maintain an active profile, appear in search results, and be contacted directly by customers. The subscription renews automatically each month and can be canceled at any time. Helpora.cz provides visibility and contact opportunities but does not guarantee a specific number of leads or bookings.",
+    "planName": "Helpora – Service Provider Subscription",
+    "planBilling": "Monthly recurring",
+    "nameLabel": "Name",
+    "priceLabel": "Price",
+    "priceValue": "99 CZK / month",
+    "billingLabel": "Billing",
+    "billingValue": "Monthly recurring",
+    "currencyLabel": "Currency",
+    "currencyValue": "CZK",
+    "trialLabel": "Free trial",
+    "trialValue": "180-days free trial",
+    "feature1": "Recurring monthly billing",
+    "feature2": "Access to provider dashboard",
+    "feature3": "Secure payments via Stripe",
+    "feature4": "Cancel anytime",
+    "cta": "Subscribe Now",
+    "loading": "Redirecting to Stripe...",
+    "manageTitle": "Subscription",
+    "manageSubtitle": "Manage your billing details and view your subscription status.",
+    "statusLabel": "Status",
+    "nextBillingLabel": "Next billing date",
+    "cancelAtPeriodEndLabel": "Cancel at period end",
+    "manageButton": "Open Stripe Billing Portal",
+    "inactiveNotice": "Your subscription is inactive. Please subscribe to continue.",
+    "successTitle": "Subscription successful!",
+    "successBody": "We are syncing your account. You'll be redirected shortly.",
+    "pendingTitle": "Subscription pending",
+    "pendingBody": "We couldn't confirm an active subscription yet. Please try again or contact support.",
+    "errorStart": "Unable to start subscription. Please try again.",
+    "cancellingLabel": "Cancelling"
+  },
+  "subscribers": {
+    "title": "Subscribers",
+    "subtitle": "Paid service providers with active subscriptions.",
+    "searchPlaceholder": "Search by name or email",
+    "statusFilterAll": "All statuses",
+    "statusActive": "Active",
+    "statusTrialing": "Trial",
+    "statusPastDue": "Past due",
+    "statusCanceled": "Canceled",
+    "paidProviders": "Paid providers",
+    "activeSubscribers": "Active subscriptions",
+    "trialingSubscribers": "Trial subscriptions",
+    "monthlyRevenue": "Monthly earnings",
+    "mrrLabel": "Monthly recurring revenue",
+    "cancelingLabel": "Cancelling",
+    "trendTitle": "Monthly earnings trend",
+    "trendSubtitle": "Last 12 months",
+    "tableProvider": "Service Provider",
+    "tableStatus": "Status",
+    "tablePlan": "Plan",
+    "tableNextBilling": "Next billing",
+    "tableTrialEnd": "Trial ends",
+    "tableCancelAtPeriodEnd": "Cancel at period end",
+    "tableAction": "Action",
+    "cancelButton": "Cancel subscription",
+    "cancelTitle": "Cancel Subscription",
+    "cancelMessage": "This will cancel the subscription immediately and remove provider access.",
+    "cancelConfirm": "Yes, cancel",
+    "cancelKeep": "No, keep",
+    "noData": "No paid providers found.",
+    "yes": "Yes",
+    "no": "No",
+    "viewButton": "View",
+    "viewTitle": "Subscriber details",
+    "sectionProvider": "Provider information",
+    "sectionSubscription": "Subscription information",
+    "detailName": "Name",
+    "detailEmail": "Email",
+    "detailLastLogin": "Last login",
+    "detailCreatedAt": "Created at",
+    "detailStatus": "Status",
+    "detailPlan": "Plan",
+    "detailNextBilling": "Next billing",
+    "detailTrialEnd": "Trial ends",
+    "detailCancelAtPeriodEnd": "Cancel at period end",
+    "detailPaymentStatus": "Payment status"
+  },
+  "search": {
+    "resultsFor": "Results for",
+    "in": "in",
+    "servicesFound": "services found",
+    "back": "Back",
+    "noDescription": "No description available",
+    "viewProfile": "View Profile",
+    "verified": "Verified",
+    "bookNow": "Book Now",
+    "category": "Category",
+    "contactLabel": "Contact",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "revealContact": "Reveal Contact",
+    "hideContact": "Hide Contact",
+    "loginToReveal": "Please log in to reveal contact details.",
+    "loginRequired": "Please log in to continue.",
+    "locationNotSpecified": "Location not specified",
+    "unknownProvider": "Unknown Provider",
+    "unavailable": "Unavailable",
+    "showingRelated": "No exact matches. Showing related providers.",
+    "fetchError": "Failed to load services. Please try again.",
+    "searchCity": "Search City",
+    "cityOptionalPlaceholder": "City (optional)",
+    "searchDistrict": "Search District",
+    "enterCity": "Enter city name...",
+    "enterDistrict": "Enter district name...",
+    "clearAllFilters": "Clear All Filters",
+    "noResultsInCity": "No services found",
+    "noResultsInCategory": "No services found in this category.",
+    "goBackHome": "Go Back Home",
+    "noResults": "No Results Found",
+    "noServicesAvailableYet": "Providers Coming Soon",
+    "backToHome": "Back to Home",
+    "tryAgain": "Try Again",
+    "suggestedCategories": "You might also like"
+  },
+  "addProvider": {
+    "address": "Address",
+    "addHeading": "Add Provider",
+    "updateHeading": "Update Provider",
+    "name": "Full Name",
+    "email": "Email Address",
+    "number": "Mobile Number",
+    "regions": "Select Regions",
+    "city": "Select City",
+    "district": "Select District",
+    "password": "Enter Password",
+    "namePlaceHolder": "Enter your name",
+    "emailPlaceHolder": "Enter your email",
+    "numberPlaceHolder": "Enter your phone number",
+    "passwordPlaceHolder": "Enter password",
+    "regionPlaceHolder": "Pleace select your regions",
+    "cityPlaceHolder": "Please select your city",
+    "addressPlaceHolder": "Please enter your address",
+    "addButton": "ADD PROVIDER",
+    "updateButton": "UPDATE PROVIDER",
+    "nameValidation": "Name is required.",
+    "nameValidation2": "Only alphabets allowed.",
+    "emailValidation": "Must be a valid email address.",
+    "emailValidation2": "Email is required.",
+    "numberValidation": "Enter a valid phone number (10 digits).",
+    "passwordValidation": "Password is required.",
+    "passwordValidation2": "Password must contain uppercase, lowercase, number, and special character.",
+    "addressValidation": "Address is required for update.",
+    "addressValidation2": "Address must be at least 5 characters long.",
+    "regionValidation": "Regions is required.",
+    "cityValidation": "City is required."
+  },
+  "regions": {
+    "heading": "Regions",
+    "searchbarPlaceholder": "Search region",
+    "addButton": " ADD REGION",
+    "table": {
+      "name": "Region Name",
+      "action": "Action",
+      "editRegion": "Edit Region",
+      "deleteRegion": "Delete Region"
+    }
+  },
+  "addRegion": {
+    "addHeading": "Add Region",
+    "updateHeading": "Update Region",
+    "name": "Region Name",
+    "namePlaceHolder": "Enter region name",
+    "regionKey": "Region Key",
+    "regionKeyPlaceHolder": "Enter Region Key",
+    "addButton": "ADD REGION",
+    "updateButton": "UPDATE REGION",
+    "nameValidation": "Name is required.",
+    "nameValidation2": "Only alphabets allowed."
+  },
+  "city": {
+    "heading": "Cities",
+    "searchbarPlaceholder": "Search city",
+    "addButton": " ADD CITY",
+    "table": {
+      "regionName": "Region Name",
+      "name": "City Name",
+      "action": "Action",
+      "editCity": "Edit City",
+      "deleteCity": "Delete City"
+    }
+  },
+  "addCity": {
+    "addHeading": "Add City",
+    "updateHeading": "Update City",
+    "cityKey": "City Key",
+    "cityKeyPlaceHolder": "Enter City Key",
+    "regionName": "Region Name",
+    "regionNamePlaceHolder": "Select region name",
+    "name": "City Name",
+    "namePlaceHolder": "Enter city name",
+    "addButton": "ADD CITY",
+    "updateButton": "UPDATE CITY",
+    "nameValidation": "Name is required.",
+    "nameValidation2": "Only alphabets allowed."
+  },
+  "district": {
+    "heading": "District",
+    "searchbarPlaceholder": "Search district",
+    "addButton": " ADD DISTRICT",
+    "table": {
+      "regionName": "Region Name",
+      "cityName": "City Name",
+      "name": "District Name",
+      "action": "Action",
+      "editDistrict": "Edit District",
+      "deleteDistrict": "Delete District"
+    }
+  },
+  "addDistrict": {
+    "addHeading": "Add District",
+    "updateHeading": "Update District",
+    "districtKey": "District Key",
+    "districtKeyPlaceHolder": "Enter District Key",
+    "cityName": "City Name",
+    "cityNamePlaceHolder": "Select city name",
+    "name": "District Name",
+    "namePlaceHolder": "Enter District name",
+    "addButton": "ADD DISTRICT",
+    "updateButton": "UPDATE DISTRICT",
+    "nameValidation": "Name is required.",
+    "nameValidation2": "Only alphabets allowed."
+  },
+  "chatSidebar": {
+    "inputPlaceHolder": "Search..."
+  },
+  "chat": {
+    "scanLink": "Scan link",
+    "scanning": "Scanning...",
+    "scanComplete": "Scan complete",
+    "linkDetected": "Link detected",
+    "linkHidden": "Link hidden until scan",
+    "openLink": "Open link",
+    "externalLink": "External link",
+    "scanResultSafe": "No threats detected"
+  },
+  "changePassword": {
+    "heading": "Change Password",
+    "text": "Kindly enter your current password and choose a new password",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceHolder": "Enter current password",
+    "newPassword": "New Password",
+    "newPasswordPlaceHolder": "Enter new password",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceHolder": "Enter confirm new password",
+    "button": "CHANGE PASSWORD",
+    "validation": {
+      "oldPassward": "Old Password is required",
+      "newPassword1": "New Password is required",
+      "newPassword2": "Whitespace is not allowed",
+      "newPassword3": "Password must be 6–16 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character",
+      "confirmPassword1": "Confirm Password is required",
+      "confirmPassword2": "Whitespace is not allowed",
+      "confirmPassword3": "Password not matched"
+    }
+  },
+  "errors": {
+    "loadCategories": "Failed to load categories. Please try again."
+  }
+}

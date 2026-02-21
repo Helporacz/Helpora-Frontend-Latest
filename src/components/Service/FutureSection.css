@@ -1,0 +1,112 @@
+/* SECTION BASE */
+.future-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* TITLE */
+.future-title {
+  font-size: 15px;
+  font-weight: 700;
+  /* color: rgb(34, 191, 30); */
+  color:#000;
+  letter-spacing: 2px;
+}
+
+.future-heading {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  /* background: linear-gradient(90deg, #132c4e, #2563eb); */
+  /* background: linear-gradient(135deg, rgb(34, 191, 30) 0%, rgb(0, 208, 132) 50%, rgb(0, 255, 200) 100%); */
+  /* -webkit-background-clip: text; */
+  /* color: transparent; */
+  /* color:black; */
+  background: linear-gradient(135deg, #22bf1e 0%, #00ffc8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* CONTENT TEXT */
+.future-text {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* BUTTON */
+.future-btn {
+  padding: 12px 30px;
+  background: #132c4e;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.future-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* IMAGE + FLOATING ICONS */
+.future-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.future-main-img {
+  max-width: 85%;
+  animation: floatFuture 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatFuture {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-12px); }
+}
+
+/* Floating Icons */
+.floating-icon {
+  position: absolute;
+  font-size: 30px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  animation: floatF 6s ease-in-out infinite;
+}
+
+.f-icon-1 { top: -10px; right: 10%; animation-delay: 0s; }
+.f-icon-2 { bottom: 20%; left: -10px; animation-delay: 1.5s; }
+.f-icon-3 { top: 50%; right: -15px; animation-delay: 3s; }
+
+@keyframes floatF {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .future-heading {
+    font-size: 28px;
+    text-align: center;
+  }
+  .future-title, .future-text {
+    text-align: center;
+  }
+  .future-btn {
+    display: block;
+    margin: auto;
+  }
+}
+@media(max-width:320px){
+  .future-heading{
+    font-size:32px;
+  }
+}

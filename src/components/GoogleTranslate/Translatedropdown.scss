@@ -1,0 +1,67 @@
+.custom-translate {
+  position: relative;
+  user-select: none;
+
+  .selected-lang {
+    padding: 6px 12px;
+    border-radius: 50px;
+    background: #f8f9fa;
+    transition: all 0.2s;
+    &:hover {
+      background: #e9ecef;
+    }
+
+    .flag-icon {
+      width: 24px;
+      height: 16px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .chevron-icon {
+      transition: transform 0.3s ease;
+      color: #495057;
+
+      &.rotate-up {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdown-menu-modern {
+    position: absolute;
+    top: 100%;
+    min-width: 150px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+    overflow: hidden;
+
+    &.left-0 {
+      left: 0;
+    }
+
+    &.right-0 {
+      right: 0;
+    }
+
+    .dropdown-item {
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      color: #495057;
+
+      &:hover {
+        background-color: #f1f3f5;
+      }
+
+      .flag-icon {
+        width: 20px;
+        height: 14px;
+      }
+    }
+  }
+}

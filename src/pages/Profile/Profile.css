@@ -1,0 +1,58 @@
+/* ACTIVE TAB STYLE */
+.active-tab {
+  border-bottom: 2px solid #132c4e;
+  font-weight: 600;
+}
+
+/* RESPONSIVE IMAGE WRAPPER */
+.profile-img-wrapper img,
+.profile-img-wrapper .no-logo {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* MOBILE RESPONSIVE BUTTONS */
+.profile-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* TAB BUTTON BASE STYLE */
+.profile-tab {
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #f0f2f5;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* MOBILE SIZES */
+@media (max-width: 768px) {
+  .profile-img-wrapper img,
+  .profile-img-wrapper .no-logo {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-tab {
+    width: 48%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-tab {
+    width: 100%;
+  }
+
+  .profile-img-wrapper img,
+  .profile-img-wrapper .no-logo {
+    width: 120px;
+    height: 120px;
+  }
+}

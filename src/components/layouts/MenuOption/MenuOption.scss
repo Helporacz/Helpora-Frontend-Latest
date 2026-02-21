@@ -1,0 +1,23 @@
+#menu-option-container {
+  .btn-check:checked + .btn,
+  .btn.active,
+  .btn.show,
+  .btn:first-child:active,
+  :not(.btn-check) + .btn:active {
+    border: unset;
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .btn {
+    padding: unset;
+    --bs-btn-border-width: unset;
+  }
+}
+.option-chat {
+  padding: 0px 4px;
+  background: #fafafa;
+  border-radius: 4px;
+  cursor: pointer;
+  height: fit-content;
+}

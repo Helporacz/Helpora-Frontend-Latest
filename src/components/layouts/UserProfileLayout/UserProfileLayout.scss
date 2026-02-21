@@ -1,0 +1,111 @@
+#user-profile-layout-container {
+  position: relative;
+  height: fit-content;
+  .user-image-block {
+    border-radius: 50%;
+    img {
+      border-radius: 50%;
+    }
+    .text-profile-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      height: 100%;
+      background-color: var(--black-20);
+    }
+    .status-indi {
+      position: absolute;
+      bottom: 1px;
+      right: 1px;
+      padding: 4px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+    }
+  }
+  @mixin profile-size($h, $w) {
+    height: $h;
+    width: $w;
+  }
+  @mixin profile-text-size($fs, $fw, $pt, $pl) {
+    font-size: $fs;
+    font-weight: $fw;
+    padding-top: $pt;
+    padding-left: $pl;
+  }
+  @mixin profile-status-size($p, $b, $r) {
+    padding: $p;
+    bottom: $b;
+    right: $r;
+  }
+  .size-82 {
+    @include profile-size(82px, 82px);
+    .text-profile-block {
+      @include profile-text-size(34px, 600, 5px, 2px);
+    }
+    .status-indi {
+      @include profile-status-size(6px, 4px, 4px);
+    }
+  }
+  .size-70 {
+    @include profile-size(70px, 70px);
+    .text-profile-block {
+      @include profile-text-size(28px, 600, 5px, 3px);
+    }
+    .status-indi {
+      @include profile-status-size(5px, 3px, 4px);
+    }
+  }
+  .size-60 {
+    @include profile-size(60px, 60px);
+    .text-profile-block {
+      @include profile-text-size(26px, 600, 8px, 3px);
+    }
+    .status-indi {
+      @include profile-status-size(5px, 0px, 4px);
+    }
+  }
+  .size-50 {
+    @include profile-size(50px, 50px);
+    .text-profile-block {
+      @include profile-text-size(26px, 600, 6px, 2px);
+    }
+  }
+
+  .size-42 {
+    @include profile-size(42px, 42px);
+    .text-profile-block {
+      @include profile-text-size(17px, 600, 4px, 2px);
+    }
+    .status-indi {
+      @include profile-status-size(4px, 1px, 1px);
+    }
+  }
+  .size-40 {
+    @include profile-size(40px, 40px);
+    .text-profile-block {
+      @include profile-text-size(16px, 600, 5px, 2px);
+    }
+    .status-indi {
+      @include profile-status-size(3px, 0px, 2.5px);
+    }
+  }
+  .size-30 {
+    @include profile-size(30px, 30px);
+    .text-profile-block {
+      @include profile-text-size(14px, 600, 3px, 2px);
+    }
+    .status-indi {
+      @include profile-status-size(2.5px, 0px, -1px);
+    }
+  }
+  .size-21 {
+    @include profile-size(21px, 21px);
+    .text-profile-block {
+      @include profile-text-size(10px, 600, 1px, 0px);
+    }
+    .status-indi {
+      @include profile-status-size(2px, -1px, -1px);
+    }
+  }
+}

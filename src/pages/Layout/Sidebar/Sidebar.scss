@@ -1,0 +1,119 @@
+#left-side-block {
+  height: 100%;
+  width: 236px;
+  // background-color: #132c4e;
+  background: linear-gradient(135deg, #2c4ee7 0%, #8721ec 100%);
+  overflow: auto;
+
+  .top-icon-block {
+    padding: 30px 0px 30px 24px;
+  }
+
+  .menu-list-container {
+    padding-right: 16px;
+    // position: relative;
+
+
+    .menu-list-item {
+      color: #fff;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 30.6px;
+      padding: 8px 26px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+
+    }
+
+    .menu-list-item .menuIcon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .active-menu-item {
+      font-weight: 600;
+      color: #132c4e;
+      background-color: #fff;
+      border-radius: 0px 24px 24px 0px;
+      user-select: none;
+    }
+
+    .inactive-menu-item {
+      cursor: pointer;
+
+      .menuIcon {
+        filter: invert(88%) sepia(50%) saturate(0%) hue-rotate(283deg) brightness(108%) contrast(101%);
+      }
+
+      .rightMenuIcon {
+        filter: invert(88%) sepia(50%) saturate(0%) hue-rotate(283deg) brightness(108%) contrast(101%);
+
+      }
+
+
+    }
+
+    .cardSubMenu-item-container {
+      max-width: 393px;
+      // width: 100%;
+      background-color: white;
+      position: absolute;
+      // top: 50px;
+      top: 190px;
+      left: 20px;
+      box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.15);
+      padding: 24px 0px;
+      border-radius: 10px;
+      z-index: 999;
+    }
+
+    .cardSubMenu-item {
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 30.6px;
+      color: var(--dashboard-primary);
+    }
+
+    .active-cardSubMenu-item {
+      background-color: rgba(232, 243, 253, 1);
+    }
+
+    .inactive-cardSubMenu-item {
+      cursor: pointer;
+    }
+
+    .sub-menu-item {
+      // background-color: #fff;
+      color: #fff;
+      border-radius: 0px 10px 0px 10px;
+      padding: 8px 26px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 30.6px;
+      margin-left: 40px;
+    }
+
+    .active-sub-menu-item {
+      font-weight: 600;
+      color: #132c4e;
+      background-color: #fff;
+    }
+
+    .inactive-sub-menu-item {
+      cursor: pointer;
+      // img {
+      //   filter: invert(88%) sepia(50%) saturate(0%) hue-rotate(283deg)
+      //     brightness(108%) contrast(101%);
+      // }
+    }
+  }
+}

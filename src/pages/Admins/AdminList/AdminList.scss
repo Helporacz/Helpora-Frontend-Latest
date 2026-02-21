@@ -1,0 +1,42 @@
+#admin-list-container {
+  .admin-list-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    .admin-list-item {
+      flex: 1 1 270px;
+      padding: 13px 23px;
+      max-width: 270px;
+      .center-profile-block {
+        display: flex;
+        justify-content: center;
+        .profile-ind {
+          height: 70px;
+          width: 70px;
+          border-radius: 50%;
+          background-color: gray;
+          position: relative;
+          .chat-icons {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+          }
+        }
+      }
+    }
+  }
+  .btn-check:checked + .btn,
+  .btn.active,
+  .btn.show,
+  .btn:first-child:active,
+  :not(.btn-check) + .btn:active {
+    border: unset;
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .btn {
+    padding: unset;
+    --bs-btn-border-width: unset;
+  }
+}

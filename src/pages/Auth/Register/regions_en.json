@@ -1,0 +1,1054 @@
+{
+    "schema_version": 1,
+    "country": "CZ",
+    "lang": "en",
+    "allow_custom_district": true,
+    "regions": [
+        {
+            "id": "prague",
+            "name": "Prague",
+            "cities": [
+                {
+                    "id": "praha-1",
+                    "name": "Praha 1",
+                    "districts": [
+                        {
+                            "id": "praha-1-stare-mesto",
+                            "name": "Staré Město"
+                        },
+                        {
+                            "id": "praha-1-mala-strana",
+                            "name": "Malá Strana"
+                        },
+                        {
+                            "id": "praha-1-josefov",
+                            "name": "Josefov"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-2",
+                    "name": "Praha 2",
+                    "districts": [
+                        {
+                            "id": "praha-2-vinohrady",
+                            "name": "Vinohrady"
+                        },
+                        {
+                            "id": "praha-2-nove-mesto",
+                            "name": "Nové Město"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-3",
+                    "name": "Praha 3",
+                    "districts": [
+                        {
+                            "id": "praha-3-zizkov",
+                            "name": "Žižkov"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-4",
+                    "name": "Praha 4",
+                    "districts": [
+                        {
+                            "id": "praha-4-nusle",
+                            "name": "Nusle"
+                        },
+                        {
+                            "id": "praha-4-pankrac",
+                            "name": "Pankrác"
+                        },
+                        {
+                            "id": "praha-4-krc",
+                            "name": "Krč"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-5",
+                    "name": "Praha 5",
+                    "districts": [
+                        {
+                            "id": "praha-5-smichov",
+                            "name": "Smíchov"
+                        },
+                        {
+                            "id": "praha-5-kosire",
+                            "name": "Košíře"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-6",
+                    "name": "Praha 6",
+                    "districts": [
+                        {
+                            "id": "praha-6-dejvice",
+                            "name": "Dejvice"
+                        },
+                        {
+                            "id": "praha-6-brevnov",
+                            "name": "Břevnov"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-7",
+                    "name": "Praha 7",
+                    "districts": [
+                        {
+                            "id": "praha-7-holesovice",
+                            "name": "Holešovice"
+                        },
+                        {
+                            "id": "praha-7-letna",
+                            "name": "Letná"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-8",
+                    "name": "Praha 8",
+                    "districts": [
+                        {
+                            "id": "praha-8-karlin",
+                            "name": "Karlín"
+                        },
+                        {
+                            "id": "praha-8-liben",
+                            "name": "Libeň"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-9",
+                    "name": "Praha 9",
+                    "districts": [
+                        {
+                            "id": "praha-9-vysocany",
+                            "name": "Vysočany"
+                        },
+                        {
+                            "id": "praha-9-prosek",
+                            "name": "Prosek"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-10",
+                    "name": "Praha 10",
+                    "districts": [
+                        {
+                            "id": "praha-10-vrsovice",
+                            "name": "Vršovice"
+                        },
+                        {
+                            "id": "praha-10-strasnice",
+                            "name": "Strašnice"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-11",
+                    "name": "Praha 11",
+                    "districts": [
+                        {
+                            "id": "praha-11-chodov",
+                            "name": "Chodov"
+                        },
+                        {
+                            "id": "praha-11-haje",
+                            "name": "Háje"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-12",
+                    "name": "Praha 12",
+                    "districts": [
+                        {
+                            "id": "praha-12-modrany",
+                            "name": "Modřany"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-13",
+                    "name": "Praha 13",
+                    "districts": [
+                        {
+                            "id": "praha-13-stodulky",
+                            "name": "Stodůlky"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-14",
+                    "name": "Praha 14",
+                    "districts": [
+                        {
+                            "id": "praha-14-cerny-most",
+                            "name": "Černý Most"
+                        }
+                    ]
+                },
+                {
+                    "id": "praha-15",
+                    "name": "Praha 15",
+                    "districts": [
+                        {
+                            "id": "praha-15-hostivar",
+                            "name": "Hostivař"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "central-bohemian",
+            "name": "Central Bohemian Region",
+            "cities": [
+                {
+                    "id": "kladno",
+                    "name": "Kladno",
+                    "districts": [
+                        {
+                            "id": "kladno-krocehlavy",
+                            "name": "Kročehlavy"
+                        },
+                        {
+                            "id": "kladno-rozdelov",
+                            "name": "Rozdělov"
+                        },
+                        {
+                            "id": "kladno-dubi",
+                            "name": "Dubí"
+                        },
+                        {
+                            "id": "kladno-svermov",
+                            "name": "Švermov"
+                        }
+                    ]
+                },
+                {
+                    "id": "mlada-boleslav",
+                    "name": "Mladá Boleslav",
+                    "districts": [
+                        {
+                            "id": "mlada-boleslav-i",
+                            "name": "Mladá Boleslav I"
+                        },
+                        {
+                            "id": "mlada-boleslav-ii",
+                            "name": "Mladá Boleslav II"
+                        },
+                        {
+                            "id": "mlada-boleslav-cejetice",
+                            "name": "Čejetice"
+                        },
+                        {
+                            "id": "mlada-boleslav-kosmonosy",
+                            "name": "Kosmonosy"
+                        }
+                    ]
+                },
+                {
+                    "id": "kolin",
+                    "name": "Kolín",
+                    "districts": [
+                        {
+                            "id": "kolin-i",
+                            "name": "Kolín I"
+                        },
+                        {
+                            "id": "kolin-ii",
+                            "name": "Kolín II"
+                        },
+                        {
+                            "id": "kolin-zalabi",
+                            "name": "Zálabí"
+                        },
+                        {
+                            "id": "kolin-stitary",
+                            "name": "Štítary"
+                        }
+                    ]
+                },
+                {
+                    "id": "pribram",
+                    "name": "Příbram",
+                    "districts": [
+                        {
+                            "id": "pribram-i-brezove-hory",
+                            "name": "Příbram I – Březové Hory"
+                        },
+                        {
+                            "id": "pribram-ii",
+                            "name": "Příbram II"
+                        },
+                        {
+                            "id": "pribram-zdabor",
+                            "name": "Zdaboř"
+                        },
+                        {
+                            "id": "pribram-brod",
+                            "name": "Brod"
+                        }
+                    ]
+                },
+                {
+                    "id": "benesov",
+                    "name": "Benešov",
+                    "districts": [
+                        {
+                            "id": "benesov-centrum",
+                            "name": "Benešov centrum"
+                        },
+                        {
+                            "id": "benesov-cervene-vrsky",
+                            "name": "Červené Vršky"
+                        },
+                        {
+                            "id": "benesov-karlov",
+                            "name": "Karlov"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "south-bohemian",
+            "name": "South Bohemian Region",
+            "cities": [
+                {
+                    "id": "ceske-budejovice",
+                    "name": "České Budějovice",
+                    "districts": [
+                        {
+                            "id": "ceske-budejovice-1",
+                            "name": "České Budějovice 1"
+                        },
+                        {
+                            "id": "ceske-budejovice-2",
+                            "name": "České Budějovice 2"
+                        },
+                        {
+                            "id": "ceske-budejovice-suche-vrbne",
+                            "name": "Suché Vrbné"
+                        },
+                        {
+                            "id": "ceske-budejovice-roznov",
+                            "name": "Rožnov"
+                        }
+                    ]
+                },
+                {
+                    "id": "tabor",
+                    "name": "Tábor",
+                    "districts": [
+                        {
+                            "id": "tabor-stare-mesto",
+                            "name": "Staré Město"
+                        },
+                        {
+                            "id": "tabor-klokoty",
+                            "name": "Klokoty"
+                        },
+                        {
+                            "id": "tabor-cekanice",
+                            "name": "Čekanice"
+                        }
+                    ]
+                },
+                {
+                    "id": "pisek",
+                    "name": "Písek",
+                    "districts": [
+                        {
+                            "id": "pisek-budejovicke-predmesti",
+                            "name": "Budějovické Předměstí"
+                        },
+                        {
+                            "id": "pisek-hradiste",
+                            "name": "Hradiště"
+                        },
+                        {
+                            "id": "pisek-prazske-predmesti",
+                            "name": "Pražské Předměstí"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "plzen",
+            "name": "Plzeň Region",
+            "cities": [
+                {
+                    "id": "plzen",
+                    "name": "Plzeň",
+                    "districts": [
+                        {
+                            "id": "plzen-1-centrum-mesta",
+                            "name": "Plzeň 1 – Centrum města"
+                        },
+                        {
+                            "id": "plzen-2-slovany",
+                            "name": "Plzeň 2 – Slovany"
+                        },
+                        {
+                            "id": "plzen-3-skrvnany",
+                            "name": "Plzeň 3 – Skvrňany"
+                        },
+                        {
+                            "id": "plzen-4-doubravka",
+                            "name": "Plzeň 4 – Doubravka"
+                        }
+                    ]
+                },
+                {
+                    "id": "klatovy",
+                    "name": "Klatovy",
+                    "districts": [
+                        {
+                            "id": "klatovy-i",
+                            "name": "Klatovy I"
+                        },
+                        {
+                            "id": "klatovy-ii",
+                            "name": "Klatovy II"
+                        },
+                        {
+                            "id": "klatovy-luby",
+                            "name": "Luby"
+                        }
+                    ]
+                },
+                {
+                    "id": "rokycany",
+                    "name": "Rokycany",
+                    "districts": [
+                        {
+                            "id": "rokycany-nove-mesto",
+                            "name": "Nové Město"
+                        },
+                        {
+                            "id": "rokycany-borek",
+                            "name": "Borek"
+                        },
+                        {
+                            "id": "rokycany-plzenske-predmesti",
+                            "name": "Plzeňské Předměstí"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "karlovy-vary",
+            "name": "Karlovy Vary Region",
+            "cities": [
+                {
+                    "id": "karlovy-vary",
+                    "name": "Karlovy Vary",
+                    "districts": [
+                        {
+                            "id": "karlovy-vary-drahovice",
+                            "name": "Drahovice"
+                        },
+                        {
+                            "id": "karlovy-vary-stara-role",
+                            "name": "Stará Role"
+                        },
+                        {
+                            "id": "karlovy-vary-rybare",
+                            "name": "Rybáře"
+                        },
+                        {
+                            "id": "karlovy-vary-bohatice",
+                            "name": "Bohatice"
+                        }
+                    ]
+                },
+                {
+                    "id": "cheb",
+                    "name": "Cheb",
+                    "districts": [
+                        {
+                            "id": "cheb-centrum",
+                            "name": "Cheb centrum"
+                        },
+                        {
+                            "id": "cheb-skalka",
+                            "name": "Skalka"
+                        },
+                        {
+                            "id": "cheb-haje",
+                            "name": "Háje"
+                        }
+                    ]
+                },
+                {
+                    "id": "sokolov",
+                    "name": "Sokolov",
+                    "districts": [
+                        {
+                            "id": "sokolov-i",
+                            "name": "Sokolov I"
+                        },
+                        {
+                            "id": "sokolov-ii",
+                            "name": "Sokolov II"
+                        },
+                        {
+                            "id": "sokolov-vitkov",
+                            "name": "Vítkov"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "usti-nad-labem",
+            "name": "Ústí nad Labem Region",
+            "cities": [
+                {
+                    "id": "usti-nad-labem",
+                    "name": "Ústí nad Labem",
+                    "districts": [
+                        {
+                            "id": "usti-strekov",
+                            "name": "Střekov"
+                        },
+                        {
+                            "id": "usti-severni-terasa",
+                            "name": "Severní Terasa"
+                        },
+                        {
+                            "id": "usti-nestemice",
+                            "name": "Neštěmice"
+                        },
+                        {
+                            "id": "usti-krasne-brezno",
+                            "name": "Krásné Březno"
+                        }
+                    ]
+                },
+                {
+                    "id": "teplice",
+                    "name": "Teplice",
+                    "districts": [
+                        {
+                            "id": "teplice-centrum",
+                            "name": "Teplice centrum"
+                        },
+                        {
+                            "id": "teplice-trnovany",
+                            "name": "Trnovany"
+                        },
+                        {
+                            "id": "teplice-prosetice",
+                            "name": "Prosetice"
+                        }
+                    ]
+                },
+                {
+                    "id": "decin",
+                    "name": "Děčín",
+                    "districts": [
+                        {
+                            "id": "decin-i",
+                            "name": "Děčín I"
+                        },
+                        {
+                            "id": "decin-podmokly",
+                            "name": "Podmokly"
+                        },
+                        {
+                            "id": "decin-breziny",
+                            "name": "Březiny"
+                        }
+                    ]
+                },
+                {
+                    "id": "most",
+                    "name": "Most",
+                    "districts": [
+                        {
+                            "id": "most-centrum",
+                            "name": "Most centrum"
+                        },
+                        {
+                            "id": "most-chanov",
+                            "name": "Chanov"
+                        },
+                        {
+                            "id": "most-velebudice",
+                            "name": "Velebudice"
+                        }
+                    ]
+                },
+                {
+                    "id": "chomutov",
+                    "name": "Chomutov",
+                    "districts": [
+                        {
+                            "id": "chomutov-i",
+                            "name": "Chomutov I"
+                        },
+                        {
+                            "id": "chomutov-ii",
+                            "name": "Chomutov II"
+                        },
+                        {
+                            "id": "chomutov-horni-ves",
+                            "name": "Horní Ves"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "liberec",
+            "name": "Liberec Region",
+            "cities": [
+                {
+                    "id": "liberec",
+                    "name": "Liberec",
+                    "districts": [
+                        {
+                            "id": "liberec-i",
+                            "name": "Liberec I"
+                        },
+                        {
+                            "id": "liberec-rochlice",
+                            "name": "Rochlice"
+                        },
+                        {
+                            "id": "liberec-vratislavice-nad-nisou",
+                            "name": "Vratislavice nad Nisou"
+                        }
+                    ]
+                },
+                {
+                    "id": "jablonec-nad-nisou",
+                    "name": "Jablonec nad Nisou",
+                    "districts": [
+                        {
+                            "id": "jablonec-i",
+                            "name": "Jablonec I"
+                        },
+                        {
+                            "id": "jablonec-mseno",
+                            "name": "Mšeno"
+                        },
+                        {
+                            "id": "jablonec-rynovice",
+                            "name": "Rýnovice"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "hradec-kralove",
+            "name": "Hradec Králové Region",
+            "cities": [
+                {
+                    "id": "hradec-kralove",
+                    "name": "Hradec Králové",
+                    "districts": [
+                        {
+                            "id": "hradec-kralove-i",
+                            "name": "Hradec Králové I"
+                        },
+                        {
+                            "id": "hradec-moravske-predmesti",
+                            "name": "Moravské Předměstí"
+                        },
+                        {
+                            "id": "hradec-slezske-predmesti",
+                            "name": "Slezské Předměstí"
+                        }
+                    ]
+                },
+                {
+                    "id": "trutnov",
+                    "name": "Trutnov",
+                    "districts": [
+                        {
+                            "id": "trutnov-horni-stare-mesto",
+                            "name": "Horní Staré Město"
+                        },
+                        {
+                            "id": "trutnov-dolni-stare-mesto",
+                            "name": "Dolní Staré Město"
+                        }
+                    ]
+                },
+                {
+                    "id": "nachod",
+                    "name": "Náchod",
+                    "districts": [
+                        {
+                            "id": "nachod-centrum",
+                            "name": "Náchod centrum"
+                        },
+                        {
+                            "id": "nachod-beloves",
+                            "name": "Běloves"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pardubice",
+            "name": "Pardubice Region",
+            "cities": [
+                {
+                    "id": "pardubice",
+                    "name": "Pardubice",
+                    "districts": [
+                        {
+                            "id": "pardubice-i",
+                            "name": "Pardubice I"
+                        },
+                        {
+                            "id": "pardubice-polabiny",
+                            "name": "Polabiny"
+                        },
+                        {
+                            "id": "pardubice-dubina",
+                            "name": "Dubina"
+                        }
+                    ]
+                },
+                {
+                    "id": "chrudim",
+                    "name": "Chrudim",
+                    "districts": [
+                        {
+                            "id": "chrudim-i",
+                            "name": "Chrudim I"
+                        },
+                        {
+                            "id": "chrudim-ii",
+                            "name": "Chrudim II"
+                        },
+                        {
+                            "id": "chrudim-topol",
+                            "name": "Topol"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "vysocina",
+            "name": "Vysočina Region",
+            "cities": [
+                {
+                    "id": "jihlava",
+                    "name": "Jihlava",
+                    "districts": [
+                        {
+                            "id": "jihlava-centrum",
+                            "name": "Jihlava centrum"
+                        },
+                        {
+                            "id": "jihlava-bedrichov",
+                            "name": "Bedřichov"
+                        },
+                        {
+                            "id": "jihlava-horni-kosov",
+                            "name": "Horní Kosov"
+                        }
+                    ]
+                },
+                {
+                    "id": "trebic",
+                    "name": "Třebíč",
+                    "districts": [
+                        {
+                            "id": "trebic-borovina",
+                            "name": "Borovina"
+                        },
+                        {
+                            "id": "trebic-horka-domky",
+                            "name": "Horka Domky"
+                        },
+                        {
+                            "id": "trebic-nove-dvory",
+                            "name": "Nové Dvory"
+                        }
+                    ]
+                },
+                {
+                    "id": "zdar-nad-sazavou",
+                    "name": "Žďár nad Sázavou",
+                    "districts": [
+                        {
+                            "id": "zdar-i",
+                            "name": "Žďár I"
+                        },
+                        {
+                            "id": "zdar-ii",
+                            "name": "Žďár II"
+                        },
+                        {
+                            "id": "zdar-vysocany",
+                            "name": "Vysočany"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "south-moravian",
+            "name": "South Moravian Region",
+            "cities": [
+                {
+                    "id": "brno",
+                    "name": "Brno",
+                    "districts": [
+                        {
+                            "id": "brno-stred",
+                            "name": "Brno-střed"
+                        },
+                        {
+                            "id": "brno-kralovo-pole",
+                            "name": "Brno-Královo Pole"
+                        },
+                        {
+                            "id": "brno-zabovresky",
+                            "name": "Brno-Žabovřesky"
+                        },
+                        {
+                            "id": "brno-lisen",
+                            "name": "Brno-Líšeň"
+                        },
+                        {
+                            "id": "brno-bohunice",
+                            "name": "Brno-Bohunice"
+                        }
+                    ]
+                },
+                {
+                    "id": "znojmo",
+                    "name": "Znojmo",
+                    "districts": [
+                        {
+                            "id": "znojmo-centrum",
+                            "name": "Znojmo centrum"
+                        },
+                        {
+                            "id": "znojmo-primetice",
+                            "name": "Přímětice"
+                        },
+                        {
+                            "id": "znojmo-louka",
+                            "name": "Louka"
+                        }
+                    ]
+                },
+                {
+                    "id": "breclav",
+                    "name": "Břeclav",
+                    "districts": [
+                        {
+                            "id": "breclav-centrum",
+                            "name": "Břeclav centrum"
+                        },
+                        {
+                            "id": "breclav-postorna",
+                            "name": "Poštorná"
+                        },
+                        {
+                            "id": "breclav-charvatska-nova-ves",
+                            "name": "Charvátská Nová Ves"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "olomouc",
+            "name": "Olomouc Region",
+            "cities": [
+                {
+                    "id": "olomouc",
+                    "name": "Olomouc",
+                    "districts": [
+                        {
+                            "id": "olomouc-centrum",
+                            "name": "Olomouc centrum"
+                        },
+                        {
+                            "id": "olomouc-nova-ulice",
+                            "name": "Nová Ulice"
+                        },
+                        {
+                            "id": "olomouc-hejcin",
+                            "name": "Hejčín"
+                        }
+                    ]
+                },
+                {
+                    "id": "prostejov",
+                    "name": "Prostějov",
+                    "districts": [
+                        {
+                            "id": "prostejov-i",
+                            "name": "Prostějov I"
+                        },
+                        {
+                            "id": "prostejov-ii",
+                            "name": "Prostějov II"
+                        }
+                    ]
+                },
+                {
+                    "id": "prerov",
+                    "name": "Přerov",
+                    "districts": [
+                        {
+                            "id": "prerov-i",
+                            "name": "Přerov I"
+                        },
+                        {
+                            "id": "prerov-ii",
+                            "name": "Přerov II"
+                        },
+                        {
+                            "id": "prerov-predmosti",
+                            "name": "Předmostí"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "zlin",
+            "name": "Zlín Region",
+            "cities": [
+                {
+                    "id": "zlin",
+                    "name": "Zlín",
+                    "districts": [
+                        {
+                            "id": "zlin-centrum",
+                            "name": "Zlín centrum"
+                        },
+                        {
+                            "id": "zlin-malenovice",
+                            "name": "Malenovice"
+                        },
+                        {
+                            "id": "zlin-jizni-svahy",
+                            "name": "Jižní Svahy"
+                        }
+                    ]
+                },
+                {
+                    "id": "uherske-hradiste",
+                    "name": "Uherské Hradiště",
+                    "districts": [
+                        {
+                            "id": "uherske-hradiste-centrum",
+                            "name": "Uherské Hradiště centrum"
+                        },
+                        {
+                            "id": "uherske-hradiste-maratice",
+                            "name": "Mařatice"
+                        }
+                    ]
+                },
+                {
+                    "id": "vsetin",
+                    "name": "Vsetín",
+                    "districts": [
+                        {
+                            "id": "vsetin-centrum",
+                            "name": "Vsetín centrum"
+                        },
+                        {
+                            "id": "vsetin-rokytnice",
+                            "name": "Rokytnice"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "moravian-silesian",
+            "name": "Moravian-Silesian Region",
+            "cities": [
+                {
+                    "id": "ostrava",
+                    "name": "Ostrava",
+                    "districts": [
+                        {
+                            "id": "ostrava-moravska-ostrava",
+                            "name": "Ostrava-Moravská Ostrava"
+                        },
+                        {
+                            "id": "ostrava-poruba",
+                            "name": "Ostrava-Poruba"
+                        },
+                        {
+                            "id": "ostrava-zabreh",
+                            "name": "Ostrava-Zábřeh"
+                        },
+                        {
+                            "id": "ostrava-hrabuvka",
+                            "name": "Ostrava-Hrabůvka"
+                        }
+                    ]
+                },
+                {
+                    "id": "karvina",
+                    "name": "Karviná",
+                    "districts": [
+                        {
+                            "id": "karvina-frystat",
+                            "name": "Karviná-Fryštát"
+                        },
+                        {
+                            "id": "karvina-nove-mesto",
+                            "name": "Karviná-Nové Město"
+                        }
+                    ]
+                },
+                {
+                    "id": "havirov",
+                    "name": "Havířov",
+                    "districts": [
+                        {
+                            "id": "havirov-mesto",
+                            "name": "Havířov-Město"
+                        },
+                        {
+                            "id": "havirov-sumbark",
+                            "name": "Havířov-Šumbark"
+                        }
+                    ]
+                },
+                {
+                    "id": "frydek-mistek",
+                    "name": "Frýdek-Místek",
+                    "districts": [
+                        {
+                            "id": "frydek",
+                            "name": "Frýdek"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

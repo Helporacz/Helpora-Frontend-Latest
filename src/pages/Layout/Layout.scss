@@ -1,0 +1,31 @@
+#layout-container {
+  height: 100vh;
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  #right-side-block {
+    width: calc(100% - 236px);
+    background: #fafafa;
+  }
+
+  .Pomonike-body {
+    padding-top: 10px;
+    height: calc(100% - 86px);
+    // height: 100vh !important;
+    overflow: auto;
+  }
+}
+
+@media (max-width:320px) {
+  #left-side-container{
+    height: 100vh !important;
+  }
+  #right-side-block{
+    height: 100vh !important;
+  }
+  .Pomonike-body{
+    height: 100vh !important;
+  }
+}

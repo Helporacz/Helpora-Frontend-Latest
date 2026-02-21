@@ -1,0 +1,20 @@
+#progress-bar-container {
+    background-color: #132c4e;
+    opacity: 1;
+
+    .logo-container {
+        border: 1px solid white;
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    .progress-bar {
+        background-color: #1571ED;
+    }
+
+    .progress-text {
+        color: white;
+        font-size: 25px;
+        font-weight: 500;
+    }
+}

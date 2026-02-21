@@ -1,0 +1,129 @@
+
+.register-page-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.register-image-wrapper {
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.register-image-wrapper img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+.register-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-family: "Poppins", sans-serif; */
+  font-family:"'League Spartan'";
+  padding-bottom: 50px;
+}
+
+.register-modern .form-container-register {
+  background: #fff;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.register-modern .form-btn {
+  font-weight: 600;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.register-modern .form-btn hr#Indicator {
+  width: 70px;
+  height: 3px;
+  background: #f77464;
+  border: none;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+
+.register-modern form.register-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.register-modern form.register-form label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.register-modern form.register-form input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.register-modern form.register-form input:focus {
+  border-color: #f77464;
+  box-shadow: 0 0 6px rgba(247, 116, 100, 0.4);
+}
+
+.register-modern .btn12.loginsbtn {
+  /* background-color: #f77464;
+   */
+   background: linear-gradient(135deg, #22bf1e, #00ffc8);
+  border: none;
+  border-radius: 24px;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 20px;
+}
+
+.register-modern .btn12.loginsbtn:hover {
+  background-color: #f95c46;
+}
+
+@media (max-width: 1400px) {
+  .register-image-col {
+    width: 60% !important;
+  }
+
+  .register-form-col {
+    width: 40% !important;
+  }
+} 
+
+
+@media (max-width: 850px) {
+  .register-image-col {
+    display: none !important;
+  }
+
+  .register-form-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+} 
+

@@ -1,0 +1,147 @@
+
+.login-image-wrapper {
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-image-wrapper img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+.login-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 50px;
+}
+
+.login-modern .form-container-login {
+  background: #fff;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.login-modern .form-btn {
+  font-weight: 600;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.login-modern .form-btn hr#Indicator {
+  width: 70px;
+  height: 3px;
+  background: #f77464;
+  border: none;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+
+.login-modern form.login-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.login-modern form.login-form label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.login-modern form.login-form input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.login-modern form.login-form input:focus {
+  border-color: #f77464;
+  box-shadow: 0 0 6px rgba(247, 116, 100, 0.4);
+}
+
+.login-modern .btn12.loginsbtn {
+  /* background-color: #f77464;
+   */
+   background: linear-gradient(135deg, #22bf1e, #00ffc8);
+  border: none;
+  border-radius: 24px;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 20px;
+}
+
+.login-modern .btn12.loginsbtn:hover {
+  background-color: #f95c46;
+}
+
+@media (max-width: 1400px) {
+  .login-image-col {
+    width: 60% !important;
+  }
+
+  .login-form-col {
+    width: 40% !important;
+  }
+} 
+
+
+@media (max-width: 850px) {
+  .login-image-col {
+    display: none !important;
+  }
+
+  .login-form-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+}
+
+
+/* ============================
+   Login role tabs (User/Provider)
+   ============================ */
+.login-role-tabs {
+  display: flex;
+  gap: 10px;
+  background: #f3f6f5;
+  padding: 8px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+.login-role-tabs .tab-btn {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
+.login-role-tabs .tab-btn.active {
+  background: #e7f7ee;
+  color: #0a7a33;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+

@@ -1,0 +1,54 @@
+.image-crop-modal {
+  .cropper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background: #111827;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .cropper-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #4b5563;
+
+    input[type="range"] {
+      flex: 1;
+    }
+  }
+
+  .aspect-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+
+    button {
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #374151;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active {
+        background: #22bf1e;
+        border-color: #22bf1e;
+        color: #ffffff;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .cropper-wrapper {
+      height: 260px;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+#add-admin-container {
+  margin: 24px;
+
+  .card-effect {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  .block-content {
+    padding: 31px 24px;
+  }
+
+  .form-block {
+    display: flex;
+    justify-content: center;
+    width: min(100% - 10px, 640px);
+    margin-inline: auto;
+
+    .change-profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .change-profile-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 150px;
+        width: 200px;
+        // background-image: url("https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60");
+        background-repeat: no-repeat;
+        object-fit: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: cover;
+        overflow: hidden;
+        border-radius: 10px;
+
+        .camera-icon-block {
+          height: 45px;
+          width: 45px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          backdrop-filter: blur(10px);
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+
+      .text-block {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 27px;
+        color: #2563eb;
+        cursor: pointer;
+      }
+    }
+
+    .product-upload {
+      .fileType[type="file"] {
+        -webkit-appearance: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .add-image-filter {
+    filter: invert(16%) sepia(14%) saturate(3773%) hue-rotate(182deg) brightness(87%) contrast(96%);
+  }
+}

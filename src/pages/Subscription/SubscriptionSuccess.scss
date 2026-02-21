@@ -1,0 +1,39 @@
+.subscription-success {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f7f6;
+  padding: 40px 16px;
+}
+
+.subscription-success-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  max-width: 520px;
+  width: 100%;
+}
+
+.subscription-success-card h2 {
+  color: #0d6b38;
+  margin-bottom: 12px;
+}
+
+.subscription-success-card p {
+  color: #4b5563;
+  margin-bottom: 16px;
+}
+
+.subscription-success-card .btn-submit {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgb(34, 191, 30) 0%, rgb(0, 255, 200) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}

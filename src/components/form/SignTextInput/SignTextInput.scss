@@ -1,0 +1,63 @@
+#sign-text-input-container {
+  // display: flex;
+  // width: 100%;
+  // background-color: lightcoral;
+
+  .input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    font-size: 14px;
+    line-height: 21px;
+    width: -webkit-fill-available;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #414141;
+    border-radius: 5px;
+    padding-left: 16px;
+    color: black !important;
+
+    .sign-block {
+      display: flex;
+      align-items: center;
+      height: 25px;
+      width: 90px;
+      padding: 0px 10px 0px 0px;
+
+    }
+
+    .saprator-block {
+      border-left: 1px solid #b7b7b7;
+      margin: 0px 8px 0px 0px;
+      height: 26px;
+    }
+
+    .text-sign-input {
+      border: unset;
+      outline: unset;
+      width: 100%;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      white-space: nowrap;
+      padding-left: 5px;
+      text-overflow: ellipsis;
+    }
+
+    // ::placeholder {
+    //   color: #a0a0a0;
+    //   /* Firefox */
+    // }
+
+    // :-ms-input-placeholder {
+    //   color: #b7b7b7;
+    // }
+
+    // ::-ms-input-placeholder {
+    //   color: #b7b7b7;
+    // }
+
+
+  }
+}

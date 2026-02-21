@@ -1,0 +1,13 @@
+/* Helpora brand tokens */
+$hp-green: #22bf1e;
+$hp-mint:  #00ffc8;
+$hp-dark:  #0b132b;
+$hp-white: #ffffff;
+
+/* Gradients */
+$hp-gradient-brand: linear-gradient(135deg, $hp-green 0%, $hp-mint 100%);
+$hp-gradient-green: linear-gradient(135deg, $hp-green 0%, darken($hp-green, 12%) 100%);
+
+/* Surfaces */
+$hp-surface-soft: rgba(34, 191, 30, 0.10);
+$hp-border-soft:  rgba(34, 191, 30, 0.25);

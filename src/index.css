@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Soleil&display=swap');
+
+body {
+  margin: 0;
+  /* font-family: 'Soleil', sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* --- Typography normalize (EN/CZ consistent) --- */
+html, body, input, textarea, select, button {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+/* Helpora brand CSS variables */
+:root {
+  --hp-green: #22bf1e;
+  --hp-mint:  #00ffc8;
+  --hp-dark:  #0b132b;
+  --hp-gradient-brand: linear-gradient(135deg, var(--hp-green) 0%, var(--hp-mint) 100%);
+}

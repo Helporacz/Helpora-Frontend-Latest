@@ -1,0 +1,36 @@
+#color-input-container {
+    // display: flex;
+    // width: 100%;
+    // background-color: lightcoral;
+    position: relative;
+
+    .color-input {
+        width: 100px;
+        height: 48px;
+        background: #ffffff;
+        border: 1px solid #414141;
+        border-radius: 5px;
+        padding: 5px;
+        color: black !important;
+        cursor: pointer;
+    }
+
+
+
+    ::placeholder {
+        color: #a0a0a0;
+        /* Firefox */
+    }
+
+    :-ms-input-placeholder {
+        color: #b7b7b7;
+    }
+
+    ::-ms-input-placeholder {
+        color: #b7b7b7;
+    }
+
+    input[type="text"]:disabled {
+        background: #f4f4f4;
+    }
+}

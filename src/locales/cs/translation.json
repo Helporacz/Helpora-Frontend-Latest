@@ -1,0 +1,1484 @@
+{
+  "navbar": {
+    "home": "Domů",
+    "about": "O nás",
+    "services": "Služby",
+    "contact": "Kontakt",
+    "message": "Zpráva",
+    "login": "Přihlásit se",
+    "logout": "Odhlásit se"
+  },
+  "header": {
+    "profile": "Profil",
+    "logout": "Odhlásit se"
+  },
+  "profile": {
+    "editProfile": "Upravit profil",
+    "changePassword": "Změnit heslo",
+    "accountPassword": "Heslo účtu",
+    "profileDetails": "Detaily profilu",
+    "changePasswordDescription": "Heslo účtu můžete měnit tak často, jak potřebujete.",
+    "editProfileDescription": "Detaily profilu můžete aktualizovat kdykoli.",
+    "noImage": "Žádný obrázek",
+    "changeImage": "Změnit obrázek"
+  },
+  "common": {
+    "status": "Stav",
+    "action": "Akce",
+    "active": "Aktivní",
+    "deactive": "Deaktivní",
+    "deactivated": "Deaktivováno",
+    "verified": "Ověřeno",
+    "unverified": "Neověřeno",
+    "completed": "Dokončeno",
+    "pending": "Čekající",
+    "accepted": "Přijato",
+    "rejected": "Odmítnuto",
+    "all": "Vše",
+    "filterBy": "Filtrovat podle",
+    "edit": "Upravit",
+    "cancel": "Zrušit",
+    "saveChanges": "Uložit změny",
+    "update": "Aktualizovat",
+    "close": "Zavřít",
+    "services": "Služby",
+    "currentlyAvailable": "Aktuálně dostupné",
+    "loading": "Na??t?n?..."
+  },
+  "messages": {
+    "profileUpdatedSuccessfully": "Profil byl úspěšně aktualizován",
+    "profileImageUploadFailed": "Nahrání obrázku profilu se nezdařilo.",
+    "updateFailed": "Aktualizace se nezdařila",
+    "unexpectedError": "Během ukládání došlo k neočekávané chybě.",
+    "passwordChangedSuccessfully": "Heslo bylo úspěšně změněno",
+    "categoryAddedSuccessfully": "Kategorie byla úspěšně přidána",
+    "categoryUpdatedSuccessfully": "Kategorie byla úspěšně aktualizována",
+    "categoryDeletedSuccessfully": "Kategorie byla úspěšně smazána",
+    "serviceAddedSuccessfully": "Služba byla úspěšně přidána",
+    "serviceUpdatedSuccessfully": "Služba byla úspěšně aktualizována",
+    "serviceDeletedSuccessfully": "Služba byla úspěšně smazána",
+    "reviewAddedSuccessfully": "Recenze byla úspěšně přidána",
+    "reviewUpdatedSuccessfully": "Recenze byla úspěšně aktualizována",
+    "reviewDeletedSuccessfully": "Recenze byla úspěšně smazána.",
+    "providerAddedSuccessfully": "Poskytovatel byl úspěšně přidán.",
+    "providerUpdatedSuccessfully": "Poskytovatel byl úspěšně aktualizován.",
+    "providerDeletedSuccessfully": "Poskytovatel byl úspěšně smazán.",
+    "bookingStatusUpdatedSuccessfully": "Stav rezervace byl úspěšně aktualizován",
+    "imageUploadFailed": "Nahrání obrázku se nezdařilo",
+    "somethingWentWrong": "Něco se pokazilo",
+    "emailAlreadyExists": "E-mail již existuje.",
+    "errorSavingProvider": "Při ukládání poskytovatele došlo k chybě.",
+    "bookingSuccessfully": "Rezervace byla úspěšná.",
+    "addRegion": "Přidání regionu úspěšné",
+    "updateRegion": "Aktualizace regionu úspěšná",
+    "deleteRegion": "Region byl úspěšně smazán",
+    "addCity": "Přidání Město úspěšné",
+    "updateCity": "Aktualizace Město úspěšná",
+    "deleteCity": "Město byl úspěšně smazán",
+    "addDistrict": "Přidání Okres úspěšné",
+    "updateDistrict": "Aktualizace Okres úspěšná",
+    "deleteDistrict": "Okres byl úspěšně smazán"
+  },
+  "profileDetails": {
+    "title": "Detaily profilu",
+    "firstName": "Křestní jméno",
+    "lastName": "Příjmení",
+    "name": "Jméno",
+    "emailAddress": "E-mailová adresa",
+    "phoneNumber": "Telefonní číslo",
+    "phoneNumberOptional": "Telefonní číslo (volitelné)",
+    "role": "Role"
+  },
+  "homepage": {
+    "miniTitle": "Důvěra a kvalita jako základ platformy",
+    "title-1": "Najděte ověřenou",
+    "title-2": "službu",
+    "title-3": "pro každodenní potřeby",
+    "para-1": "Od úklidu a stěhování po péči o krásu, plánování akcí, opravy a doučování – Helpora spojuje ověřené místní profesionály, kteří práci provedou rychle a spolehlivě.",
+    "title-4": "Vše na jednom místě",
+    "btn-1": "Rezervovat službu",
+    "btn-2": "Staňte se poskytovatelem",
+    "search": "Vyhledávání",
+    "searchCity": "Hledat město",
+    "selectCategoryFirst": "Nejprve vyberte kategorii",
+    "selectCategory": "Vyberte kategorii"
+  },
+  "section1": {
+    "text1": "Omezená nabídka",
+    "text2": "Připojte se k naší rostoucí",
+    "text3": "síti",
+    "text4": "ještě dnes",
+    "text5": "Staňte se poskytovatelem a využijte",
+    "text6": "6 měsíců zdarma/ poté 99 Kč měsíčně ",
+    "text7": " ",
+    "text8": "Začít zdarma"
+  },
+  "section2": {
+    "text1": "Prohlédněte si populární kategorie služeb",
+    "text2": "Vyberte si ze široké škály domácích, kosmetických, fitness a dětských služeb – vše na jednom místě.",
+    "text3": "Najít pomoc nyní"
+  },
+  "section3": {
+    "text1": "Prémiové domácí služby poskytované s péčí",
+    "text2": "Spojujeme vás s vyškolenými a ověřenými profesionály pro všechny vaše každodenní potřeby. Od úklidu po opravy, od doučování po wellness – spolehněte se na odbornou pomoc kdykoli potřebujete.",
+    "text3": "100 % prověření profesionálové",
+    "text4": "Bezpečné, spolehlivé a cenově dostupné",
+    "text5": "Snadná online rezervace",
+    "text6": "24/7 zákaznická podpora",
+    "text7": "Rezervovat službu"
+  },
+  "section4": {
+    "text1": "Recenze zákazníků",
+    "text2": "Skutečné příběhy od našich zákazníků"
+  },
+  "section5": {
+    "text1": "Vaše cesta začíná zde. Objevujte více a užívejte si hladký zážitek.",
+    "text2": "Začněte",
+    "text3": "Zjistit více"
+  },
+  "section6": {
+    "text1": "Řešení vytvořená",
+    "text2": "Jednoduše",
+    "text3": "Objevte naši komplexní nabídku profesionálních služeb přizpůsobených vašim potřebám",
+    "text4": "Prozkoumat služby",
+    "text5": "Nemůžete najít, co hledáte?",
+    "text6": "Kontaktujte nás pro vlastní řešení služeb",
+    "text7": "Kontaktujte nás"
+  },
+  "section7": {
+    "text1": "DOPAD KOMUNITY",
+    "text2": "Podpora místních pracovních míst a dovedností",
+    "text3": "Helpora.cz je více než digitální tržiště – je to rostoucí síť místních poskytovatelů služeb, majitelů domů a profesionálů, kteří spolupracují, aby život byl jednodušší.",
+    "text4": "Rodiny najdou ověřené uklízeče, stěhováky a doučovatele",
+    "text5": "Freelanceři a řemeslníci získají stabilní příjem",
+    "text6": "Komunity rostou díky spolupráci a digitálním inovacím",
+    "text7": "Každá dobře odvedená práce posiluje důvěru – a buduje propojenější a podporující ekonomiku.",
+    "text8": "Zjistit více"
+  },
+  "section8": {
+    "text1": "BUDOUCNOST",
+    "text2": "Rosteme – přidejte se k nám",
+    "text3": "Rozšiřujeme se po českých městech a regionech a každý měsíc přidáváme více služeb a příležitostí.",
+    "text4": "Ať už jste profesionál, který chce rozvíjet své podnikání, nebo někdo, kdo si chce život ulehčit, Helpora.cz je tu pro vás.",
+    "text5": "Připojte se k nám při budování lepšího a chytřejšího způsobu, jak vyřizovat úkoly – lokálně, jednoduše a společně.",
+    "text6": "Připojte se k naší síti"
+  },
+  "section9": {
+    "text1": "Kdo jsme",
+    "text2": "Helpora byla vytvořena s jednoduchou vizí: umožnit lidem snadno najít důvěryhodnou pomoc pro každodenní úkoly a dát šikovným jednotlivcům platformu k vydělávání a rozvoji jejich práce.",
+    "text3": "Věříme v férovost, transparentnost a komunitu. Každá žádost o službu podporuje místní profesionály od uklízečů a techniků po doučovatele a kosmetické specialisty.",
+    "text4": "Helpora spojuje technologie s lidským přístupem a usnadňuje každodenní úkoly, díky čemuž je život pohodlnější."
+  },
+  "section10": {
+    "text1": "NÁŠ PŘÍBĚH",
+    "text2": "Jak Helpora.cz začala",
+    "text3": "Helpora.cz byla založena malým týmem odborníků na operace a technologie, kteří viděli mezeru – lidé se potýkají s hledáním důvěryhodné pomoci pro každodenní úkoly, zatímco šikovní jednotlivci nemají dostatečnou viditelnost a stabilní práci.",
+    "text4": "Inspirováni globálními platformami služeb a českým duchem spolehlivosti jsme začali vyvíjet ekosystém, který spojuje obě strany – spravedlivě, lokálně a digitálně.",
+    "text5": "Náš zakladatel si představoval platformu, kde technologie posiluje lidi, ne je nahrazuje. Každá žádost o službu vytváří příležitost pro zákazníky ušetřit čas a pro profesionály rozvíjet jejich živobytí."
+  },
+  "section11": {
+    "text1": "NAŠE MISE",
+    "text2": "Co pohání naši značku",
+    "text3": "Naším cílem je zpřístupnit důvěryhodnou místní pomoc všem a zároveň umožnit profesionálům prosperovat díky poctivé práci.",
+    "text4": "Spolehlivost",
+    "text5": "Každá rezervace a interakce je založena na důvěře.",
+    "text6": "Transparentnost",
+    "text7": "Jasné ceny, ověření partneři a viditelná zpětná vazba.",
+    "text8": "Posílení",
+    "text9": "Férové příležitosti pro pracovníky a malé podniky.",
+    "text10": "Jednoduchost",
+    "text11": "Plynulé rezervace, rychlá podpora, hladký zážitek."
+  },
+  "section12": {
+    "text1": "Kontaktujte nás",
+    "text2": "Spojme se a najděme pro vás nejlepší řešení.",
+    "text3": "Odeslat zprávu"
+  },
+  "section13": {
+    "text1": "jméno",
+    "text2": "Jméno",
+    "text3": "Zadejte jméno",
+    "text4": "email",
+    "text5": "E-mail",
+    "text6": "Zadejte e-mail",
+    "text7": "předmět",
+    "text8": "Předmět",
+    "text9": "Zadejte předmět",
+    "text10": "zpráva",
+    "text11": "Zpráva",
+    "text12": "Zadejte svou zprávu",
+    "text13": "Praha, Česká republika",
+    "text14": " ",
+    "text15": "Zavolejte nám se svým dotazem",
+    "text16": "Napište nám svůj dotaz e-mailem",
+    "validation": {
+      "name": "Jméno je povinné",
+      "subject": "Předmět je povinný",
+      "email1": "Neplatný e-mail",
+      "email2": "E-mail je povinný",
+      "message": "Zpráva je povinná"
+    },
+    "messagePopup": {
+      "success": "Úspěch",
+      "error": "Chyba",
+      "successMessage": "Zpráva úspěšně odeslána!",
+      "errorMessage": "Zprávu se nepodařilo odeslat. Zkuste to prosím znovu."
+    }
+  },
+  "section14": {
+    "text1": "Váš důvěryhodný marketplace pro každodenní služby po celé České republice.",
+    "text2": "Služby",
+    "text3": "Vzdělávání",
+    "text4": "Fitness instruktor",
+    "text5": "Domácí doučování",
+    "text6": "Malování a opravy",
+    "text7": "Standardní úklid",
+    "text8": "Stránky",
+    "text9": "Domů",
+    "text10": "Služba",
+    "text11": "O nás",
+    "text12": "Kontakt",
+    "text13": "Jazyk",
+    "text14": "Angličtina",
+    "text15": "Čeština",
+    "text16": "Sledujte nás",
+    "text17": "Helpora.cz — Všechna práva vyhrazena.",
+    "text18": "Zásady ochrany osobních údajů",
+    "text19": "Podmínky služby"
+  },
+  "section15": {
+    "text1": "Registrace",
+    "text2": "Objednejte si ověřenou pomoc během pár minut",
+    "text3": "Vytvořte si zdarma účet na Helpora pomocí svého e-mailu.",
+    "text4": "Vyplňte základní údaje: jméno, město/region, kontaktní informace a zvolte roli „Poskytovatel“. ",
+    "text5": "Doplňte svůj profil",
+    "text6": "Nahrajte profilovou fotografii (profesionální)",
+    "text7": "Přidejte své dovednosti, služby které nabízíte, svou dostupnost a hodinovou sazbu (nebo cenové balíčky).",
+    "text8": "Napište krátký popis, který shrnuje vaše zkušenosti a specializaci.",
+    "text9": "Ověření a schválení",
+    "text10": "Odešlete požadované dokumenty (ověření totožnosti, případné licence či certifikace, pokud jsou potřeba).",
+    "text11": "Helpora zkontroluje a schválí váš profil pro zajištění kvality a důvěryhodnosti.",
+    "text12": "Přijměte naše podmínky a pokyny",
+    "text13": "Přečtěte si a přijměte Poskytovatelskou smlouvu a Kodex chování Helpora.",
+    "text14": "Potvrďte, že budete dodržovat pravidla platformy týkající se kvality, chování a poskytování služeb.",
+    "text15": "Staňte se aktivními a začněte přijímat zakázky",
+    "text16": "Po schválení bude váš profil viditelný pro klienty.",
+    "text17": "Klienti si vás mohou přímo objednat; dostanete upozornění a začnete přijímat požadavky na služby.",
+    "text18": "Přihlásit se"
+  },
+  "section16": {
+    "text1": "Rezervovat službu",
+    "text2": "Rezervujte důvěryhodnou pomoc během minut",
+    "text3": "Získejte rychlou, spolehlivou a ověřenou podporu pro váš domov, rodinu a každodenní úkoly. Vyberte službu, sdělte, co potřebujete, a buďte spárováni s důvěryhodnými poskytovateli ve vašem okolí.",
+    "text4": "Jak to funguje",
+    "text5": "1. Vyberte si službu",
+    "text6": "Vyberte typ služby, kterou potřebujete.",
+    "text7": "Úklid, stěhování, opravy, péče, doučování, IT pomoc a další.",
+    "text8": "2. Řekněte nám, co potřebujete",
+    "text9": "Popište svou žádost.",
+    "text10": "Sdílejte svou polohu, preferovaný čas a všechny důležité informace.",
+    "text11": "3. Buďte spárováni s poskytovateli",
+    "text12": "Oznamujeme důvěryhodným poskytovatelům ve vašem okolí.",
+    "text13": "Obdržíte nabídky nebo přímé potvrzení.",
+    "text15": "4. Užijte si službu bez stresu",
+    "text16": "Váš poskytovatel dorazí v plánovaném čase.",
+    "text17": "Platíte bezpečně až po dokončení služby.",
+    "text18": "Populární služby",
+    "text19": "Úklid domácnosti",
+    "text20": "Hloubkové čištění",
+    "text21": "Pomoc při stěhování",
+    "text22": "Domácí opravy",
+    "text23": "Malování a opravy",
+    "text24": "Podpora seniorů",
+    "text25": "Hlídání dětí",
+    "text26": "Péče o domácí mazlíčky",
+    "text27": "Doučování",
+    "text28": "IT podpora",
+    "text29": "Začněte svou rezervaci",
+    "text30": "Vyplňte krátký formulář, aby nám pomohl spárovat vás s vhodným poskytovatelem.",
+    "text31": "Výběr služby",
+    "text32": "Vyberte prosím kategorii služby.",
+    "text33": "Detaily služby",
+    "text34": "Co potřebujete?",
+    "text35": "Kdy to potřebujete?",
+    "text36": "Kde má služba proběhnout?",
+    "text37": "Máte nějaké speciální požadavky?",
+    "text38": "Váš kontakt",
+    "text39": "Zadejte své jméno, e-mail nebo telefonní číslo, abychom mohli potvrdit vaši rezervaci.",
+    "text40": "Párování",
+    "text41": "Hledáme důvěryhodné poskytovatele ve vaší blízkosti.",
+    "text42": "Uvidíte dostupné nabídky s profily, hodnocením a odhadem ceny.",
+    "text43": "Vyberte svého poskytovatele",
+    "text44": "Zkontrolujte možnosti a vyberte poskytovatele, který vyhovuje vašim potřebám.",
+    "text45": "Potvrďte svou rezervaci",
+    "text46": "Zkontrolujte detaily a potvrďte rezervaci.",
+    "text47": "Obdržíte potvrzovací zprávu se všemi informacemi.",
+    "text48": "Absolutně — zde jsou čisté, přátelské a budoucnosti odolné odpovědi FAQ, které můžete přidat na svou stránku „Rezervovat službu“.",
+    "text49": "Fungují i když ještě nemáte aktivované platby a nastavují správné očekávání pro pozdější zavedení plateb.",
+    "text50": "Jsou napsány:",
+    "text51": "jednoduchým jazykem",
+    "text52": "krátké věty",
+    "text53": "snadno přeložitelné",
+    "text54": "uklidňující a profesionální",
+    "text55": "FAQ pro zákazníky — připravené k použití"
+  },
+  "section17": {
+    "text1": "Přihlášení",
+    "text2": "Zadejte e-mail",
+    "text3": "Zadejte heslo",
+    "text4": "Nemáte účet?",
+    "text5": "Zaregistrovat se",
+    "text6": "Zapomenuté heslo"
+  },
+  "section18": {
+    "text1": "Přihlášení",
+    "text2": "Vítejte v administrátorském portálu Helpora",
+    "text3": "Zadejte e-mail",
+    "text4": "Zadejte heslo"
+  },
+  "section19": {
+    "text1": "Helpora",
+    "text2": "Přihlaste se ke svému účtu",
+    "text3": "Přihlaste se ke správě svého účtu.",
+    "text4": "E-mailová adresa",
+    "text5": "Heslo",
+    "text6": "Nemáte účet ",
+    "text7": "Zaregistrovat se",
+    "text8": "Přihlašování...",
+    "text9": "Přihlásit se",
+    "text10": "Přihlášením souhlasíte s našimi podmínkami služby a zásadami ochrany osobních údajů.",
+    "text11": "Zapomenuté heslo",
+    "text12": "Zapomněli jste heslo",
+    "text13": "Odeslat"
+  },
+  "ResetPassword": {
+    "heading": "Obnovte své heslo",
+    "newPassword": "Nové heslo",
+    "confirmPassword": "Potvrdit heslo",
+    "label1": "Zadejte nové heslo",
+    "label2": "Zadejte heslo znovu",
+    "errormessage1": "Nové heslo a potvrzení hesla se musí shodovat",
+    "passwordRequired": "Je vyžadováno heslo",
+    "confirmRequired": "Je vyžadováno potvrzení hesla",
+    "button": "Předložit",
+    "button2": "Obnovitheslo..."
+  },
+  "section20": {
+    "text1": "Helpora",
+    "text2": "Vytvořte svůj účet",
+    "text3": "Přidejte se k nám ještě dnes a začněte svou cestu",
+    "text4": "Celé jméno",
+    "text5": "E-mailová adresa",
+    "text6": "Heslo",
+    "text7": "Už máte účet?",
+    "text8": "Přihlásit se",
+    "text9": "Vytváření účtu...",
+    "text10": "Zaregistrovat se",
+    "text11": "Registrací souhlasíte s našimi Podmínkami služby a Zásadami ochrany osobních údajů",
+    "text12": "Souhlasím s podmínkami služby a SLA",
+    "text13": "Musíte přijmout Podmínky služby a SLA, abyste mohli pokračovat.",
+    "text14": "Přečíst Podmínky služby a SLA",
+    "text15": "Souhlasím se zásadami ochrany osobních údajů a se zpracováním dle GDPR",
+    "text16": "Přečtěte si Zásady ochrany osobních údajů a GDPR",
+    "text17": "Regiony jsou povinné",
+    "text18": "Město je povinné",
+    "regions": "Vyberte regiony",
+    "city": "Vyberte město",
+    "district": "Vyberte Okres"
+  },
+  "section21": {
+    "text1": "Zadejte jméno",
+    "text2": "Zadejte e-mail",
+    "text3": "Zadejte heslo",
+    "text4": "Zadejte potvrzení hesla",
+    "text5": "Už máte účet?",
+    "text6": "Přihlásit se",
+    "text7": "Zaregistrovat se"
+  },
+  "section22": {
+    "text1": "Zapomenuté heslo",
+    "text2": "Nové heslo",
+    "text3": "Potvrzení hesla",
+    "text4": "Odeslat",
+    "text5": "Zpět na přihlášení"
+  },
+  "section23": {
+    "text1": "Vítejte v administrátorském portálu Pomonike",
+    "text2": "Změňte heslo podle svého výběru",
+    "text3": "Zadejte nové heslo",
+    "text4": "Potvrďte nové heslo",
+    "text5": "PŘIHLÁSIT SE",
+    "text6": "ZMĚNIT HESLO"
+  },
+  "section24": {
+    "text1": "Platím před poskytnutím služby?",
+    "text2": "Ne. V současné době jsou všechny platby řešeny přímo mezi vámi a poskytovatelem služby.",
+    "text3": "V budoucnu nabídneme bezpečné online platby prostřednictvím platformy.",
+    "text4": "Co když platba nefunguje?",
+    "text5": "Pokud se vyskytnou problémy s platbou, můžete nás kdykoli kontaktovat pro pomoc.",
+    "text6": "Můžete také zaplatit poskytovateli služby přímo jako záložní možnost.",
+    "text7": "Jakmile budou online platby k dispozici, nabídneme jasné pokyny a podporu.",
+    "text8": "Co když žádný poskytovatel nepřijme mou žádost?",
+    "text9": "Pokud není k dispozici žádný poskytovatel, budeme vás informovat.",
+    "text10": "Můžete se rozhodnout počkat, zkusit jiný čas nebo vybrat jinou kategorii služby.",
+    "text11": "Můžete si také uložit žádost, abychom vás mohli kontaktovat, jakmile bude někdo k dispozici.",
+    "text12": "Mohu zrušit nebo změnit svou rezervaci?",
+    "text13": "Ano. Rezervaci můžete zrušit nebo změnit před zahájením služby.",
+    "text14": "Pokud máte jakékoli dotazy, rádi vám se změnou pomůžeme.",
+    "text15": "Jsou poskytovatelé ověřeni?",
+    "text16": "Ano. Všichni poskytovatelé procházejí procesem kontroly a ověření před vstupem na naši platformu.",
+    "text17": "To pomáhá zajistit bezpečnost a kvalitu pro všechny zákazníky.",
+    "text18": "Jak zjistím cenu?",
+    "text19": "Před rezervací uvidíte odhadovanou cenu nebo hodinovou sazbu.",
+    "text20": "Konečná cena bude potvrzena s poskytovatelem služby před zahájením služby.",
+    "text21": "Jak mohu komunikovat s poskytovatelem?",
+    "text22": "Po odeslání žádosti budete spojeni s poskytovatelem služby.",
+    "text23": "Můžete projednat detaily, klást otázky a potvrdit případné změny.",
+    "text24": "Jsou moje osobní údaje v bezpečí?",
+    "text25": "Ano. Sdílíme pouze informace nezbytné k provedení služby.",
+    "text26": "Vaše údaje jsou uchovávány bezpečně a soukromě.",
+    "text27": "Co když mám problém se službou?",
+    "text28": "Můžete nás kdykoli kontaktovat.",
+    "text29": "Budeme spolupracovat s vámi i poskytovatelem na vyřešení problému.",
+    "text30": "Potřebuji účet k rezervaci služby?",
+    "text31": "Službu si můžete rezervovat pomocí e-mailu nebo telefonního čísla.",
+    "text32": "Plnohodnotný účet vám v budoucnu nabídne více funkcí."
+  },
+  "section25": {
+    "text1": "Kontaktujte nás",
+    "text2": "O Helpora",
+    "text3": "Služby"
+  },
+  "section26": {
+    "text1": "Celé jméno je povinné.",
+    "text2": "Zadejte prosím platnou e-mailovou adresu.",
+    "text3": "Heslo musí mít alespoň 6 znaků.",
+    "text4": "E-mailová adresa je povinná.",
+    "text5": "Heslo je povinné.",
+    "text6": "Registrace proběhla úspěšně.",
+    "text7": "Registrace se nezdařila. Zkuste to prosím znovu.",
+    "text8": "Došlo k neočekávané chybě."
+  },
+  "section27": {
+    "text1": "E-mail musí být platná e-mailová adresa.",
+    "text2": "E-mail je povinný.",
+    "text3": "Heslo je povinné."
+  },
+  "section28": {
+    "text1": "Jméno je povinné.",
+    "text2": "E-mail je povinný.",
+    "text3": "Zadejte platnou e-mailovou adresu.",
+    "text4": "Heslo je povinné.",
+    "text5": "Heslo musí mít alespoň 8 znaků.",
+    "text6": "Heslo musí obsahovat velká a malá písmena, číslo a speciální znak.",
+    "text7": "Potvrzení hesla je povinné.",
+    "text8": "Hesla se musí shodovat."
+  },
+  "section29": {
+    "text1": "E-mail musí být platná e-mailová adresa.",
+    "text2": "E-mail je povinný.",
+    "text3": "Heslo musí mít alespoň 6 znaků.",
+    "text4": "Heslo je povinné.",
+    "text5": "Poskytovatel byl úspěšně přihlášen.",
+    "text6": "Neplatný e-mail nebo heslo.",
+    "text7": "Něco se pokazilo.",
+    "text8": "Obnovení hesla E-mail byl úspěšně odeslán"
+  },
+  "section30": {
+    "text1": "Jméno je povinné.",
+    "text2": "E-mail musí být platná e-mailová adresa.",
+    "text3": "E-mail je povinný.",
+    "text4": "Heslo musí mít alespoň 6 znaků.",
+    "text5": "Heslo je povinné.",
+    "text6": "Hesla se musí shodovat.",
+    "text7": "Potvrzení hesla je povinné."
+  },
+  "section31": {
+    "text1": "E-mail musí být platná e-mailová adresa.",
+    "text2": "E-mail je povinný.",
+    "text3": "Heslo musí mít alespoň 6 znaků.",
+    "text4": "Heslo je povinné."
+  },
+  "section32": {
+    "text1": "Jméno je povinné.",
+    "text2": "E-mail je povinný.",
+    "text3": "Zadejte platnou e-mailovou adresu.",
+    "text4": "Heslo je povinné.",
+    "text5": "Heslo musí mít alespoň 6 znaků.",
+    "text6": "Heslo musí obsahovat velká a malá písmena, číslo a speciální znak.",
+    "text7": "Potvrzení hesla je povinné.",
+    "text8": "Hesla se musí shodovat.",
+    "text9": "E-mail již existuje.",
+    "text10": "Při registraci došlo k chybě."
+  },
+  "section33": {
+    "text1": "Zpět",
+    "text2": "Vyberte chat a začněte psát zprávy"
+  },
+  "section34": {
+    "text1": "Žádné chaty nejsou k dispozici",
+    "text2": "Píše se...",
+    "text3": "Online",
+    "text4": "Naposledy viděn:",
+    "text5": "Žádné zprávy"
+  },
+  "section35": {
+    "text1": "Zadejte své jméno",
+    "text2": "Zadejte svou e-mailovou adresu",
+    "text3": "Zadejte své heslo",
+    "text4": "Zadejte potvrzení hesla"
+  },
+  "section36": {
+    "text1": "Zadejte své celé jméno",
+    "text2": "Vytvořte silné heslo"
+  },
+  "section37": {
+    "text1": "Zadejte svůj e-mail",
+    "text2": "Zadejte své heslo"
+  },
+  "section38": {
+    "text1": "Můj profil",
+    "text2": "Moje rezervace",
+    "text3": "Odhlásit se",
+    "text4": "Přihlásit se",
+    "text5": "Zprávy"
+  },
+  "section39": {
+    "text1": "Úprava vlasů",
+    "text2": "Objednal/a jsem si úpravu vlasů a byl/a jsem nadšený/á z výsledku. Stylista přesně pochopil, co chci, a výsledek předčil mé očekávání.",
+    "text3": "Ošetření pleti",
+    "text4": "Ošetření pleti bylo relaxační a profesionální. Moje pleť je jasnější a zdravější. Určitě se vrátím.",
+    "text5": "Krása a péče (nehty)",
+    "text6": "Krásná práce s nehty! Velmi precizní, dlouhotrvající a přesně ve stylu, který jsem chtěl/a. Vřele doporučuji.",
+    "text7": "Krása a péče",
+    "text8": "Jedna z nejlepších masáží, jaké jsem kdy měl/a. Terapeut přesně věděl, kde je napětí, a dokonale ho uvolnil.",
+    "text9": "Úklidové služby",
+    "text10": "Úklid byl perfektní! Tým pracoval efektivně a zanechal byt svěží a uklizený.",
+    "text11": "Fitness trenér",
+    "text12": "Skvělý trenér! Motivující, znalý a trpělivý. Konečně cítím pokrok ve svém tréninku.",
+    "text13": "Domácí učitel",
+    "text14": "Můj syn se díky jasnému výkladu a přátelskému přístupu učitele rychle zlepšil. Velká spokojenost.",
+    "text15": "Odtahová služba",
+    "text16": "Rychlá a spolehlivá odtahová služba. Dorazili dříve, než jsem čekal/a, a s autem zacházeli profesionálně."
+  },
+  "section40": {
+    "text1": "Klára Novotná",
+    "text2": "Marek Doležal",
+    "text3": "Adéla Hrušková",
+    "text4": "Tomáš Černý ",
+    "text5": "Petra Konečná",
+    "text6": "Ondřej Slanina",
+    "text7": " Jana Veselá",
+    "text8": "David Král"
+  },
+  "section41": {
+    "text1": "Chyba při načítání kategorií:",
+    "text2": "Nepodařilo se načíst kategorie. Zkuste to prosím znovu."
+  },
+  "section42": {
+    "text1": "Služby v",
+    "text2": "Filtry",
+    "text3": "Kategorie",
+    "text4": "Věk",
+    "text5": "Jazyky",
+    "text6": "Může také...",
+    "text7": "Ověření",
+    "text8": "Datum:",
+    "text9": "Od:",
+    "text10": "Vyberte čas",
+    "text11": "Do:",
+    "text12": "Vyberte čas",
+    "text13": "Hledat",
+    "text14": "Zrušit",
+    "text15": "Poskytovatel:",
+    "text16": "Cena:",
+    "text17": " Kyc Ověřeno",
+    "text18": " MOJEID OVĚŘENÍ",
+    "text19": "Rezervovat službu",
+    "text20": "Zobrazit profil",
+    "text21": "Zobrazit dostupné časy",
+    "text22": "Týdenní dostupnost",
+    "text23": "Nepracuje",
+    "text24": "V této kategorii služeb nebyl nalezen žádný poskytovatel.",
+    "text25": "Nalezené výsledky",
+    "text26": "Hledat město…",
+    "text27": "Chyba při načítání kategorií:",
+    "text28": "Neděle",
+    "text29": "Pondělí",
+    "text30": "Úterý",
+    "text31": "Středa",
+    "text32": "Čtvrtek",
+    "text33": "Pátek",
+    "text34": "Sobota",
+    "text35": "Chyba při načítání služeb:",
+    "text36": "Úklid",
+    "text37": "Řízení",
+    "text38": "Hlídání dětí",
+    "text39": "Vaření",
+    "text40": "Péče o domácí mazlíčky",
+    "text41": "Ověřený doklad totožnosti",
+    "text42": "Kontrola minulosti",
+    "text43": "Ověřený telefon",
+    "text44": "Ověřená adresa",
+    "text45": "Servis:"
+  },
+  "myService": {
+    "heading": "Moje služby",
+    "searchbarPlaceholder": "Vyhledávací služby",
+    "addButton": "PŘIDAT SLUŽBU",
+    "table": {
+      "header1": "Název služby",
+      "header2": "kategorie",
+      "header3": "Cena",
+      "header4": "Typ ceny",
+      "header5": "obraz",
+      "header6": "postaven¡",
+      "header7": "Akce"
+    }
+  },
+  "category": {
+    "heading": "Kategorie",
+    "searchbarPlaceholder": "Hledat kategorie",
+    "addButton": "PŘIDAT KATEGORII",
+    "table": {
+      "header1": "Název kategorie",
+      "header2": "obraz",
+      "header3": "postavení",
+      "header4": "Pozice",
+      "header5": "Akce"
+    }
+  },
+  "services": {
+    "heading": "Všechny služby",
+    "searchbarPlaceholder": "Vyhledávací služby",
+    "addButton": "PŘIDAT SLUŽBU",
+    "table": {
+      "header1": "Titul",
+      "header2": "Kategorie",
+      "header3": "obraz",
+      "header4": "postavení",
+      "header5": "Pozice",
+      "header6": "Akce"
+    },
+    "statusOption": {
+      "active": "aktivní",
+      "deactive": "deaktivní"
+    }
+  },
+  "providerServiceForm": {
+    "priceFrom": "Od",
+    "perHour": "hod",
+    "subServiceName": {
+      "title": "Typ služby (volitelné)",
+      "placeHolder": "např. hloubkové čištění, mytí oken, párová masáž, montáž TV"
+    },
+    "description": {
+      "title": "Popis",
+      "placeHolder": "Popište, co je zahrnuto, délku trvání, místo, požadavky atd."
+    },
+    "heading": "Přidat službu",
+    "heading2": "Aktualizovat službu",
+    "addButton": "PŘIDAT SLUŽBU",
+    "category": {
+      "title": "Kategorie",
+      "placeHolder": "Vyberte kategorii"
+    },
+    "service": {
+      "title": "Služba",
+      "placeHolder": "Vyberte službu"
+    },
+    "status": {
+      "title": "Stav",
+      "option1": "Aktivní",
+      "option2": "Neaktivní",
+      "helpActive": "Služba bude viditelná pro zákazníky",
+      "helpInactive": "Služba bude skrytá pro zákazníky"
+    },
+    "price": {
+      "title": "Cena",
+      "placeHolder": "Zadejte cenu"
+    },
+    "subCategories": {
+      "title": "Podkategorie",
+      "placeHolder": "např. hloubkové čištění, mytí oken, montáž TV",
+      "addButton": "Přidat"
+    },
+    "priceType": {
+      "title": "Typ ceny",
+      "fixed": "Pevná",
+      "hourly": "Hodinová",
+      "fixedHelp": "Jednorázová pevná cena za službu",
+      "hourlyHelp": "Cena za hodinu služby",
+      "range": "Rozsah",
+      "rangeHelp": "Nastavte cenové rozpětí (od–do)"
+    },
+    "validation": {
+      "category": "Kategorie je povinná",
+      "service": "Služba je povinná",
+      "price1": "Cena musí být platné číslo",
+      "price2": "Cena je povinná",
+      "price3": "Cena musí být vyšší než 0",
+      "price4": "Cena musí být celé číslo",
+      "priceType": "Typ ceny je povinný"
+    },
+    "sections": {
+      "basic": {
+        "title": "Základní informace"
+      },
+      "subCategories": {
+        "title": "Podkategorie (volitelné)",
+        "helper": "Přidejte konkrétní varianty nebo specializace služby",
+        "addedLabel": "Přidané podkategorie"
+      },
+      "description": {
+        "title": "Popis a média"
+      },
+      "pricing": {
+        "title": "Cena a stav"
+      },
+      "submit": {
+        "subtitleAdd": "Připraveni přidat novou službu?",
+        "subtitleUpdate": "Aktualizujte svou službu",
+        "titleAdd": "Zkontrolovat a publikovat",
+        "titleUpdate": "Zkontrolovat a aktualizovat"
+      }
+    },
+    "image": {
+      "title": "Obrázek služby (volitelné)",
+      "recommended": "Doporučeno: čtvercový obrázek, 500 × 500 px",
+      "defaultNote": "Pokud nebude nahrán, použije se výchozí obrázek služby."
+    },
+    "priceHint": {
+      "fixed": "Zadejte celkovou cenu (CZK)",
+      "hourly": "Zadejte cenu za hodinu (CZK)",
+      "range": "Zadejte cenové rozpětí (CZK)"
+    },
+    "priceRange": {
+      "fromPlaceholder": "Od",
+      "toPlaceholder": "Do"
+    }
+  },
+  "table": {
+    "pagination": {
+      "noResult": "Nebyly nalezeny žádné záznamy.",
+      "results": "Výsledky:",
+      "prev": "Předchozí",
+      "next": "Další"
+    }
+  },
+  "allOrder": {
+    "heading": "Všechny objednávky",
+    "searchbarPlaceholder": "vyhledávací příkazy",
+    "status": {
+      "all": "Vše",
+      "rejected": "Odmítnuto",
+      "accepted": "Přijato",
+      "completed": "Dokončeno",
+      "pending": "Čeká na vyřízení"
+    },
+    "table": {
+      "header1": "Název služby",
+      "header2": "Cena",
+      "header4": "Stav",
+      "header3": "Uživatel",
+      "header5": "poskytovatel",
+      "header6": "Datum objednávky",
+      "header7": "Aktualizováno v",
+      "header8": "Rezervace By"
+    }
+  },
+  "order": {
+    "heading": "Moje objednávky",
+    "searchbarPlaceholder": "vyhledávací příkazy",
+    "status": {
+      "all": "Vše",
+      "rejected": "Odmítnuto",
+      "accepted": "Přijato",
+      "completed": "Dokončeno",
+      "pending": "Čeká na vyřízení"
+    },
+    "table": {
+      "header1": "Název služby",
+      "header2": "Cena",
+      "header4": "Stav",
+      "header3": "Uživatel",
+      "header5": "poskytovatel",
+      "header6": "Datum objednávky",
+      "header7": "Aktualizováno v",
+      "header8": "Rezervace By"
+    }
+  },
+  "sidebar": {
+    "title1": "Ovládací panel",
+    "title2": "Poskytovatelé",
+    "title3": "Klienti",
+    "title4": "Kategorie",
+    "title5": "Služby",
+    "title6": "Objednávky",
+    "title7": "Moje služby",
+    "title8": "Všechny objednávky",
+    "title9": "Zprávy",
+    "title10": "Správa slotů",
+    "title11": "Profil KYC",
+    "title12": "Stav KYC",
+    "title13": "Recenze",
+    "title14": "Dotaz",
+    "title15": "Konfigurace",
+    "regions": "Regiony",
+    "city": "Město",
+    "district": "Okres",
+    "approvedKYC": "Schváleno KYC",
+    "KYCApproval": "Schválení KYC",
+    "subscription": "Předplatné",
+    "subscribers": "Předplatitelé"
+  },
+  "client": {
+    "heading": "Klienti",
+    "searchbarPlaceholder": "vyhledávací klient",
+    "table": {
+      "header1": "Jméno klienta",
+      "header2": "E-mail",
+      "header3": "Telefonní číslo",
+      "header4": "Počet objednávek",
+      "header5": "Částka útraty",
+      "header6": "Poslední přihlášení",
+      "header7": "Akce"
+    },
+    "deleteAction": "Smazat",
+    "deleteConfirm": "Smazat tohoto klienta?",
+    "deleteSuccess": "Klient byl úspěšně odstraněn.",
+    "deleteError": "Smazání klienta se nezdařilo."
+  },
+  "providers": {
+    "heading": "Poskytovatelé",
+    "addButton": "PŘIDAT POSKYTOVATELE",
+    "searchbarPlaceholder": "vyhledávací Poskytovatelé",
+    "table": {
+      "header1": "Jméno klienta",
+      "header2": "E-mail",
+      "header3": "Adresa",
+      "header4": "Telefonní číslo",
+      "header6": "Počet objednávek",
+      "header7": "Celkový výdělek",
+      "header8": "Poslední přihlášení",
+      "header9": "Postavení",
+      "header5": "Akce",
+      "header10": "Region",
+      "header11": "Město",
+      "header12": "Okres",
+      "editProvider": "Upravit poskytovatele",
+      "deleteProvider": "Smazat poskytovatele",
+      "active": "Aktivní",
+      "suspend": "pozastavit"
+    }
+  },
+  "myBooking": {
+    "reviewPromptTitle": "Zanechte recenzi na tuto službu",
+    "reviewPromptBody": "Jaká byla vaše zkušenost s touto službou?",
+    "allReviewed": "Pro tuto službu již byla odeslána recenze.",
+    "heading": "Moje rezervace",
+    "searchbarPlaceholder": "pořadí vyhledávání",
+    "table": {
+      "header1": "Název služby",
+      "header2": "Cena",
+      "header3": "Stav",
+      "header4": "Poskytovatel",
+      "header5": "Datum a čas rezervace",
+      "header6": "Aktualizované datum a čas"
+    },
+    "reviewModalTitle": "Zanechte recenzi",
+    "reviewRatingLabel": "Hodnocení",
+    "reviewTextLabel": "Vaše recenze",
+    "reviewTextPlaceholder": "Napište podrobnosti o službě a poskytovateli...",
+    "reviewSubmit": "Odeslat recenzi",
+    "leaveReview": "Zanechte recenzi",
+    "reviewPromptBodyWithDate": "Vaše poslední dokončená rezervace byla",
+    "repeatSuccess": "Rezervace úspěšně zopakována",
+    "bookAgain": "Zarezervovat znovu",
+    "reviewedLabel": "Hodnoceno",
+    "reviewSuccessPlaceholder": "Recenze úspěšně odeslána"
+  },
+  "review": {
+    "heading": "Všechny recenze",
+    "searchbarPlaceholder": "Hledat recenzi podle názvu",
+    "addButton": "PŘIDAT RECENZI",
+    "table": {
+      "header1": "Název",
+      "header2": "Služba",
+      "header3": "Obrázek",
+      "header4": "Recenze",
+      "header5": "Pozice",
+      "header6": "Akce"
+    }
+  },
+  "addReviewModel": {
+    "addHeading": "Přidat Recenze",
+    "updateHeading": "Upravit Recenze",
+    "form": {
+      "header1": "Jméno",
+      "header2": "Pozice",
+      "header3": "Recenze",
+      "header4": "Obrázek",
+      "header5": "Služba",
+      "header6": "Hodnocení",
+      "TitlePlaceholder": "Zadejte jméno",
+      "PositionPlaceholder": "Zadejte pozici",
+      "ServicePlaceholder": "Vyberte službu",
+      "DescriptionPlaceholder": "Napište recenzi"
+    }
+  },
+  "addServiceModel": {
+    "addHeading": "Přidat službu",
+    "updateHeading": "Aktualizovat službu",
+    "form": {
+      "header1": "Název (EN) ",
+      "header2": "Název (CZ)",
+      "header3": "Pozice",
+      "header4": "Stav",
+      "header5": "Popis (EN)",
+      "header6": "Popis (CZ)",
+      "header7": "Obrázek",
+      "header8": "Kategorie",
+      "TitlePlaceholder": "Zadejte název",
+      "PositionPlaceholder": "Zadejte pozici",
+      "CategoryPlaceholder": "Vyberte kategorii",
+      "DescriptionPlaceholder": "Zadejte popis"
+    },
+    "statusOption": {
+      "active": "aktivní",
+      "deactive": "deaktivní"
+    }
+  },
+  "inquiry": {
+    "heading": "Dotaz",
+    "table": {
+      "header1": "Uživatelské jméno",
+      "header2": "E-mail",
+      "header3": "Předmět",
+      "header4": "Zpráva",
+      "header5": "Akce",
+      "header6": "Datum dotazu"
+    }
+  },
+  "showProfile": {
+    "verification": {
+      "emailAndPhoneNumber": "Ověřený e-mail a telefonní číslo",
+      "verifiedAddress": "Ověřená adresa",
+      "verifiedIdentity": "Ověřená identita",
+      "documents": "Úspěšné ověření dokumentu (občanský průkaz nebo řidičský průkaz)",
+      "verificationDate": "Kontrola proti duplicitním registracím · ověření data ověření"
+    }
+  },
+  "kycProfile": {
+    "header": "KYC poskytovatele",
+    "headingText": "Začněte s procesem KYC",
+    "headingSubText": "Dokončete proces KYC pro aktivaci účtu poskytovatele.",
+    "startButton": "Spustit proces KYC",
+    "step1": {
+      "heading": "Krok 1: Základní údaje",
+      "fullname": "Celé jméno",
+      "validation": {
+        "dob": "Datum narození je povinné",
+        "phoneNumber": "Telefonní číslo je povinné",
+        "address": "Adresa je povinná"
+      },
+      "button": "Uložit a pokračovat",
+      "updatebutton": "Aktualizovat a dále"
+    },
+    "step2": {
+      "heading": "Krok 2: Dokumenty",
+      "detaial": "Nahrajte pouze soubory JPG, JPEG nebo PNG (max. 5 MB každý)",
+      "identity": "Nahrajte průkaz totožnosti vydaný vládou (Aadhaar, cestovní pas, řidičský průkaz)",
+      "address": "Nahrajte nedávný účet za energie, výpis z bankovního účtu nebo nájemní smlouvu",
+      "submitButton": "Odeslat dokumenty",
+      "resubmitButton": "Znovu odeslat dokumenty",
+      "backButton": "Zpět"
+    },
+    "detail": {
+      "header": "Podrobnosti žádosti KYC",
+      "name": "Jméno",
+      "email": "E-mail",
+      "phoneNumber": "Telefonní číslo",
+      "dob": "Datum narození",
+      "address": "Adresa",
+      "submitted": "Odesláno",
+      "identityProof": "Doklad totožnosti",
+      "addressProof": "Doklad o adrese",
+      "viewDocument": "Zobrazit dokument"
+    },
+    "result": {
+      "success": "Vaše KYC bylo schváleno. Přidejte prosím své služby."
+    },
+    "popup": {
+      "success": "Dokumenty úspěšně odeslány!",
+      "failed": "Odeslání dokumentů se nezdařilo. Zkuste to prosím znovu.",
+      "sTitle": "Úspěch",
+      "fTitle": "Odeslání se nezdařilo"
+    }
+  },
+  "approvedKYC": {
+    "header": "Schválené KYC",
+    "placeHolder": "Vyhledat poskytovatele",
+    "tabel": {
+      "name": "Jméno poskytovatele",
+      "email": "E-mail poskytovatele",
+      "submitted": "Datum odeslání",
+      "status": "Stav",
+      "action": "Akce"
+    }
+  },
+  "kycApproval": {
+    "header": "Schválení KYC čeká na schválení"
+  },
+  "terms": {
+    "disclaimerTitle": "Zřeknutí se odpovědnosti tržiště",
+    "title": "Podmínky a SLA",
+    "updated": "Poslední aktualizace: 1. ledna 2026",
+    "section1": {
+      "title": "1. Smlouva",
+      "body": "Používáním naší platformy souhlasíte s těmito Podmínkami a se Smlouvou o úrovni poskytovaných služeb (SLA)."
+    },
+    "section2": {
+      "title": "2. Povinnosti poskytovatelů",
+      "body": "Poskytovatelé musí poskytovat služby profesionálně, jasně komunikovat s klienty a udržovat aktuální svou dostupnost."
+    },
+    "section3": {
+      "title": "3. Platby a předplatné",
+      "body": "Přístup poskytovatele do řídicího panelu vyžaduje aktivní předplatné. Platby jsou zpracovávány bezpečně prostřednictvím služby Stripe."
+    },
+    "section4": {
+      "title": "4. Zrušení",
+      "body": "Předplatné můžete zrušit v platebním portálu Stripe. Přístup zůstává aktivní do konce aktuálního fakturačního období."
+    },
+    "section5": {
+      "title": "5. Podpora",
+      "body": "Pokud máte otázky k těmto podmínkám, kontaktujte náš tým podpory."
+    }
+  },
+  "subscription": {
+    "title": "Aktivujte svůj tarif poskytovatele",
+    "subtitle": "Předplaťte si tarif a odemkněte poskytovatelský dashboard a nové zakázky.",
+    "planName": "Helpora – předplatné pro poskytovatele služeb",
+    "planBilling": "Měsíční opakovaná platba",
+    "feature1": "Měsíční opakovaná platba",
+    "feature2": "Přístup do poskytovatelského dashboardu",
+    "feature3": "Bezpečné platby přes Stripe",
+    "feature4": "Zrušení kdykoliv",
+    "cta": "Předplatit nyní",
+    "loading": "Přesměrování na Stripe...",
+    "manageTitle": "Předplatné",
+    "manageSubtitle": "Spravujte své fakturační údaje a stav předplatného.",
+    "statusLabel": "Stav",
+    "nextBillingLabel": "Další fakturace",
+    "cancelAtPeriodEndLabel": "Zrušit na konci období",
+    "manageButton": "Otevřít portál Stripe Billing",
+    "inactiveNotice": "Předplatné je neaktivní. Pro pokračování si ho prosím aktivujte.",
+    "successTitle": "Předplatné bylo úspěšně aktivováno!",
+    "successBody": "Synchronizujeme váš účet. Za chvíli budete přesměrováni.",
+    "pendingTitle": "Předplatné čeká na potvrzení",
+    "pendingBody": "Zatím jsme nepotvrdili aktivní předplatné. Zkuste to prosím znovu nebo kontaktujte podporu.",
+    "errorStart": "Předplatné se nepodařilo spustit. Zkuste to prosím znovu.",
+    "description": "Měsíční předplatné pro poskytovatele služeb na platformě helpora.cz. Předplatné umožňuje vytvořit a udržovat aktivní profil, zobrazovat se ve vyhledávání a být přímo kontaktován zákazníky. Předplatné se automaticky obnovuje každý měsíc a lze jej kdykoliv zrušit. Platforma helpora.cz nezaručuje konkrétní počet poptávek ani zakázek.",
+    "nameLabel": "Název",
+    "priceLabel": "Cena",
+    "priceValue": "99 Kč / měsíc",
+    "billingLabel": "Fakturace",
+    "billingValue": "Měsíční opakovaná",
+    "currencyLabel": "Měna",
+    "currencyValue": "CZK",
+    "trialLabel": "Zkušební období",
+    "trialValue": "180denní zkušební období zdarma",
+    "cancellingLabel": "Zrušení"
+  },
+  "subscribers": {
+    "title": "Předplatitelé",
+    "subtitle": "Placené profily poskytovatelů s aktivním předplatným.",
+    "searchPlaceholder": "Hledat podle jména nebo e-mailu",
+    "statusFilterAll": "Všechny stavy",
+    "statusActive": "Aktivní",
+    "statusTrialing": "Zkušební",
+    "statusPastDue": "Po splatnosti",
+    "statusCanceled": "Zrušeno",
+    "paidProviders": "Placené profily",
+    "activeSubscribers": "Aktivní předplatné",
+    "trialingSubscribers": "Předplatné ve zkušební době",
+    "monthlyRevenue": "Měsíční výnos",
+    "mrrLabel": "Měsíční opakovaný výnos",
+    "cancelingLabel": "Ruší se",
+    "trendTitle": "Trend měsíčních výnosů",
+    "trendSubtitle": "Posledních 12 měsíců",
+    "tableProvider": "Poskytovatel",
+    "tableStatus": "Stav",
+    "tablePlan": "Plán",
+    "tableNextBilling": "Další platba",
+    "tableTrialEnd": "Konec zkušební doby",
+    "tableCancelAtPeriodEnd": "Zrušení na konci období",
+    "tableAction": "Akce",
+    "cancelButton": "Zrušit předplatné",
+    "cancelTitle": "Zrušení předplatného",
+    "cancelMessage": "Tímto okamžitě zrušíte předplatné a poskytovateli odeberete přístup.",
+    "cancelConfirm": "Ano, zrušit",
+    "cancelKeep": "Ne, ponechat",
+    "noData": "Nebyl nalezen žádný placený poskytovatel.",
+    "yes": "Ano",
+    "no": "Ne",
+    "viewButton": "Zobrazit",
+    "viewTitle": "Detail předplatitele",
+    "sectionProvider": "Informace o poskytovateli",
+    "sectionSubscription": "Informace o předplatném",
+    "detailName": "Jméno",
+    "detailEmail": "E-mail",
+    "detailLastLogin": "Poslední přihlášení",
+    "detailCreatedAt": "Vytvořeno",
+    "detailStatus": "Stav",
+    "detailPlan": "Plán",
+    "detailNextBilling": "Další platba",
+    "detailTrialEnd": "Konec zkušební doby",
+    "detailCancelAtPeriodEnd": "Zrušit na konci období",
+    "detailPaymentStatus": "Stav platby"
+  },
+  "privacy": {
+    "title": "Zásady ochrany osobních údajů",
+    "brand": "Helpora.cz",
+    "lastUpdated": "Poslední aktualizace: 1. ledna 2026",
+    "sections": [
+      {
+        "id": "1",
+        "title": "1. Úvod",
+        "paragraphs": [
+          "Tyto Zásady ochrany osobních údajů popisují, jak společnost Helpora.cz (dále jen „my“, „nás“ nebo „naše“) shromažďuje, používá, uchovává a chrání osobní údaje v souladu s Obecným nařízením o ochraně osobních údajů (GDPR).",
+          "Používáním webových stránek a služeb Helpora.cz potvrzujete, že jste se s těmito zásadami seznámili a rozumíte jim."
+        ]
+      },
+      {
+        "id": "2",
+        "title": "2. Správce osobních údajů",
+        "paragraphs": [
+          "Správcem osobních údajů je:",
+          "Helpora.cz",
+          "Sídlo: Česká republika",
+          "Kontaktní e-mail: info@helpora.cz"
+        ]
+      },
+      {
+        "id": "3",
+        "title": "3. Jaké osobní údaje zpracováváme",
+        "paragraphs": [
+          "Můžeme zpracovávat následující kategorie osobních údajů:"
+        ],
+        "bullets": [
+          "Identifikační údaje (jméno, příjmení)",
+          "Kontaktní údaje (e-mailová adresa, telefonní číslo)",
+          "Obchodní informace (název společnosti, typ poskytované služby, lokalita)",
+          "Přihlašovací údaje k uživatelskému účtu",
+          "Technické údaje (IP adresa, typ prohlížeče, informace o zařízení)",
+          "Fakturační a předplatitelské údaje (stav předplatného, faktury)",
+          "Údaje o platebních kartách neukládáme. Platby jsou zpracovávány bezpečně prostřednictvím služby Stripe."
+        ]
+      },
+      {
+        "id": "4",
+        "title": "4. Účely zpracování osobních údajů",
+        "paragraphs": [
+          "Osobní údaje zpracováváme zejména za účelem:"
+        ],
+        "bullets": [
+          "Vytvoření a správy uživatelských účtů",
+          "Poskytování přístupu k platformě Helpora.cz",
+          "Správy předplatného a fakturace",
+          "Zasílání provozních a servisních sdělení",
+          "Poskytování zákaznické podpory",
+          "Zajištění bezpečnosti platformy a prevence zneužití",
+          "Plnění zákonných povinností"
+        ]
+      },
+      {
+        "id": "5",
+        "title": "5. Právní základ zpracování",
+        "paragraphs": [
+          "Osobní údaje zpracováváme na základě následujících právních titulů:"
+        ],
+        "bullets": [
+          "Plnění smlouvy, která vzniká registrací uživatelského účtu",
+          "Oprávněný zájem na provozu a zlepšování platformy",
+          "Souhlas uživatele, zejména pro marketingovou komunikaci",
+          "Plnění právních povinností vyplývajících z právních předpisů"
+        ]
+      },
+      {
+        "id": "6",
+        "title": "6. Marketingová komunikace",
+        "paragraphs": [
+          "Marketingová nebo propagační sdělení zasíláme pouze v případě, že jste k tomu udělili výslovný souhlas.",
+          "Souhlas můžete kdykoli odvolat:"
+        ],
+        "bullets": [
+          "kliknutím na odkaz pro odhlášení v e-mailu",
+          "kontaktováním nás na adrese info@helpora.cz",
+          "Provozní e-maily týkající se účtu, předplatného nebo bezpečnosti jsou zasílány bez ohledu na marketingový souhlas."
+        ]
+      },
+      {
+        "id": "7",
+        "title": "7. Sdílení osobních údajů s třetími stranami",
+        "paragraphs": [
+          "Osobní údaje můžeme sdílet pouze s důvěryhodnými třetími stranami, pokud je to nezbytné pro poskytování našich služeb, zejména:"
+        ],
+        "bullets": [
+          "Poskytovateli hostingu a technické infrastruktury",
+          "Poskytovateli e-mailových služeb",
+          "Společností Stripe pro zpracování plateb",
+          "Poskytovateli analytických nebo bezpečnostních nástrojů",
+          "Všechny třetí strany jsou povinny dodržovat požadavky GDPR."
+        ]
+      },
+      {
+        "id": "8",
+        "title": "8. Doba uchovávání osobních údajů",
+        "paragraphs": [
+          "Osobní údaje uchováváme pouze po dobu nezbytně nutnou k:"
+        ],
+        "bullets": [
+          "Poskytování služeb",
+          "Plnění zákonných povinností",
+          "Řešení sporů",
+          "Ochranu našich práv a oprávněných zájmů",
+          "Uživatel může kdykoli požádat o zrušení účtu a výmaz osobních údajů."
+        ]
+      },
+      {
+        "id": "9",
+        "title": "9. Zabezpečení osobních údajů",
+        "paragraphs": [
+          "Přijímáme odpovídající technická a organizační opatření k ochraně osobních údajů, včetně:"
+        ],
+        "bullets": [
+          "Zabezpečených serverů",
+          "Řízení přístupových práv",
+          "Šifrované komunikace",
+          "Pravidelného monitorování bezpečnosti"
+        ]
+      },
+      {
+        "id": "10",
+        "title": "10. Práva subjektů údajů",
+        "paragraphs": [
+          "V souladu s GDPR máte právo:"
+        ],
+        "bullets": [
+          "Požádat o přístup ke svým osobním údajům",
+          "Požádat o opravu nepřesných údajů",
+          "Požádat o výmaz osobních údajů",
+          "Omezit nebo vznést námitku proti zpracování",
+          "Odvolat udělený souhlas",
+          "Podat stížnost u dozorového úřadu",
+          "Žádosti můžete zasílat na e-mail: info@helpora.cz"
+        ]
+      },
+      {
+        "id": "11",
+        "title": "11. Cookies",
+        "paragraphs": [
+          "Webové stránky Helpora.cz používají cookies nezbytné pro jejich správné fungování.",
+          "Analytické nebo marketingové cookies jsou používány pouze na základě vašeho souhlasu. Podrobnosti jsou uvedeny v Zásadách používání cookies."
+        ]
+      },
+      {
+        "id": "12",
+        "title": "12. Změny těchto zásad",
+        "paragraphs": [
+          "Tyto Zásady ochrany osobních údajů můžeme čas od času aktualizovat. Aktuální verze bude vždy zveřejněna na této stránce s uvedením data poslední aktualizace."
+        ]
+      },
+      {
+        "id": "13",
+        "title": "13. Kontakt",
+        "paragraphs": [
+          "V případě dotazů týkajících se ochrany osobních údajů nás můžete kontaktovat na:"
+        ],
+        "contactEmail": "info@helpora.cz"
+      }
+    ]
+  },
+  "search": {
+    "resultsFor": "Výsledky pro",
+    "in": "v",
+    "servicesFound": "nalezené služby",
+    "back": "Zpět",
+    "noDescription": "Popis není k dispozici",
+    "viewProfile": "Zobrazit profil",
+    "verified": "Ověřeno",
+    "bookNow": "Rezervovat",
+    "category": "Kategorie",
+    "contactLabel": "Kontakt",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-mail",
+    "addressLabel": "Adresa",
+    "revealContact": "Zobrazit kontakt",
+    "hideContact": "Skrýt kontakt",
+    "loginToReveal": "Pro zobrazení kontaktních údajů se prosím přihlaste.",
+    "loginRequired": "Pro pokračování se prosím přihlaste.",
+    "locationNotSpecified": "Lokalita není uvedena",
+    "unknownProvider": "Neznámý poskytovatel",
+    "unavailable": "Nedostupné",
+    "showingRelated": "Nebyly nalezeny žádné přesné shody. Zobrazuji podobné poskytovatele.",
+    "fetchError": "Nepodařilo se načíst služby. Zkuste to prosím znovu.",
+    "searchCity": "Hledat město",
+    "cityOptionalPlaceholder": "Město (volitelné)",
+    "searchDistrict": "Hledat okres",
+    "enterCity": "Zadejte název města...",
+    "enterDistrict": "Zadejte název okresu...",
+    "clearAllFilters": "Vymazat všechny filtry",
+    "noResultsInCity": "Nebyly nalezeny žádné služby",
+    "noResultsInCategory": "V této kategorii nebyly nalezeny žádné služby.",
+    "goBackHome": "Zpět na úvod",
+    "noResults": "Nenalezeny žádné výsledky",
+    "noServicesAvailableYet": "Poskytovatelé se brzy přidají",
+    "backToHome": "Zpět na hlavní stránku",
+    "tryAgain": "Zkusit znovu",
+    "suggestedCategories": "Mohlo by se vám také líbit"
+  },
+  "addProvider": {
+    "address": "adresa",
+    "addHeading": "Přidat poskytovatele",
+    "updateHeading": "Aktualizovat poskytovatele",
+    "name": "Celé jméno",
+    "email": "E-mailová adresa",
+    "number": "Mobilní číslo",
+    "regions": "Vybrat regiony",
+    "city": "Vybrat město",
+    "district": "Vybrat Okres",
+    "password": "Zadejte heslo",
+    "namePlaceHolder": "Zadejte své jméno",
+    "emailPlaceHolder": "Zadejte svůj e-mail",
+    "numberPlaceHolder": "Zadejte své telefonní číslo",
+    "passwordPlaceHolder": "Zadejte heslo",
+    "regionPlaceHolder": "Vyberte regiony",
+    "cityPlaceHolder": "Vyberte město",
+    "addButton": "PŘIDAT POSKYTOVATELE",
+    "updateButton": "AKTUALIZOVAT POSKYTOVATELE",
+    "nameValidation": "Jméno je povinné.",
+    "nameValidation2": "Povolena jsou pouze písmena.",
+    "emailValidation": "Musí být platná e-mailová adresa.",
+    "emailValidation2": "E-mail je povinný.",
+    "numberValidation": "Zadejte platné telefonní číslo (10 číslic).",
+    "passwordValidation": "Heslo je povinné.",
+    "passwordValidation2": "Heslo musí obsahovat velké a malé písmeno, číslo a speciální znak.",
+    "addressValidation": "Adresa je povinná pro aktualizaci.",
+    "addressValidation2": "Adresa musí mít alespoň 5 znaků.",
+    "regionValidation": "Region je povinný.",
+    "cityValidation": "Město je povinné."
+  },
+  "regions": {
+    "heading": "Regiony",
+    "searchbarPlaceholder": "Hledat region",
+    "addButton": "PŘIDAT REGION",
+    "table": {
+      "name": "Název regionu",
+      "action": "Akce",
+      "editRegion": "Upravit region",
+      "deleteRegion": "Smazat region"
+    }
+  },
+  "addRegion": {
+    "addHeading": "Přidat region",
+    "updateHeading": "Aktualizovat region",
+    "name": "Název regionu",
+    "namePlaceHolder": "Zadejte název regionu",
+    "regionKey": "Klíč regionu",
+    "regionKeyPlaceHolder": "Zadejte klíč regionu",
+    "addButton": "PŘIDAT REGION",
+    "updateButton": "AKTUALIZOVAT REGION",
+    "nameValidation": "Název je povinný.",
+    "nameValidation2": "Povoleny jsou pouze písmena abecedy."
+  },
+  "city": {
+    "heading": "Města",
+    "searchbarPlaceholder": "Hledat město",
+    "addButton": "PŘIDAT MĚSTO",
+    "table": {
+      "regionName": "Název regionu",
+      "name": "Název města",
+      "action": "Akce",
+      "editCity": "Upravit město",
+      "deleteCity": "Smazat město"
+    }
+  },
+  "addCity": {
+    "addHeading": "Přidat město",
+    "updateHeading": "Aktualizovat město",
+    "cityKey": "Klíč města",
+    "cityKeyPlaceHolder": "Zadejte klíč města",
+    "regionName": "Název regionu",
+    "regionNamePlaceHolder": "Vyberte název regionu",
+    "name": "Název města",
+    "namePlaceHolder": "Zadejte název města",
+    "addButton": "PŘIDAT MĚSTO",
+    "updateButton": "AKTUALIZOVAT MĚSTO",
+    "nameValidation": "Název je povinný",
+    "nameValidation2": "Povoleny jsou pouze písmena abecedy"
+  },
+  "district": {
+    "heading": "Okresy",
+    "searchbarPlaceholder": "Hledat okres",
+    "addButton": "PŘIDAT OKRES",
+    "table": {
+      "regionName": "Název regionu",
+      "cityName": "Název města",
+      "name": "Název okresu",
+      "action": "Akce",
+      "editDistrict": "Upravit okres",
+      "deleteDistrict": "Smazat okres"
+    }
+  },
+  "addDistrict": {
+    "addHeading": "Přidat okres",
+    "updateHeading": "Aktualizovat okres",
+    "districtKey": "Klíč okresu",
+    "districtKeyPlaceHolder": "Zadejte klíč okresu",
+    "cityName": "Název města",
+    "cityNamePlaceHolder": "Vyberte název města",
+    "name": "okre Name",
+    "namePlaceHolder": "Zadejte název okresu",
+    "addButton": "PŘIDAT OKRES",
+    "updateButton": "AKTUALIZOVAT OKRES",
+    "nameValidation": "Název je povinný",
+    "nameValidation2": "Povoleny jsou pouze písmena abecedy"
+  },
+  "chatSidebar": {
+    "inputPlaceHolder": "Hledat..."
+  },
+  "chat": {
+    "scanLink": "Skenovat odkaz",
+    "scanning": "Skenov?n?...",
+    "scanComplete": "Sken dokon?en",
+    "linkDetected": "Odkaz zji?t?n",
+    "linkHidden": "Odkaz je skryt? do dokon?en? skenu",
+    "openLink": "Otev??t odkaz",
+    "externalLink": "Extern? odkaz",
+    "scanResultSafe": "Nebyly zji?t?ny hrozby"
+  },
+  "changePassword": {
+    "heading": "Změna hesla",
+    "text": "Zadejte prosím své aktuální heslo a zvolte nové heslo",
+    "currentPassword": "Aktuální heslo",
+    "currentPasswordPlaceHolder": "Zadejte aktuální heslo",
+    "newPassword": "Nové heslo",
+    "newPasswordPlaceHolder": "Zadejte nové heslo",
+    "confirmPassword": "Potvrdit nové heslo",
+    "confirmPasswordPlaceHolder": "Zadejte potvrzení nového hesla",
+    "button": "ZMĚNIT HESLO",
+    "validation": {
+      "oldPassward": "Aktuální heslo je povinné",
+      "newPassword1": "Nové heslo je povinné",
+      "newPassword2": "Mezery nejsou povoleny",
+      "newPassword3": "Heslo musí mít 6–16 znaků a obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jednu číslici a jeden speciální znak",
+      "confirmPassword1": "Potvrzení hesla je povinné",
+      "confirmPassword2": "Mezery nejsou povoleny",
+      "confirmPassword3": "Hesla se neshodují"
+    }
+  },
+  "errors": {
+    "loadCategories": "Nepodařilo se načíst kategorie. Zkuste to prosím znovu."
+  }
+}

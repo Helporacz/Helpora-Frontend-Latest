@@ -1,0 +1,44 @@
+#login-continer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-block {
+    width: 50%;
+
+    .login-heading-block {
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 5px;
+
+      .logo-block {
+        text-align: center;
+      }
+
+      .logo-text {
+        text-align: center;
+      }
+    }
+
+    .login-content-block {
+      border: 1px solid #f2f2f2;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+
+      .login-content-block-heading {
+        text-align: center;
+      }
+    }
+
+    .forgot-text {
+      text-align: center;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .login-block {
+      width: 90%;
+    }
+  }
+}

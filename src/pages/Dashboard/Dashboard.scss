@@ -1,0 +1,19 @@
+#dashboard-container {
+    .cardlist-header {
+        border-radius: 5px;
+        background-color: var(--white);
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .chart-button {
+            background: #FFFFFF;
+            border: 0.5px solid #718095;
+            border-radius: 5px;
+            justify-content: start;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+    }
+}

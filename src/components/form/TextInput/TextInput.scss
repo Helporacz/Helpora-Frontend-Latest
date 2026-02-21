@@ -1,0 +1,41 @@
+#text-input-container {
+  // display: flex;
+  // width: 100%;
+  // background-color: lightcoral;
+  position: relative;
+
+  .text-input {
+    width: -webkit-fill-available;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #414141;
+    border-radius: 5px;
+    padding-left: 20px;
+    color: black !important;
+  }
+
+  .right-icon-block {
+    position: absolute;
+    margin: auto;
+    top: 45px;
+    bottom: 0;
+    right: 10px;
+  }
+
+  ::placeholder {
+    color: #a0a0a0;
+    /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    color: #b7b7b7;
+  }
+
+  ::-ms-input-placeholder {
+    color: #b7b7b7;
+  }
+
+  input[type="text"]:disabled {
+    background: #f4f4f4;
+  }
+}

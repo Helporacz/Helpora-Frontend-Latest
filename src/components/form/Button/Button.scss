@@ -1,0 +1,99 @@
+#button-container {
+  display: inline-flex;
+  min-width: fit-content;
+
+  button {
+    min-width: 120px;
+    width: 100%;
+    height: 42px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    border: unset;
+    padding: 0px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @mixin btn-style($bg-color, $color) {
+    background-color: $bg-color;
+    color: $color;
+  }
+
+  .disabled-dark {
+    @include btn-style(var(--black-20), var(--white));
+  }
+
+  .primary-dark {
+    @include btn-style(var(--primary), var(--white));
+  }
+
+  .primary-outline {
+    @include btn-style(var(--white), var(--primary));
+    border: 1px solid var(--primary);
+  }
+
+  .primary-lignt-outline {
+    @include btn-style(var(--white), var(--primary));
+    border: 1px solid var(--blue-60);
+  }
+
+  .black-outline {
+    @include btn-style(var(--white), var(--black));
+    border: 1px solid var(--black);
+  }
+
+  .black-disabled-dark {
+    @include btn-style(var(--black-40), var(--white));
+  }
+
+  .gray-outline {
+    @include btn-style(var(--white), var(--gray));
+    border: 1px solid var(--gray);
+  }
+
+  .delete-orange {
+    @include btn-style(var(--orange), var(--white));
+  }
+
+  .blue-dark {
+    @include btn-style(var(--blue-10), var(--primary));
+  }
+
+  .primary-white {
+    @include btn-style(var(--white), var(--primary))
+  }
+
+  .light-blue {
+    @include btn-style(var(--blue-60), var(--white))
+  }
+
+  .blue-light-border {
+    @include btn-style(var(--blue-10, #E2E5E8), var(--primary));
+    border: 1px solid var(--blue-60)
+  }
+
+  .light-sky-blue {
+    @include btn-style(var(--lightSkyBlue), var(--dashboard-primary))
+  }
+}

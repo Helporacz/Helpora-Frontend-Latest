@@ -1,0 +1,98 @@
+:root {
+  --primary: #132c4e;
+  --dashboard-primary: #0f0f0f;
+  --dashboard-primary-light: #132c4e15;
+  --white: #ffffff;
+  // --blue-10: #e2e5e8;
+  --blue-10: #FF5722;
+ 
+  --black: #000000;
+  --black-100: #111111;
+  --black-80: #414141;
+  --black-60: #707070;
+  --black-40: #a0a0a0;
+  --blue: #1571ed;
+  --blue-60: #718095;
+  --black-20: #cfcfcf;
+  --black-2: #292929;
+  --blue-crayola: #2563eb;
+  --light-gray: #fafafa;
+  --light-gray-f3: #f3f3f3;
+  --blue-5: #eeeff0;
+  --black-70: #707070;
+  --success: #219653;
+  --success-light: #21965315;
+  --orange: #FF2A1C;
+  --gray: #828282;
+  --lightblue: #78D6F5;
+  --light-skyblue: #D4F2FB;
+  --darkgreen: #002632;
+  --gistColor: #F2994A;
+  --gistColor-light: #F2994A15;
+  --red: #D90000;
+  --primaryOrange: #dd6a03;
+  --lightSkyBlue: #DCEDFC;
+
+
+
+
+
+
+
+
+
+}
+
+$colors: (
+  "primary": var(--primary),
+  "dashboard-primary": var(--dashboard-primary),
+  "white": var(--white),
+  "blue-10": var(--blue-10),
+  "black-100": var(--black-100),
+  "black-80": var(--black-80),
+  "black-60": var(--black-60),
+  "black-40": var(--black-40),
+  "blue": var(--blue),
+  "black-20": var(--black-20),
+  "black-2": var(--black-2),
+  "black": var(--black),
+  "blue-crayola": var(--blue-crayola),
+  "blue-60": var(--blue-60),
+  "light-gray": var(--light-gray),
+  "blue-5": var(--blue-5),
+  "black-70": var(--black-70),
+  "light-gray-f3": var(--light-gray-f3),
+  "success": var(--success),
+  "orange": var(--orange),
+  "gray": var(--gray),
+  "lightblue": var(--lightblue),
+  "light-skyblue": var(--light-skyblue),
+  "darkgreen": var(--darkgreen),
+  "gistColor": var(--gistColor),
+  "red": var(--red),
+  "primaryOrange": var(--primaryOrange),
+  "dashboard-primary-light": var(--dashboard-primary-light),
+  "success-light": var(--success-light),
+  "gistColor-light": var(--gistColor-light),
+  "lightSkyBlue": var(--lightSkyBlue),
+
+
+
+
+
+
+
+
+
+);
+
+@each $name,
+$color in $colors {
+  .color-#{$name} {
+    color: $color !important;
+  }
+
+  .bg-#{$name} {
+    background-color: $color !important;
+  }
+}

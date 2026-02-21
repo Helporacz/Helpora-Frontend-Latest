@@ -1,0 +1,27 @@
+#post-input-container {
+  .gist-input {
+    position: relative;
+    .emoji {
+      position: absolute;
+      left: 16px;
+      top: 13px;
+    }
+    input {
+      width: 100%;
+      background: #f3f3f3;
+      border-radius: 10px;
+      color: #707070;
+      font-size: 15px;
+      font-weight: 500;
+      height: 50px;
+      border: unset;
+      padding: 0px 10px 0px 56px;
+      &:hover {
+        outline: none;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

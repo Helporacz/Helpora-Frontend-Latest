@@ -1,0 +1,77 @@
+#date-picker-container {
+  width: 100%;
+
+  .input-container {
+    position: relative;
+
+    .calender-icon {
+      position: absolute;
+      right: 10px;
+      top: 15px;
+      background-color: transparent;
+      padding: 0px 5px 0px 5px;
+      display: flex;
+
+      img {
+        height: 18px;
+      }
+    }
+
+    .left-calender-icon {
+      left: 4px;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+
+      border-radius: 4px;
+      outline: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid #414141;
+      border-radius: 5px;
+      padding: 13px 25px 13px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 27px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: var(--outer-space);
+    }
+
+    :disabled {
+      background-color: #e6e6e6;
+      color: #212121;
+    }
+
+    ::placeholder {
+      color: #b7b7b7;
+      opacity: 1;
+      /* Firefox */
+    }
+
+    :-ms-input-placeholder {
+      color: #b7b7b7;
+    }
+
+    ::-ms-input-placeholder {
+      color: #b7b7b7;
+    }
+  }
+  .custom-date-header {
+    button {
+      padding: 5px 10px;
+      border: 0.5px solid var(--granite-gray);
+      border-radius: 5px;
+    }
+    select {
+      padding: 5px 10px 5px 5px;
+      border: 0.5px solid var(--granite-gray);
+      &:focus-visible {
+        outline: unset;
+      }
+    }
+  }
+}

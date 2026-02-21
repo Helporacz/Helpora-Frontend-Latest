@@ -1,0 +1,15 @@
+#download-btn-block {
+
+    .download-button {
+        color: var(--white);
+        background-color: var(--dashboard-primary);
+        border-radius: 5px;
+        justify-content: center;
+        border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+
+    }
+}

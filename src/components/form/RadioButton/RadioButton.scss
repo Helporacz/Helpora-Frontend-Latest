@@ -1,0 +1,19 @@
+#round-check-box-container {
+
+
+    .form-check-input {
+        border: 1px solid #718095;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        margin-top: 15px;
+        cursor: pointer;
+
+        &:focus {
+            box-shadow: unset;
+        }
+    }
+}
+.radio-labels{
+    margin: 0 !important;
+}

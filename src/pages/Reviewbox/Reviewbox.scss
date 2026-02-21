@@ -1,0 +1,153 @@
+// Variables for a modern, cool palette
+$primary-color: #007e6e; 
+$secondary-color: #f8f9fa; 
+$accent-color: #1abc9c; 
+$text-color-dark: #343a40;
+$text-color-light: #6c757d;
+$star-color: #ffd700;
+$card-bg: #ffffff;
+
+.review-container {
+  padding: 5rem 0;
+  background-color: $secondary-color; // Light background for the section
+  font-family: "League Spartan";
+}
+
+// --- Review Heading Section ---
+
+.review-heading {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  .title {
+    background: linear-gradient(135deg, #22bf1e 0%, #00ffc8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    font-weight: 700;
+    // color: $primary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  .review-description {
+    font-size: 1.1rem;
+    // color: $text-color-light;
+    color: rgba(33, 37, 41, 0.75);
+    font-weight: 300;
+  }
+}
+@media (max-width: 320px) {
+  .review-description {
+    font-size: 1rem;
+  }
+}
+// --- Review Grid & Cards ---
+
+.review-grid {
+  display: grid;
+  // Use Bootstrap's grid concept: 1 column on mobile, 2 on tablet, 3 on desktop
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem; // Space between cards;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column; // Stack elements on mobile
+  background-color: $card-bg;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); // Modern, soft shadow
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.5rem;
+  background: linear-gradient(40deg, #f5faff, #e4f5e3bd);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  // Two-part card structure
+  .card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    .avatar-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+      // border: 3px solid $accent-color;
+      border: 3px solid rgb(69 213 65); // Pop of color on the avatar
+    }
+
+    .info-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $text-color-dark;
+    }
+
+    .address {
+      margin: 0;
+      font-size: 0.9rem;
+      // color: $text-color-light;
+      color: #22bf1e;
+    }
+  }
+
+  // Review content
+  .review-card-body {
+    .stars {
+      margin-bottom: 0.5rem;
+      svg {
+        margin-right: 2px;
+      }
+    }
+
+    .review-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: $text-color-dark;
+      margin-bottom: 0;
+      font-style: italic;
+      // border-left: 3px solid $primary-color;
+      border-left: 3px solid;
+      border-image: linear-gradient(180deg, #22bf1e, #00ffc8) 1;
+
+      padding-left: 10px;
+    }
+  }
+}
+
+// Media query for better desktop layout (making the review grid 3 columns)
+@media (min-width: 992px) {
+  .review-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 320px) {
+  .review-heading .title {
+    font-size: 2rem !important;
+  }
+  .review-container {
+    padding: 1.2rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .review-container {
+    padding: 2rem 0;
+  }
+  .review-heading .title {
+    font-size: 2rem !important;
+  }
+}

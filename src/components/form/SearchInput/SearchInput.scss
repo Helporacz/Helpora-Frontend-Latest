@@ -1,0 +1,50 @@
+#searchWidth {
+  width: 185px;
+  max-width: 257px;
+  position: relative;
+
+  input {
+    height: 48px;
+    border: 1px solid #718095;
+    border-radius: 5px;
+    background: #ffffff;
+    padding: 8px 16px 8px 16px;
+    width: 100%;
+  }
+
+  .searc-icon-block {
+    position: absolute;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+  }
+}
+
+#search-input-container {
+  // width: 257px;
+  // max-width: 257px;
+  min-width:250px;
+  max-width: 100%;
+  position: relative;
+
+
+  input {
+    height: 48px;
+    border: 1px solid #718095;
+    border-radius: 5px;
+    background: #ffffff;
+    padding: 8px 16px 8px 16px;
+    width: 100%;
+  }
+
+  .searc-icon-block {
+    position: absolute;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+  }
+}
