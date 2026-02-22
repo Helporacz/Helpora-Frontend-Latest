@@ -57,6 +57,7 @@ const ChatBox = () => {
   const quickPartnerId = String(searchParams.get("partnerId") || "").trim();
   const quickPartnerName = String(searchParams.get("partnerName") || "").trim();
   const quickPartnerImage = String(searchParams.get("partnerImage") || "").trim();
+  const selectedPartnerId = resolvePartnerId(selectedChat);
 
   const fetchChatList = useCallback(
     async ({ silent = false } = {}) => {
@@ -201,22 +202,14 @@ const ChatBox = () => {
   }, [chatList, selectedChat]);
 
   useEffect(() => {
-    if (!selectedChat || !userId) {
+    if (!selectedPartnerId || !userId) {
       setMessages([]);
       setBookingDate({});
       setLoadingMessages(false);
       return;
     }
 
-    const partnerId = resolvePartnerId(selectedChat);
-    if (!partnerId) {
-      setMessages([]);
-      setBookingDate({});
-      setLoadingMessages(false);
-      return;
-    }
-
-    const chatId = getChatId(String(userId), String(partnerId));
+    const chatId = getChatId(String(userId), String(selectedPartnerId));
     let isMounted = true;
 
     const fetchMessages = async () => {
@@ -247,7 +240,7 @@ const ChatBox = () => {
       socket.emit("markRead", {
         chatId,
         readerId: userId,
-        otherUserId: partnerId,
+        otherUserId: selectedPartnerId,
       });
 
       dispatch(markMessagesRead(chatId));
@@ -258,7 +251,7 @@ const ChatBox = () => {
     return () => {
       isMounted = false;
     };
-  }, [selectedChat, userId, dispatch]);
+  }, [selectedPartnerId, userId, dispatch]);
 
   useEffect(() => {
     const handleReceiveMessage = (msg) => {
@@ -273,12 +266,11 @@ const ChatBox = () => {
         return;
       }
 
-      const partnerId = resolvePartnerId(selectedChat);
-      const currentChatId = partnerId
-        ? getChatId(String(userId), String(partnerId))
+      const currentChatId = selectedPartnerId
+        ? getChatId(String(userId), String(selectedPartnerId))
         : null;
 
-      if (partnerId && currentChatId && msg.chatId === currentChatId) {
+      if (selectedPartnerId && currentChatId && msg.chatId === currentChatId) {
         setMessages((prev) => {
           const filtered = prev.filter(
             (message) => !String(message?._id || "").startsWith("temp-")
@@ -305,13 +297,14 @@ const ChatBox = () => {
       socket.off("receiveMessage", handleReceiveMessage);
       socket.off("messageError", handleMessageError);
     };
-  }, [selectedChat, userId, fetchChatList]);
+  }, [selectedPartnerId, userId, fetchChatList]);
 
   useEffect(() => {
     const handleChatDeleted = ({ chatId }) => {
-      const partnerId = resolvePartnerId(selectedChat);
       const activeChatId =
-        userId && partnerId ? getChatId(String(userId), String(partnerId)) : "";
+        userId && selectedPartnerId
+          ? getChatId(String(userId), String(selectedPartnerId))
+          : "";
 
       if (chatId && activeChatId && chatId === activeChatId) {
         clearSelectedChat();
@@ -323,7 +316,7 @@ const ChatBox = () => {
 
     socket.on("chatDeleted", handleChatDeleted);
     return () => socket.off("chatDeleted", handleChatDeleted);
-  }, [selectedChat, userId, fetchChatList, clearSelectedChat]);
+  }, [selectedPartnerId, userId, fetchChatList, clearSelectedChat]);
 
   useEffect(() => {
     socket.on("messagesRead", ({ readerId }) => {
@@ -345,9 +338,10 @@ const ChatBox = () => {
   }, []);
 
   useEffect(() => {
-    const partnerId = resolvePartnerId(selectedChat);
     const currentChatId =
-      partnerId && userId ? getChatId(String(userId), String(partnerId)) : null;
+      selectedPartnerId && userId
+        ? getChatId(String(userId), String(selectedPartnerId))
+        : null;
 
     socket.on("typing", ({ senderId, chatId }) => {
       if (chatId === currentChatId) {
@@ -363,15 +357,14 @@ const ChatBox = () => {
       socket.off("typing");
       socket.off("stopTyping");
     };
-  }, [selectedChat, userId]);
+  }, [selectedPartnerId, userId]);
 
   const sendMessage = () => {
-    const partnerId = resolvePartnerId(selectedChat);
-    if (!input.trim() || !partnerId || !userId) return;
+    if (!input.trim() || !selectedPartnerId || !userId) return;
 
     const messageText = input.trim();
     const senderIdStr = String(userId);
-    const receiverIdStr = String(partnerId);
+    const receiverIdStr = String(selectedPartnerId);
 
     const tempMessage = {
       _id: `temp-${Date.now()}`,
@@ -403,10 +396,9 @@ const ChatBox = () => {
 
   const handleDeleteChat = async () => {
     if (deletingChat || !selectedChat || !userId) return false;
-    const partnerId = resolvePartnerId(selectedChat);
-    if (!partnerId) return false;
+    if (!selectedPartnerId) return false;
 
-    const chatId = getChatId(String(userId), String(partnerId));
+    const chatId = getChatId(String(userId), String(selectedPartnerId));
     setDeletingChat(true);
 
     try {
@@ -441,14 +433,13 @@ const ChatBox = () => {
   const handleTyping = (event) => {
     setInput(event.target.value);
 
-    const receiverId = resolvePartnerId(selectedChat);
-    if (!receiverId || !userId) return;
+    if (!selectedPartnerId || !userId) return;
 
-    const chatId = getChatId(String(userId), String(receiverId));
+    const chatId = getChatId(String(userId), String(selectedPartnerId));
 
     socket.emit("typing", {
       senderId: userId,
-      receiverId,
+      receiverId: selectedPartnerId,
       chatId,
     });
 
@@ -457,7 +448,7 @@ const ChatBox = () => {
     typingTimeoutRef.current = setTimeout(() => {
       socket.emit("stopTyping", {
         senderId: userId,
-        receiverId,
+        receiverId: selectedPartnerId,
         chatId,
       });
     }, 1200);
