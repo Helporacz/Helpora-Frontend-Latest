@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Soleil&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   /* font-family: 'Soleil', sans-serif; */

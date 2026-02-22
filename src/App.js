@@ -38,17 +38,33 @@ function App() {
 
         const response = await api.get("/stripe/subscription-status");
         const fallbackActive = localStorage.getItem("subscriptionActive") === "true";
+        const fallbackRequireProviderSubscription =
+          localStorage.getItem("requireProviderSubscription");
         const status = response?.data?.status || "inactive";
-        const isActive =
+        const requireProviderSubscriptionFromApi =
+          response?.data?.requireProviderSubscription;
+        const requireProviderSubscription =
+          typeof requireProviderSubscriptionFromApi === "boolean"
+            ? requireProviderSubscriptionFromApi
+            : fallbackRequireProviderSubscription === "false"
+            ? false
+            : true;
+        const isActiveFromApi =
           typeof response?.data?.isActive === "boolean"
             ? response.data.isActive
             : fallbackActive;
+        const isActive = requireProviderSubscription ? isActiveFromApi : true;
 
         localStorage.setItem("subscriptionStatus", status);
         localStorage.setItem("subscriptionActive", isActive ? "true" : "false");
+        localStorage.setItem(
+          "requireProviderSubscription",
+          requireProviderSubscription ? "true" : "false"
+        );
         storeLocalStorageData({
           subscriptionStatus: status,
           subscriptionActive: isActive,
+          requireProviderSubscription,
         });
 
         if (isMounted) {
@@ -69,7 +85,7 @@ function App() {
   }, [token, userRole]);
     
   return (
-    <div className="App">
+    <div className="App tw-block">
       <ErrorPopup />
       {isAdminOrProvider ? (
         userRole === "provider" ? (

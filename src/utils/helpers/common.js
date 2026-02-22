@@ -1,5 +1,5 @@
 import moment from "moment";
-import i18n from "../../i18n";
+import i18n from "@/lib/i18n-client";
 
 export function getHeaderData() {
   const currentLang = i18n.language || localStorage.getItem("i18nextLng") || "cz";
@@ -73,7 +73,7 @@ export const getYearList = (num) => {
 // export const fetchLocationName = async (lat, long) => {
 //   try {
 //     const response = await fetch(
-//       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.REACT_APP_MAP_API}`
+//       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${import.meta.env.VITE_MAP_API}`
 //     );
 //     if (!response.ok) {
 //       throw new Error("Network response was not ok");

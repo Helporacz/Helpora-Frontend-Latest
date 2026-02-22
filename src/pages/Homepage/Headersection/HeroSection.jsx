@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { IoSparkles } from "react-icons/io5";
 import "./HeroSection.scss";
+import homePaintingImage from "../../../assets/images/Best-Home-Painting-Services-in-Bangalore.png";
 import massageImage from "../../../assets/images/young-attractive-woman-having-massage-relaxing-spa-salon.jpg";
 import tutorImage from "../../../assets/images/tutor-girl-home-writing-new-information.jpg";
 import parlorImage from "../../../assets/images/hairdresser-styling-beautiful-woman.jpg";
@@ -13,7 +14,7 @@ import regionsDataEn from "pages/Auth/Register/regions_en.json";
 import regionsDataCz from "pages/Auth/Register/regions_cz.json";
 
 const heroImages = [
-  "https://cleanfanatics.com/wp-content/uploads/2024/05/Best-Home-Painting-Services-in-Bangalore.jpg",
+  homePaintingImage,
   massageImage,
   tutorImage,
   parlorImage,
@@ -25,7 +26,10 @@ const HeroSection = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang = normalizedLang === "cs" ? "cz" : normalizedLang;
   const regionDataset = useMemo(
     () => (currentLang === "cz" ? regionsDataCz : regionsDataEn),
     [currentLang]
@@ -50,8 +54,12 @@ const HeroSection = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [categoryOption, setCategoryOption] = useState([]);
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [loadedSlides, setLoadedSlides] = useState(() => new Set([0, 1]));
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
+  const heroWrapperRef = useRef(null);
 
 
   useEffect(() => {
@@ -67,11 +75,62 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    handleMotionPreference();
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleMotionPreference);
+      return () =>
+        mediaQuery.removeEventListener("change", handleMotionPreference);
+    }
+
+    mediaQuery.addListener(handleMotionPreference);
+    return () => mediaQuery.removeListener(handleMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setIsHeroVisible(true);
+      return undefined;
+    }
+
+    if (!heroWrapperRef.current || !("IntersectionObserver" in window)) {
+      setIsHeroVisible(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(heroWrapperRef.current);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    setLoadedSlides((prev) => {
+      const next = new Set(prev);
+      next.add(currentSlide);
+      next.add((currentSlide + 1) % heroImages.length);
+      return next;
+    });
+  }, [currentSlide]);
+
+  useEffect(() => {
+    if (prefersReducedMotion || !isHeroVisible) return undefined;
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 7000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isHeroVisible, prefersReducedMotion]);
 
   useEffect(() => {
     if (!selectedCategory || !searchText.trim() || !isInputFocused) {
@@ -199,13 +258,22 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="hero-wrapper">
+    <div
+      ref={heroWrapperRef}
+      className={`hero-wrapper ${isHeroVisible ? "is-visible" : "is-hidden"}`}
+    >
       <div className="hero-backgrounds">
         {heroImages.map((img, index) => (
           <div
             key={index}
-            className={`hero-bg ${index === currentSlide ? "active" : ""}`}
-            style={{ backgroundImage: `url(${img})` }}
+            className={`hero-bg ${index === currentSlide ? "active" : ""} ${
+              loadedSlides.has(index) ? "loaded" : "loading-placeholder"
+            }`}
+            style={
+              loadedSlides.has(index)
+                ? { backgroundImage: `url(${img})` }
+                : undefined
+            }
           />
         ))}
         <div className="hero-overlay" />
@@ -266,7 +334,11 @@ const HeroSection = () => {
                   </option>
                   {categoryOption?.map((cat) => (
                     <option key={cat.id} value={cat._id || cat.id}>
-                      {currentLang === "cz" ? cat.cz_name : cat.name}
+                      {currentLang === "ru"
+                        ? cat.ru_name || cat.name || cat.cz_name
+                        : currentLang === "cz"
+                        ? cat.cz_name || cat.name
+                        : cat.name}
                     </option>
                   ))}
                 </select>

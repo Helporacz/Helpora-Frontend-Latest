@@ -4,16 +4,18 @@ import Pricing from "pages/Subscription/Pricing";
 import SubscriptionSuccess from "pages/Subscription/SubscriptionSuccess";
 import Terms from "pages/Terms/Terms";
 import MainLayout from "pages/MainLayout/MainLayout";
+import ScrollToTop from "components/layouts/ScrollToTop/ScrollToTop";
 import { commonRoute } from "utils/constants";
 import { getLocalizedPath } from "utils/localizedRoute";
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, normalizeLanguage } from "@/lib/i18n-client";
 
 const ProviderSubscriptionRoute = () => {
-  const languages = ["en", "cz"];
-  const defaultLang = "cz";
+  const languages = SUPPORTED_LANGUAGES;
+  const defaultLang = DEFAULT_LANGUAGE;
 
   const PricingRedirect = () => {
     const { pathname } = useLocation();
-    const lang = pathname.split("/")[1];
+    const lang = normalizeLanguage(pathname.split("/")[1] || "");
     const targetLang = languages.includes(lang) && lang !== defaultLang ? lang : defaultLang;
     return (
       <Navigate
@@ -25,6 +27,7 @@ const ProviderSubscriptionRoute = () => {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {languages.map((lang) => (
           <Route

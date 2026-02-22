@@ -19,7 +19,7 @@ import { icons } from "utils/constants";
 import "./Header.scss";
 import { getLocalizedPath } from "utils/localizedRoute";
 
-const socket = io(process.env.REACT_APP_SOCKET_URL, {
+const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3000", {
   transports: ["websocket"],
 });
 

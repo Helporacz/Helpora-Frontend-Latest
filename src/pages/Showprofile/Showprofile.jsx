@@ -6,7 +6,7 @@ import Tabsection from "./Tabsection";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProviderServices, throwError } from "store/globalSlice";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark, FaUserCircle } from "react-icons/fa";
 import { GoClock } from "react-icons/go";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { FaCheck } from "react-icons/fa6";
@@ -14,17 +14,22 @@ import { BsChat } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
 import { getLocalizedPath } from "utils/localizedRoute";
 
-const Showprofile = ({ url, text }) => {
+const Showprofile = ({ text }) => {
   const dispatch = useDispatch();
   const { id: providerId } = useParams();
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang =
+    normalizedLang === "cs" ? "cz" : normalizedLang === "ru" ? "ru" : "en";
 
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTabId, setActiveTabId] = useState("");
   const [providerDetails, setProviderDetails] = useState([]);
   const [bookmarked, setBookmarked] = useState(false);
   const [lastBookingAt, setLastBookingAt] = useState(null);
   const [lastReviewAt, setLastReviewAt] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const token = getDataFromLocalStorage("token");
@@ -62,10 +67,9 @@ const Showprofile = ({ url, text }) => {
       .toUpperCase();
   }
 
-  const profileUrl = url || icons.userDefaultImage;
-
   useEffect(() => {
     const loadProviderData = async () => {
+      setIsLoading(true);
       try {
         const providerRes = await dispatch(getProviderServices(providerId));
         const details = providerRes?.providerServices || [];
@@ -76,20 +80,35 @@ const Showprofile = ({ url, text }) => {
         setLastReviewAt(providerMeta.lastReviewAt || null);
 
         if (details.length > 0) {
-          setActiveTab(details[0]?.service?.title);
+          setActiveTabId(details[0]?.service?._id || "");
         }
       } catch (err) {
         console.error("Error fetching provider details:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
     loadProviderData();
-  }, [dispatch, providerId]);
+  }, [dispatch, providerId, currentLang]);
 
-  const tabs = providerDetails.map((item) => ({
-    id: item.service._id,
-    label: item.service.title,
-    cz_label: item.service?.cz_title,
-  }));
+  const tabs = providerDetails
+    .filter((item) => item?.service?._id)
+    .map((item) => ({
+      id: item.service._id,
+      label: item.service.title,
+      cz_label: item.service?.cz_title,
+      ru_label: item.service?.ru_title,
+    }));
+
+  const getServiceLabel = (tab) => {
+    if (currentLang === "ru") {
+      return tab?.ru_label || tab?.label || tab?.cz_label || "";
+    }
+    if (currentLang === "cz") {
+      return tab?.cz_label || tab?.label || tab?.ru_label || "";
+    }
+    return tab?.label || tab?.cz_label || tab?.ru_label || "";
+  };
 
   const formatDate = (value) => {
     if (!value) return null;
@@ -97,6 +116,47 @@ const Showprofile = ({ url, text }) => {
     if (Number.isNaN(d.getTime())) return null;
     return d.toLocaleString();
   };
+
+  if (isLoading) {
+    return (
+      <div className="p-4 show-profile-skeleton">
+        <div className="row">
+          <div
+            className="col-md-3 d-flex flex-column text-center left-profile-box px-5 py-3"
+            style={{ borderRight: "1px solid grey" }}
+          >
+            <div className="skeleton-shimmer profile-skeleton-avatar" />
+            <div className="skeleton-shimmer profile-skeleton-button my-3" />
+            <div className="profile-skeleton-meta">
+              <div className="skeleton-shimmer profile-skeleton-line" />
+              <div className="skeleton-shimmer profile-skeleton-line" />
+              <div className="skeleton-shimmer profile-skeleton-line short" />
+            </div>
+          </div>
+
+          <div className="col-md-9" style={{ paddingInline: "30px" }}>
+            <div className="d-none d-md-flex mb-3 profile-skeleton-tabs">
+              <div className="skeleton-shimmer profile-skeleton-tab" />
+              <div className="skeleton-shimmer profile-skeleton-tab" />
+              <div className="skeleton-shimmer profile-skeleton-tab" />
+            </div>
+            <div className="d-block d-md-none mb-3">
+              <div className="skeleton-shimmer profile-skeleton-mobile-tab" />
+            </div>
+
+            <div className="profile-skeleton-content">
+              <div className="skeleton-shimmer profile-skeleton-title" />
+              <div className="skeleton-shimmer profile-skeleton-line" />
+              <div className="skeleton-shimmer profile-skeleton-line" />
+              <div className="skeleton-shimmer profile-skeleton-line short" />
+              <div className="skeleton-shimmer profile-skeleton-card" />
+              <div className="skeleton-shimmer profile-skeleton-card" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
@@ -116,7 +176,16 @@ const Showprofile = ({ url, text }) => {
                 onError={(e) => (e.target.src = icons.userDefaultImage)}
               />
             ) : (
-              <div className="profile-placeholder">{displayText}</div>
+              <div
+                className="profile-placeholder"
+                aria-label={t("profile.noImage", "No Image")}
+                title={t("profile.noImage", "No Image")}
+              >
+                <FaUserCircle className="profile-placeholder-icon" />
+                {!providerDetails[0]?.provider?.name && displayText && (
+                  <span className="profile-placeholder-text">{displayText}</span>
+                )}
+              </div>
             )}
             <div
               onClick={handleBookmarkToggle}
@@ -183,11 +252,11 @@ const Showprofile = ({ url, text }) => {
               <button
                 key={tab.id}
                 className={`profile-tab-btn ${
-                  activeTab === tab.label ? "active" : ""
+                  activeTabId === tab.id ? "active" : ""
                 }`}
-                onClick={() => setActiveTab(tab.label)}
+                onClick={() => setActiveTabId(tab.id)}
               >
-                {currentLang === "cz" ? tab.cz_label : tab.label}
+                {getServiceLabel(tab)}
               </button>
             ))}
           </div>
@@ -196,12 +265,12 @@ const Showprofile = ({ url, text }) => {
           <div className="d-block d-md-none mb-3">
             <select
               className="form-select mobile-tab-select"
-              value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value)}
+              value={activeTabId}
+              onChange={(e) => setActiveTabId(e.target.value)}
             >
               {tabs.map((tab) => (
-                <option key={tab.id} value={tab.label}>
-                  {tab.label}
+                <option key={tab.id} value={tab.id}>
+                  {getServiceLabel(tab)}
                 </option>
               ))}
             </select>
@@ -209,12 +278,8 @@ const Showprofile = ({ url, text }) => {
 
           {/* TAB CONTENT */}
           <Tabsection
-            url={profileUrl}
-            text={text}
-            providerId={providerId}
-            activeTab={activeTab}
             activeService={providerDetails.find(
-              (item) => item.service.title === activeTab
+              (item) => item?.service?._id === activeTabId
             )}
           />
         </div>

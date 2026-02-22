@@ -19,18 +19,23 @@ import {
   FaRupeeSign,
   FaShoppingCart,
 } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   getMyKyc,
   getProviderMonthlyEarnings,
   getProviderMonthlyOrders,
   getProviderOrdersSummary,
+  getUserProfile,
   getProviderServiceStatus,
   getProviderSummary,
+  submitProviderRankingRequest,
+  throwError,
+  throwSuccess,
 } from "store/globalSlice";
 import "./ProviderDashboard.scss";
 import { PiHandCoinsThin } from "react-icons/pi";
+import { localizeRankBadgeLabel } from "utils/rankingLabel";
 
 ChartJS.register(
   ArcElement,
@@ -44,13 +49,23 @@ ChartJS.register(
 const ProviderDashboard = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const providerProfile = useSelector((state) => state.global?.adminData || {});
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
   const [serviceStatusData, setServiceStatusData] = useState(null);
   const [ordersSummary, setOrdersSummary] = useState(null);
   const [summaryData, setSummaryData] = useState(null);
   const [monthlyOrders, setMonthlyOrders] = useState(null);
   const [monthlyEarnings, setMonthlyEarnings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [rankingRequestLoading, setRankingRequestLoading] = useState(false);
+  const [showRankingRequestModal, setShowRankingRequestModal] = useState(false);
+  const [rankingRequestForm, setRankingRequestForm] = useState({
+    preferred_position: "",
+    preferred_start_at: "",
+    preferred_end_at: "",
+    message: "",
+  });
   const [showKycPrompt, setShowKycPrompt] = useState(false);
   const [kycActionLabel, setKycActionLabel] = useState("Start KYC");
   const [ordersDateFilter, setOrdersDateFilter] = useState(() => {
@@ -324,6 +339,113 @@ const ProviderDashboard = () => {
       }
     : null;
 
+  const rankingPosition = Number(providerProfile?.ranking_position);
+  const isRankingActive =
+    !!providerProfile?.is_ranked &&
+    Number.isInteger(rankingPosition) &&
+    rankingPosition > 0;
+  const rankingRequestStatus =
+    providerProfile?.ranking_request?.status || "none";
+  const rankingRequestRequestedAt = providerProfile?.ranking_request?.requested_at;
+  const rankingBadgeLabel = localizeRankBadgeLabel(
+    providerProfile?.rank_badge_label,
+    t,
+    t("topProviders.featuredRibbon")
+  );
+
+  const toDateTimeLocal = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    const tzOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
+  };
+
+  const openRankingRequestModal = () => {
+    if (rankingRequestLoading || rankingRequestStatus === "pending") return;
+    const preferredPosition = Number(
+      providerProfile?.ranking_request?.preferred_position
+    );
+    setRankingRequestForm({
+      preferred_position:
+        Number.isInteger(preferredPosition) && preferredPosition > 0
+          ? String(preferredPosition)
+          : "",
+      preferred_start_at: toDateTimeLocal(
+        providerProfile?.ranking_request?.preferred_start_at
+      ),
+      preferred_end_at: toDateTimeLocal(
+        providerProfile?.ranking_request?.preferred_end_at
+      ),
+      message: providerProfile?.ranking_request?.message || "",
+    });
+    setShowRankingRequestModal(true);
+  };
+
+  const closeRankingRequestModal = () => {
+    if (rankingRequestLoading) return;
+    setShowRankingRequestModal(false);
+  };
+
+  const handleRankingRequest = async () => {
+    if (rankingRequestLoading || rankingRequestStatus === "pending") return;
+
+    const preferredPositionRaw = rankingRequestForm.preferred_position;
+    const hasPreferredPosition = String(preferredPositionRaw || "").trim() !== "";
+    let preferredPosition = null;
+    if (hasPreferredPosition) {
+      preferredPosition = Number(preferredPositionRaw);
+      if (!Number.isInteger(preferredPosition) || preferredPosition <= 0) {
+        dispatch(throwError(t("providerDashboard.rankingRequestInvalidRank")));
+        return;
+      }
+    }
+
+    const parseDateValue = (value) => {
+      if (!value) return null;
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return null;
+      return date;
+    };
+
+    const preferredStartAt = parseDateValue(rankingRequestForm.preferred_start_at);
+    const preferredEndAt = parseDateValue(rankingRequestForm.preferred_end_at);
+
+    if (preferredStartAt && preferredEndAt && preferredStartAt > preferredEndAt) {
+      dispatch(throwError(t("providerDashboard.rankingRequestInvalidDateRange")));
+      return;
+    }
+
+    const payload = {
+      message: rankingRequestForm.message || "",
+      preferred_position: hasPreferredPosition ? preferredPosition : "",
+      preferred_start_at: rankingRequestForm.preferred_start_at || "",
+      preferred_end_at: rankingRequestForm.preferred_end_at || "",
+    };
+
+    setRankingRequestLoading(true);
+    try {
+      const response = await dispatch(submitProviderRankingRequest(payload));
+      if (response?.success) {
+        dispatch(throwSuccess(t("providerDashboard.rankingRequestSuccess")));
+        if (userId) {
+          await dispatch(getUserProfile(userId));
+        }
+        setShowRankingRequestModal(false);
+      } else {
+        dispatch(
+          throwError(
+            response?.message || t("providerDashboard.rankingRequestFailed")
+          )
+        );
+      }
+    } catch (error) {
+      dispatch(throwError(t("providerDashboard.rankingRequestFailed")));
+    } finally {
+      setRankingRequestLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <Container>
@@ -343,6 +465,186 @@ const ProviderDashboard = () => {
           <h2 className="dashboard-title">Provider Dashboard</h2>
         </div>
       </div>
+
+      <Row className="mb-4">
+        <Col>
+          <Card className="summary-card">
+            <Card.Body>
+              <div className="summary-content">
+                <div className="summary-label">
+                  {t("providerDashboard.rankingStatusTitle")}
+                </div>
+                <div className="summary-value">
+                  {isRankingActive
+                    ? t("providerDashboard.rankingStatusActive", {
+                        position: rankingPosition,
+                      })
+                    : t("providerDashboard.rankingStatusInactive")}
+                </div>
+                <div className="text-muted" style={{ fontSize: 13 }}>
+                  {isRankingActive
+                    ? t("providerDashboard.rankingStatusHintActive", {
+                        badge: rankingBadgeLabel,
+                      })
+                    : t("providerDashboard.rankingStatusHintInactive")}
+                </div>
+                <div className="ranking-request-block">
+                  <button
+                    type="button"
+                    className="ranking-request-btn"
+                    onClick={openRankingRequestModal}
+                    disabled={
+                      rankingRequestLoading || rankingRequestStatus === "pending"
+                    }
+                  >
+                    {rankingRequestLoading
+                      ? t("providerDashboard.rankingRequestLoading")
+                      : rankingRequestStatus === "pending"
+                      ? t("providerDashboard.rankingRequestPendingButton")
+                      : t("providerDashboard.rankingRequestButton")}
+                  </button>
+                  <p className="ranking-request-hint">
+                    {rankingRequestStatus === "pending"
+                      ? t("providerDashboard.rankingRequestPendingHint")
+                      : rankingRequestStatus === "approved"
+                      ? t("providerDashboard.rankingRequestApprovedHint")
+                      : rankingRequestStatus === "denied"
+                      ? t("providerDashboard.rankingRequestDeniedHint")
+                      : t("providerDashboard.rankingRequestDefaultHint")}
+                    {rankingRequestRequestedAt
+                      ? ` (${new Date(rankingRequestRequestedAt).toLocaleString()})`
+                      : ""}
+                  </p>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      <Modal
+        centered
+        show={showRankingRequestModal}
+        onHide={closeRankingRequestModal}
+        dialogClassName="tw-max-w-2xl tw-mx-3 md:tw-mx-auto"
+        contentClassName="tw-overflow-hidden tw-rounded-2xl tw-border tw-border-slate-200 tw-bg-white tw-shadow-[0_20px_60px_rgba(15,23,42,0.22)]"
+      >
+        <div className="tw-relative tw-overflow-hidden tw-border-b tw-border-slate-200 tw-bg-gradient-to-r tw-from-slate-50 tw-via-white tw-to-emerald-50 tw-px-5 tw-py-4 md:tw-px-6 md:tw-py-5">
+          <div className="tw-pr-10">
+            <h3 className="tw-mb-1 tw-text-xl tw-font-semibold tw-text-slate-900">
+              {t("providerDashboard.rankingRequestModalTitle")}
+            </h3>
+            <p className="tw-m-0 tw-text-sm tw-text-slate-600">
+              {t("providerDashboard.rankingRequestModalSubtitle")}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={closeRankingRequestModal}
+            className="tw-absolute tw-right-4 tw-top-4 tw-inline-flex tw-h-8 tw-w-8 tw-items-center tw-justify-center tw-rounded-full tw-border tw-border-slate-200 tw-bg-white tw-text-lg tw-leading-none tw-text-slate-500 tw-transition hover:tw-bg-slate-100 hover:tw-text-slate-700"
+            aria-label={t("common.close")}
+          >
+            &times;
+          </button>
+        </div>
+
+        <div className="tw-px-5 tw-py-4 md:tw-px-6 md:tw-py-5">
+          <div className="tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2">
+            <div className="tw-space-y-1.5">
+              <label className="tw-block tw-text-sm tw-font-semibold tw-text-slate-700">
+                {t("providerDashboard.rankingRequestModalRank")}
+              </label>
+              <input
+                type="number"
+                min="1"
+                step="1"
+                value={rankingRequestForm.preferred_position}
+                onChange={(event) =>
+                  setRankingRequestForm((prev) => ({
+                    ...prev,
+                    preferred_position: event.target.value,
+                  }))
+                }
+                placeholder={t("providerDashboard.rankingRequestModalRankPlaceholder")}
+                className="tw-h-12 tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-slate-50 tw-px-4 tw-text-sm tw-text-slate-800 tw-outline-none tw-transition focus:tw-border-brand-green focus:tw-bg-white focus:tw-ring-2 focus:tw-ring-brand-green/20"
+              />
+            </div>
+
+            <div className="tw-space-y-1.5">
+              <label className="tw-block tw-text-sm tw-font-semibold tw-text-slate-700">
+                {t("providerDashboard.rankingRequestModalStart")}
+              </label>
+              <input
+                type="datetime-local"
+                value={rankingRequestForm.preferred_start_at}
+                onChange={(event) =>
+                  setRankingRequestForm((prev) => ({
+                    ...prev,
+                    preferred_start_at: event.target.value,
+                  }))
+                }
+                className="tw-h-12 tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-slate-50 tw-px-4 tw-text-sm tw-text-slate-800 tw-outline-none tw-transition focus:tw-border-brand-green focus:tw-bg-white focus:tw-ring-2 focus:tw-ring-brand-green/20"
+              />
+            </div>
+
+            <div className="tw-space-y-1.5">
+              <label className="tw-block tw-text-sm tw-font-semibold tw-text-slate-700">
+                {t("providerDashboard.rankingRequestModalEnd")}
+              </label>
+              <input
+                type="datetime-local"
+                value={rankingRequestForm.preferred_end_at}
+                onChange={(event) =>
+                  setRankingRequestForm((prev) => ({
+                    ...prev,
+                    preferred_end_at: event.target.value,
+                  }))
+                }
+                className="tw-h-12 tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-slate-50 tw-px-4 tw-text-sm tw-text-slate-800 tw-outline-none tw-transition focus:tw-border-brand-green focus:tw-bg-white focus:tw-ring-2 focus:tw-ring-brand-green/20"
+              />
+            </div>
+
+            <div className="md:tw-col-span-2 tw-space-y-1.5">
+              <label className="tw-block tw-text-sm tw-font-semibold tw-text-slate-700">
+                {t("providerDashboard.rankingRequestModalMessage")}
+              </label>
+              <textarea
+                rows={5}
+                value={rankingRequestForm.message}
+                onChange={(event) =>
+                  setRankingRequestForm((prev) => ({
+                    ...prev,
+                    message: event.target.value,
+                  }))
+                }
+                placeholder={t("providerDashboard.rankingRequestModalMessagePlaceholder")}
+                className="tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-slate-50 tw-px-4 tw-py-3 tw-text-sm tw-text-slate-800 tw-outline-none tw-transition focus:tw-border-brand-green focus:tw-bg-white focus:tw-ring-2 focus:tw-ring-brand-green/20"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-end tw-gap-2 tw-border-t tw-border-slate-200 tw-bg-slate-50 tw-px-5 tw-py-4 md:tw-px-6">
+          <button
+            type="button"
+            onClick={closeRankingRequestModal}
+            disabled={rankingRequestLoading}
+            className="tw-inline-flex tw-items-center tw-rounded-xl tw-border tw-border-slate-300 tw-bg-white tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-slate-700 tw-transition hover:tw-bg-slate-100 disabled:tw-cursor-not-allowed disabled:tw-opacity-60"
+          >
+            {t("common.cancel")}
+          </button>
+          <button
+            type="button"
+            onClick={handleRankingRequest}
+            disabled={rankingRequestLoading}
+            className="tw-inline-flex tw-items-center tw-rounded-xl tw-bg-emerald-600 tw-px-4 tw-py-2 tw-text-sm tw-font-semibold tw-text-white tw-transition hover:tw-bg-emerald-700 disabled:tw-cursor-not-allowed disabled:tw-opacity-60"
+          >
+            {rankingRequestLoading
+              ? t("providerDashboard.rankingRequestLoading")
+              : t("providerDashboard.rankingRequestModalSubmit")}
+          </button>
+        </div>
+      </Modal>
 
       <Row className="mb-4">
         <Col md={4}>

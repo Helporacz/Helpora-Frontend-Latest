@@ -1,527 +1,336 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Modal, Button, Table } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { fetchUnavailabilityAPI, fetchWeekSlotsAPI, getUserProfile, saveDefaultAvailabilityAPI } from "store/globalSlice";
-import { Formik, Form, Field } from "formik";
 import MessagePopup from "components/layouts/MessagePopup/MessagePopup";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import {
+  getProviderDefaultAvailabilityAPI,
+  saveDefaultAvailabilityAPI,
+} from "store/globalSlice";
 
-const API_BASE = "http://localhost:3000/api/v1/slot";
+const DEFAULT_AVAILABILITY = {
+  startTime: "09:00",
+  endTime: "17:00",
+  workingDays: [1, 2, 3, 4, 5, 6], // Monday-Saturday
+};
 
-const getWeekDates = (startDate) =>
-    [...Array(7)].map((_, i) => {
-        const d = new Date(startDate);
-        d.setDate(startDate.getDate() + i);
-        return d;
-    });
+const HOUR_SLOT_PATTERN = /^([01]\d|2[0-3]):00$/;
 
-const formatDate = (date) => date.toISOString().slice(0, 10);
-
-const daysOfWeek = [
-    { label: "Sunday", value: 0 },
-    { label: "Monday", value: 1 },
-    { label: "Tuesday", value: 2 },
-    { label: "Wednesday", value: 3 },
-    { label: "Thursday", value: 4 },
-    { label: "Friday", value: 5 },
-    { label: "Saturday", value: 6 },
+const DAY_OPTIONS = [
+  { value: 1, fallbackLabel: "Monday" },
+  { value: 2, fallbackLabel: "Tuesday" },
+  { value: 3, fallbackLabel: "Wednesday" },
+  { value: 4, fallbackLabel: "Thursday" },
+  { value: 5, fallbackLabel: "Friday" },
+  { value: 6, fallbackLabel: "Saturday" },
+  { value: 0, fallbackLabel: "Sunday" },
 ];
 
+const normalizeAvailability = (input = {}) => {
+  const startTime = String(input?.startTime || DEFAULT_AVAILABILITY.startTime);
+  const endTime = String(input?.endTime || DEFAULT_AVAILABILITY.endTime);
+  const workingDays = Array.isArray(input?.workingDays)
+    ? Array.from(
+        new Set(
+          input.workingDays
+            .map((day) => Number(day))
+            .filter((day) => Number.isInteger(day) && day >= 0 && day <= 6)
+        )
+      ).sort((left, right) => left - right)
+    : [...DEFAULT_AVAILABILITY.workingDays];
+
+  return {
+    startTime: HOUR_SLOT_PATTERN.test(startTime)
+      ? startTime
+      : DEFAULT_AVAILABILITY.startTime,
+    endTime: HOUR_SLOT_PATTERN.test(endTime)
+      ? endTime
+      : DEFAULT_AVAILABILITY.endTime,
+    workingDays: workingDays.length ? workingDays : [...DEFAULT_AVAILABILITY.workingDays],
+  };
+};
+
 const SlotManagementWeekly = () => {
-    const dispatch = useDispatch();
-    const providerId = localStorage.getItem("userId");
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const providerId = localStorage.getItem("userId");
 
-    const [weekStart, setWeekStart] = useState(new Date());
-    const [weekDates, setWeekDates] = useState(getWeekDates(new Date()));
-    const [slotsByDate, setSlotsByDate] = useState({});
-    const [unavailability, setUnavailability] = useState([]);
-    const [showDefaultForm, setShowDefaultForm] = useState(false);
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [addDate, setAddDate] = useState("");
-    const [addOverride, setAddOverride] = useState({ isDayOff: false, timeRanges: [] });
-    const [editingDefault, setEditingDefault] = useState(false);
+  const [availability, setAvailability] = useState({ ...DEFAULT_AVAILABILITY });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [messagePopup, setMessagePopup] = useState({
+    show: false,
+    title: "",
+    message: "",
+    type: "success",
+  });
 
-    // Sync editableDefaultAvailability when defaultAvailability changes
+  const dayOptions = useMemo(
+    () =>
+      DAY_OPTIONS.map((day) => ({
+        ...day,
+        label: t(
+          `availabilitySettings.days.${String(day.value)}`,
+          day.fallbackLabel
+        ),
+      })),
+    [t]
+  );
 
-    const [defaultAvailability, setDefaultAvailability] = useState({
-        startTime: "09:00",
-        endTime: "17:00",
-        workingDays: [],
+  const showMessage = (type, title, message) => {
+    setMessagePopup({
+      show: true,
+      title,
+      message,
+      type,
     });
-    const [editableDefaultAvailability, setEditableDefaultAvailability] = useState(defaultAvailability);
+  };
 
-    useEffect(() => {
-        setEditableDefaultAvailability(defaultAvailability);
-    }, [defaultAvailability]);
+  const loadAvailability = async () => {
+    if (!providerId) {
+      setLoading(false);
+      return;
+    }
 
-    const [loadingDefault, setLoadingDefault] = useState(true);
+    setLoading(true);
+    try {
+      const response = await dispatch(getProviderDefaultAvailabilityAPI(providerId));
+      if (response?.success && response?.defaultAvailability) {
+        setAvailability(normalizeAvailability(response.defaultAvailability));
+      } else {
+        setAvailability({ ...DEFAULT_AVAILABILITY });
+      }
+    } catch (error) {
+      console.error("Error loading provider availability:", error);
+      setAvailability({ ...DEFAULT_AVAILABILITY });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchDefaultAvailability = async () => {
-        try {
-            const res = await dispatch(getUserProfile(providerId));
-            const defaultAvail = res?.data?.providerDetails?.defaultAvailability;
-            if (defaultAvail) setDefaultAvailability(defaultAvail);
-        } catch {
-        } finally {
-            setLoadingDefault(false);
-        }
-    };
+  useEffect(() => {
+    loadAvailability();
+  }, [providerId]);
 
-    const fetchWeekSlots = async () => {
-        if (!providerId || !weekStart) return;
+  const toggleWorkingDay = (dayValue) => {
+    setAvailability((prev) => {
+      const hasDay = prev.workingDays.includes(dayValue);
+      const nextDays = hasDay
+        ? prev.workingDays.filter((day) => day !== dayValue)
+        : [...prev.workingDays, dayValue];
 
-        const startDate = weekStart.toISOString().slice(0, 10);
-        const endDate = formatDate(new Date(weekStart.getTime() + 6 * 86400000));
+      return {
+        ...prev,
+        workingDays: nextDays.sort((left, right) => left - right),
+      };
+    });
+  };
 
-        const res = await dispatch(fetchWeekSlotsAPI(providerId, startDate, endDate));
+  const handleSave = async () => {
+    const startTime = String(availability.startTime || "").trim();
+    const endTime = String(availability.endTime || "").trim();
+    const workingDays = Array.isArray(availability.workingDays)
+      ? availability.workingDays
+      : [];
 
-        if (res?.success) {
-            setSlotsByDate(res.slotsByDate);
-        }
-    };
+    if (workingDays.length === 0) {
+      showMessage(
+        "warning",
+        t("availabilitySettings.validationTitle", "Validation"),
+        t("availabilitySettings.atLeastOneDay", "Select at least one available day.")
+      );
+      return;
+    }
 
-    const fetchUnavailability = async () => {
-        const res = await dispatch(fetchUnavailabilityAPI(providerId));
-        if (res?.success) {
-            setUnavailability(res?.unavailability || []);
-        }
-    };
+    if (!HOUR_SLOT_PATTERN.test(startTime) || !HOUR_SLOT_PATTERN.test(endTime)) {
+      showMessage(
+        "warning",
+        t("availabilitySettings.validationTitle", "Validation"),
+        t(
+          "availabilitySettings.fullHourOnly",
+          "Use full-hour values such as 09:00 or 17:00."
+        )
+      );
+      return;
+    }
 
-    useEffect(() => {
-        fetchDefaultAvailability();
-        fetchUnavailability();
-    }, []);
+    if (startTime >= endTime) {
+      showMessage(
+        "warning",
+        t("availabilitySettings.validationTitle", "Validation"),
+        t("availabilitySettings.invalidRange", "End time must be later than start time.")
+      );
+      return;
+    }
 
-    useEffect(() => {
-        setWeekDates(getWeekDates(weekStart));
-        if (defaultAvailability?.workingDays?.length > 0) fetchWeekSlots();
-    }, [weekStart, defaultAvailability]);
+    setSaving(true);
+    try {
+      const payload = {
+        startTime,
+        endTime,
+        workingDays,
+      };
+      const response = await dispatch(saveDefaultAvailabilityAPI(providerId, payload));
 
-    const saveDefaultAvailability = async (values) => {
-        if (!values.workingDays.length) {
-            setMessagePopup({
-                show: true,
-                title: "Validation Error",
-                message: "Please select at least one working day",
-                type: "warning",
-            });
-            return;
-        }
+      if (response?.success) {
+        setAvailability(normalizeAvailability(response.defaultAvailability || payload));
+        showMessage(
+          "success",
+          t("availabilitySettings.successTitle", "Success"),
+          t(
+            "availabilitySettings.savedSuccess",
+            "Availability updated successfully."
+          )
+        );
+      } else {
+        showMessage(
+          "error",
+          t("availabilitySettings.errorTitle", "Error"),
+          response?.message ||
+            t("availabilitySettings.saveFailed", "Failed to update availability.")
+        );
+      }
+    } catch (error) {
+      console.error("Error saving availability:", error);
+      showMessage(
+        "error",
+        t("availabilitySettings.errorTitle", "Error"),
+        t("availabilitySettings.saveFailed", "Failed to update availability.")
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
 
-        // try {
-        //     await axios.post(`${API_BASE}/${providerId}/default-availability`, values);
-        //     alert("Default availability saved");
-        //     fetchDefaultAvailability();
-        // } catch {
-        //     alert("Error saving default availability");
-        // }
-        const res = await dispatch(saveDefaultAvailabilityAPI(providerId, values));
-        if (res?.success) {
-            setMessagePopup({
-                show: true,
-                title: "Success",
-                message: "Default availability saved",
-                type: "success",
-            });
-            fetchDefaultAvailability();
-        } else {
-            setMessagePopup({
-                show: true,
-                title: "Error",
-                message: "Error saving default availability",
-                type: "error",
-            });
-        }
-    };
-
-    const saveAddOverride = async () => {
-        if (!addDate) {
-            setMessagePopup({
-                show: true,
-                title: "Validation Error",
-                message: "Please select a date",
-                type: "warning",
-            });
-            return;
-        }
-        if (!addOverride.isDayOff && addOverride.timeRanges.length === 0) {
-            setMessagePopup({
-                show: true,
-                title: "Validation Error",
-                message: "Add a time range or choose Day Off",
-                type: "warning",
-            });
-            return;
-        }
-
-        const { startTime: defStart, endTime: defEnd } = defaultAvailability;
-
-        for (const range of addOverride.timeRanges) {
-            if (range.startTime < defStart || range.endTime > defEnd) {
-                setMessagePopup({
-                    show: true,
-                    title: "Validation Error",
-                    message: `Time range must be within default availability: ${defStart} - ${defEnd}`,
-                    type: "warning",
-                });
-                return;
-            }
-        }
-
-        try {
-            const overrideData = {
-                date: addDate,
-                isDayOff: addOverride.isDayOff,
-                timeRanges: addOverride.timeRanges
-            };
-            await dispatch(overrideAvailabilityAPI(providerId, overrideData));
-
-            setMessagePopup({
-                show: true,
-                title: "Success",
-                message: "Unavailability added",
-                type: "success",
-            });
-            setShowAddModal(false);
-            fetchWeekSlots();
-        } catch {
-            setMessagePopup({
-                show: true,
-                title: "Error",
-                message: "Error adding unavailability",
-                type: "error",
-            });
-        }
-    };
-
-    if (loadingDefault) return <div>Loading...</div>;
-
+  if (loading) {
     return (
-        <>
-            <MessagePopup
-                show={messagePopup.show}
-                onHide={() => setMessagePopup({ ...messagePopup, show: false })}
-                title={messagePopup.title}
-                message={messagePopup.message}
-                type={messagePopup.type}
-            />
-        <div className="container mt-4">
-            {showDefaultForm || defaultAvailability.workingDays.length === 0 ? (
-                <div>
-                    <h2>Set Default Availability</h2>
-
-                    <Formik
-                        initialValues={defaultAvailability}
-                        onSubmit={async (values) => {
-                            await saveDefaultAvailability(values);
-                            setShowDefaultForm(false);
-                        }}
-                        enableReinitialize
-                    >
-                        {({ values, handleChange }) => (
-                            <Form>
-                                <div className="mb-2">
-                                    <label>Start Time</label>
-                                    <Field type="time" name="startTime" className="form-control" />
-                                </div>
-
-                                <div className="mb-2">
-                                    <label>End Time</label>
-                                    <Field type="time" name="endTime" className="form-control" />
-                                </div>
-
-                                <div className="mb-2">
-                                    <label>Working Days</label>
-                                    <div>
-                                        {daysOfWeek.map((day) => (
-                                            <label key={day.value} className="me-3">
-                                                <input
-                                                    type="checkbox"
-                                                    name="workingDays"
-                                                    value={day.value}
-                                                    checked={values.workingDays.includes(day.value)}
-                                                    onChange={(e) => {
-                                                        const newDays = e.target.checked
-                                                            ? [...values.workingDays, day.value]
-                                                            : values.workingDays.filter((d) => d !== day.value);
-
-                                                        handleChange({
-                                                            target: { name: "workingDays", value: newDays },
-                                                        });
-                                                    }}
-                                                />
-                                                {day.label}
-                                            </label>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <button type="submit" className="btn btn-primary">
-                                    Save
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary ms-2"
-                                    onClick={() => setShowDefaultForm(false)}
-                                >
-                                    Cancel
-                                </button>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            ) : (
-                <>
-                    <div className="d-flex justify-content-between mb-3">
-                        <h2>Availability Management</h2>
-
-                        <button
-                            className="px-3"
-                            style={{ backgroundColor: "red", border: "none", borderRadius: "12px" }}
-                            onClick={() => {
-                                setAddDate("");
-                                setAddOverride({ isDayOff: false, timeRanges: [] });
-                                setShowAddModal(true);
-                            }}
-                        >
-                            Add Unavailability
-                        </button>
-                    </div>
-                    <div>
-                        <p>You can change default availability from here.</p>
-                    </div>
-
-                    <Table bordered>
-                        <thead>
-                            <tr>
-                                <th>Day</th>
-                                <th>Day Off</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {daysOfWeek.map((day) => {
-                                const isWorking = editableDefaultAvailability.workingDays.includes(day.value);
-                                const slots = slotsByDate[formatDate(weekDates[day.value])] || [];
-
-                                return (
-                                    <tr key={day.value}>
-                                        <td>{day.label}</td>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                checked={!isWorking}
-                                                disabled={!editingDefault}
-                                                onChange={(e) => {
-                                                    const newDays = e.target.checked
-                                                        ? editableDefaultAvailability.workingDays.filter(d => d !== day.value)
-                                                        : [...editableDefaultAvailability.workingDays, day.value];
-                                                    setEditableDefaultAvailability({
-                                                        ...editableDefaultAvailability,
-                                                        workingDays: newDays,
-                                                    });
-                                                }}
-                                            />
-                                            Day Off
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="time"
-                                                value={editableDefaultAvailability.startTime}
-                                                disabled={!editingDefault || !isWorking}
-                                                onChange={(e) =>
-                                                    setEditableDefaultAvailability({ ...editableDefaultAvailability, startTime: e.target.value })
-                                                }
-                                            />
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="time"
-                                                value={editableDefaultAvailability.endTime}
-                                                disabled={!editingDefault || !isWorking}
-                                                onChange={(e) =>
-                                                    setEditableDefaultAvailability({ ...editableDefaultAvailability, endTime: e.target.value })
-                                                }
-                                            />
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </Table>
-                    {editingDefault ? (
-                        <div className="mt-3">
-                            <button
-                                className="btn btn-success me-2"
-                                onClick={async () => {
-                                    await dispatch(saveDefaultAvailabilityAPI(providerId, editableDefaultAvailability));
-                                    setEditingDefault(false);
-                                    fetchDefaultAvailability();
-                                    fetchWeekSlots();
-                                }}
-                            >
-                                Save
-                            </button>
-                            <button
-                                className="btn btn-secondary"
-                                onClick={() => {
-                                    setEditableDefaultAvailability(defaultAvailability);
-                                    setEditingDefault(false);
-                                }}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    ) : (
-                        <button className="btn btn-primary mt-3" onClick={() => setEditingDefault(true)}>
-                            Change Default Availability
-                        </button>
-                    )}
-
-
-                    <h4 className="mt-4">Unavailability</h4>
-
-                    <Table bordered>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Time Ranges</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {unavailability.length === 0 && (
-                                <tr>
-                                    <td colSpan="3" className="text-center">
-                                        No unavailability added.
-                                    </td>
-                                </tr>
-                            )}
-
-                            {unavailability.map((u, idx) => (
-                                <tr key={idx}>
-                                    <td>{u.date}</td>
-                                    <td>{u.isDayOff ? "Day Off" : "Custom Time"}</td>
-                                    <td>
-                                        {u.isDayOff ? (
-                                            "—"
-                                        ) : (
-                                            u.timeRanges.map((t, i) => (
-                                                <div key={i}>
-                                                    {t.startTime} - {t.endTime}
-                                                </div>
-                                            ))
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </>
-            )}
-
-            <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add Unavailability</Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                    {/* Date */}
-                    <div className="mb-3">
-                        <label>Date</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            value={addDate}
-                            min={formatDate(new Date())}
-                            onChange={(e) => setAddDate(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="mb-3">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={addOverride.isDayOff}
-                                onChange={(e) =>
-                                    setAddOverride({ ...addOverride, isDayOff: e.target.checked })
-                                }
-                            />{" "}
-                            Day Off
-                        </label>
-                    </div>
-
-                    {!addOverride.isDayOff &&
-                        addOverride.timeRanges.map((range, index) => (
-                            <div key={index} className="d-flex gap-2 mb-2">
-                                <input
-                                    type="time"
-                                    value={range.startTime}
-                                    onChange={(e) => {
-                                        const updated = [...addOverride.timeRanges];
-                                        updated[index].startTime = e.target.value;
-                                        setAddOverride({ ...addOverride, timeRanges: updated });
-                                    }}
-                                />
-                                <input
-                                    type="time"
-                                    value={range.endTime}
-                                    onChange={(e) => {
-                                        const updated = [...addOverride.timeRanges];
-                                        updated[index].endTime = e.target.value;
-                                        setAddOverride({ ...addOverride, timeRanges: updated });
-                                    }}
-                                />
-                                <button
-                                    className="btn btn-sm btn-danger"
-                                    onClick={() =>
-                                        setAddOverride({
-                                            ...addOverride,
-                                            timeRanges: addOverride.timeRanges.filter((_, i) => i !== index),
-                                        })
-                                    }
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
-
-                    {!addOverride.isDayOff && (
-                        <button
-                            className="btn btn-sm btn-primary"
-                            onClick={() =>
-                                setAddOverride({
-                                    ...addOverride,
-                                    timeRanges: [
-                                        ...addOverride.timeRanges,
-                                        {
-                                            startTime: defaultAvailability.startTime,
-                                            endTime: defaultAvailability.endTime,
-                                        },
-                                    ],
-                                })
-                            }
-                        >
-                            Add Time Range
-                        </button>
-                    )}
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={saveAddOverride}>
-                        Save
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
-        </>
+      <div className="tw-mx-auto tw-mt-6 tw-flex tw-max-w-5xl tw-items-center tw-gap-2 tw-px-3">
+        <span
+          className="tw-h-4 tw-w-4 tw-animate-spin tw-rounded-full tw-border-2 tw-border-[#112d58] tw-border-t-transparent"
+          aria-hidden="true"
+        />
+        <span className="tw-text-sm tw-text-slate-700">
+          {t("availabilitySettings.loading", "Loading availability...")}
+        </span>
+      </div>
     );
+  }
+
+  return (
+    <>
+      <MessagePopup
+        show={messagePopup.show}
+        onHide={() => setMessagePopup((prev) => ({ ...prev, show: false }))}
+        title={messagePopup.title}
+        message={messagePopup.message}
+        type={messagePopup.type}
+      />
+
+      <div className="tw-mx-auto tw-mt-6 tw-max-w-5xl tw-px-3">
+        <div className="tw-rounded-2xl tw-border tw-border-slate-200 tw-bg-white tw-p-5 tw-shadow-sm md:tw-p-6">
+          <div className="tw-mb-5 tw-flex tw-flex-col tw-gap-2">
+            <h3 className="tw-mb-0 tw-text-2xl tw-font-semibold tw-text-slate-900">
+              {t("availabilitySettings.heading", "Availability Settings")}
+            </h3>
+            <p className="tw-mb-0 tw-text-sm tw-text-slate-600 md:tw-text-base">
+              {t(
+                "availabilitySettings.description",
+                "Set your working days and booking hours. Customers can request only these slots."
+              )}
+            </p>
+          </div>
+
+          <div className="tw-mb-5 tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2">
+            <div className="tw-space-y-2">
+              <label
+                htmlFor="availability-start-time"
+                className="tw-text-sm tw-font-semibold tw-text-slate-800"
+              >
+                {t("availabilitySettings.startTime", "Start time")}
+              </label>
+              <input
+                id="availability-start-time"
+                type="time"
+                step={3600}
+                value={availability.startTime}
+                onChange={(event) =>
+                  setAvailability((prev) => ({
+                    ...prev,
+                    startTime: event.target.value,
+                  }))
+                }
+                className="tw-block tw-h-11 tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-white tw-px-3 tw-text-sm tw-text-slate-900 focus:tw-border-brand-green focus:tw-outline-none"
+              />
+            </div>
+            <div className="tw-space-y-2">
+              <label
+                htmlFor="availability-end-time"
+                className="tw-text-sm tw-font-semibold tw-text-slate-800"
+              >
+                {t("availabilitySettings.endTime", "End time")}
+              </label>
+              <input
+                id="availability-end-time"
+                type="time"
+                step={3600}
+                value={availability.endTime}
+                onChange={(event) =>
+                  setAvailability((prev) => ({
+                    ...prev,
+                    endTime: event.target.value,
+                  }))
+                }
+                className="tw-block tw-h-11 tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-white tw-px-3 tw-text-sm tw-text-slate-900 focus:tw-border-brand-green focus:tw-outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="tw-mb-6">
+            <p className="tw-mb-3 tw-text-sm tw-font-semibold tw-text-slate-800">
+              {t("availabilitySettings.daysLabel", "Available days")}
+            </p>
+            <div className="tw-flex tw-flex-wrap tw-gap-2.5">
+              {dayOptions.map((day) => {
+                const checked = availability.workingDays.includes(day.value);
+                return (
+                  <label
+                    key={day.value}
+                    htmlFor={`availability-day-${day.value}`}
+                    className={`tw-flex tw-cursor-pointer tw-items-center tw-gap-2 tw-rounded-full tw-border tw-px-3 tw-py-1.5 tw-text-sm tw-font-medium ${
+                      checked
+                        ? "tw-border-brand-green tw-bg-brand-green/10 tw-text-[#116227]"
+                        : "tw-border-slate-300 tw-bg-white tw-text-slate-700 hover:tw-border-slate-400"
+                    }`}
+                  >
+                    <input
+                      id={`availability-day-${day.value}`}
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleWorkingDay(day.value)}
+                      className="tw-h-4 tw-w-4 tw-cursor-pointer tw-rounded tw-border-slate-300 tw-text-brand-green focus:tw-ring-brand-green/40"
+                    />
+                    <span>{day.label}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="tw-flex tw-justify-end">
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving}
+              className="tw-inline-flex tw-h-11 tw-items-center tw-justify-center tw-rounded-xl tw-bg-[#112d58] tw-px-5 tw-text-sm tw-font-semibold tw-text-white tw-transition hover:tw-bg-[#0b2142] disabled:tw-cursor-not-allowed disabled:tw-opacity-60"
+            >
+              {saving
+                ? t("availabilitySettings.saving", "Saving...")
+                : t("availabilitySettings.save", "Save availability")}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default SlotManagementWeekly;

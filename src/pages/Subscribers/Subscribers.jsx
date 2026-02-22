@@ -14,10 +14,13 @@ import {
   throwSuccess,
 } from "store/globalSlice";
 import "./Subscribers.scss";
+import { normalizeLanguage } from "@/lib/i18n-client";
 
 
 const Subscribers = () => {
   const { t, i18n } = useTranslation();
+  const currentLang = normalizeLanguage(i18n.resolvedLanguage || i18n.language || "cz");
+  const numberLocale = currentLang === "cz" ? "cs-CZ" : currentLang === "ru" ? "ru-RU" : "en-US";
   const dispatch = useDispatch();
   const [stats, setStats] = useState(null);
   const [tableState, setTableState] = useState({
@@ -93,7 +96,7 @@ const Subscribers = () => {
 
   const formatDate = (value) => {
     if (!value) return "-";
-    return new Date(value).toLocaleDateString(i18n.language === "cz" ? "cs-CZ" : "en-US", {
+    return new Date(value).toLocaleDateString(numberLocale, {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -103,7 +106,7 @@ const Subscribers = () => {
   const formatAmount = (amount, currency) => {
     if (amount === null || amount === undefined || !currency) return "-";
     try {
-      return new Intl.NumberFormat(i18n.language === "cz" ? "cs-CZ" : "en-US", {
+      return new Intl.NumberFormat(numberLocale, {
         style: "currency",
         currency: currency.toUpperCase(),
       }).format(amount / 100);

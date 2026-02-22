@@ -1,5 +1,5 @@
-@import "../../styles/tokens";
-@import "../../styles/badges";
+@use "../../styles/tokens";
+@use "../../styles/badges";
 
 .subservices-container {
   padding: 2rem 0;
@@ -33,6 +33,10 @@
       line-height: 1.6;
       margin: 0;
     }
+  }
+
+  .subservices-top-providers {
+    margin-bottom: 1rem;
   }
 
   // Search & Filter Bar
@@ -424,7 +428,7 @@
             gap: 0.5rem;
 
             &.video-badge {
-              background: $hp-gradient-brand;
+              background: tokens.$hp-gradient-brand;
             }
 
             &.mojeid-badge {

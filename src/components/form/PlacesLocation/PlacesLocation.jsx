@@ -9,7 +9,7 @@ const PlacesLocation = ({ label, onChange, placeholder, error }) => {
   const inputRef = useRef();
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_MAP_API,
+    googleMapsApiKey: import.meta.env.VITE_MAP_API,
     libraries,
   });
 

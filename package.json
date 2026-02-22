@@ -10,9 +10,9 @@
     "@lottiefiles/dotlottie-react": "^0.17.8",
     "@mui/material": "^5.11.11",
     "@mui/styled-engine-sc": "^5.11.11",
+    "@react-google-maps/api": "^2.20.7",
     "@react-pdf/renderer": "^3.1.12",
     "@reduxjs/toolkit": "^1.9.5",
-    "@tailwindcss/postcss": "^4.1.16",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.10.3",
@@ -42,7 +42,6 @@
     "react-phone-input-2": "^2.15.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
-    "react-scripts": "5.0.1",
     "react-select": "^5.10.2",
     "react-star-ratings": "^2.3.0",
     "react-time-range": "^1.0.4",
@@ -54,11 +53,12 @@
     "yup": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build-zip": "if exist build rmdir /Q /S build && del -f /Q build.zip && react-scripts build && tar.exe -a -cf build.zip build"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest --passWithNoTests",
+    "build-zip": "if exist build rmdir /Q /S build && del -f /Q build.zip && vite build && tar.exe -a -cf build.zip build"
   },
   "browserslist": {
     "production": [
@@ -78,8 +78,14 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.10.0",
+    "jsdom": "^27.0.1",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "^3.4.17",
+    "vite": "^7.1.12",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }

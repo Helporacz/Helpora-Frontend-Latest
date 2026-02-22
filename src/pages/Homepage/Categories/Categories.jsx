@@ -1,4 +1,5 @@
 import SkeletonCategory from "components/Skeleton/SkeletonCategory";
+import LazyBackgroundImage from "components/LazyBackgroundImage";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaArrowRight } from "react-icons/fa";
@@ -16,7 +17,10 @@ const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang = normalizedLang === "cs" ? "cz" : normalizedLang;
 
   const fetchCategories = useCallback(async () => {
     setLoading(true);
@@ -39,11 +43,14 @@ const Categories = () => {
 
   const getImageForCategory = () => clean;
 
-  const slugify = (text) =>
-    text
+  const slugify = (text = "") =>
+    String(text)
+      .normalize("NFKD")
       .toLowerCase()
+      .trim()
+      .replace(/[^\p{L}\p{N}\s-]/gu, "")
       .replace(/\s+/g, "-")
-      .replace(/[^\w-]+/g, "");
+      .replace(/-+/g, "-");
 
   if (loading) {
     return <SkeletonCategory />;
@@ -68,12 +75,26 @@ const Categories = () => {
             const backgroundImage = category.image || getImageForCategory();
 
             const displayName =
-              currentLang === "cz" ? category.cz_name : category.name;
+              (currentLang === "ru"
+                ? category?.ru_name
+                : currentLang === "cz"
+                ? category?.cz_name
+                : category?.name) ||
+              category?.name ||
+              category?.cz_name ||
+              category?.ru_name ||
+              "";
 
             const displayDescription =
-              currentLang === "cz"
-                ? category.cz_short_description
-                : category.short_description;
+              (currentLang === "ru"
+                ? category?.ru_short_description
+                : currentLang === "cz"
+                ? category?.cz_short_description
+                : category?.short_description) ||
+              category?.short_description ||
+              category?.cz_short_description ||
+              category?.ru_short_description ||
+              "";
 
             const slugSource = displayName || "";
 
@@ -99,14 +120,14 @@ const Categories = () => {
                     }
                   }}
                 >
-                  <div
+                  <LazyBackgroundImage
                     className="card-bg"
+                    src={backgroundImage}
                     style={{
-                      backgroundImage: `url(${backgroundImage})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }}
-                  ></div>
+                  />
 
                   <div className="card-overlay"></div>
                   <div className="card-border"></div>
@@ -116,7 +137,7 @@ const Categories = () => {
                       {displayName}
                     </h3>
 
-                    {category?.short_description && (
+                    {displayDescription && (
                       <p className="category-description text-white-50 mb-3 small">
                         {displayDescription}
                       </p>

@@ -10,7 +10,10 @@ import { getLocalizedPath } from "utils/localizedRoute";
 
 const Servicesection = () => {
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang = normalizedLang === "cs" ? "cz" : normalizedLang;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -39,11 +42,14 @@ const Servicesection = () => {
     return clean;
   };
 
-  const slugify = (text) =>
-    text
+  const slugify = (text = "") =>
+    String(text)
+      .normalize("NFKD")
       .toLowerCase()
+      .trim()
+      .replace(/[^\p{L}\p{N}\s-]/gu, "")
       .replace(/\s+/g, "-")
-      .replace(/[^\w-]+/g, "");
+      .replace(/-+/g, "-");
   if (loading) {
     return <SkeletonCategory />;
   }
@@ -89,12 +95,26 @@ const Servicesection = () => {
         <div className="row g-4">
           {categories.map((category, index) => {
             const displayName =
-              currentLang === "cz" ? category.cz_name : category.name;
+              (currentLang === "ru"
+                ? category?.ru_name
+                : currentLang === "cz"
+                ? category?.cz_name
+                : category?.name) ||
+              category?.name ||
+              category?.cz_name ||
+              category?.ru_name ||
+              "";
 
             const displayDescription =
-              currentLang === "cz"
-                ? category.cz_short_description
-                : category.short_description;
+              (currentLang === "ru"
+                ? category?.ru_short_description
+                : currentLang === "cz"
+                ? category?.cz_short_description
+                : category?.short_description) ||
+              category?.short_description ||
+              category?.cz_short_description ||
+              category?.ru_short_description ||
+              "";
 
             const slugSource = displayName || "";
             return (
@@ -134,7 +154,7 @@ const Servicesection = () => {
 
                   <div className="card-body-content">
                   <div className="d-flex justify-content-between align-content-center ">
-                      <h3 className="card-title">{displayName}</h3>  <h6 className="">{category?.serviceCount} Services</h6>
+                      <h3 className="card-title">{displayName}</h3>  <h6 className="">{category?.serviceCount} {t("common.services")}</h6>
                   </div>
 
                     <p className="card-description">{displayDescription}</p>
@@ -144,7 +164,7 @@ const Servicesection = () => {
                         e.stopPropagation();
                         navigate(
                           getLocalizedPath(
-                            `/categories/${slugify(category.name)}/${
+                            `/categories/${slugify(displayName || category.name)}/${
                               category._id
                             }`,
                             i18n.language

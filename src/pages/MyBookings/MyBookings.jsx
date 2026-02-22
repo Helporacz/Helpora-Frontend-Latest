@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import SearchInput from "components/form/SearchInput";
 import MenuOption from "components/layouts/MenuOption";
@@ -7,10 +8,13 @@ import Table from "components/layouts/Table/Table";
 import { Badge, Modal, Button } from "react-bootstrap";
 import { getUserBookings, addReview, getAllReview, throwSuccess, createBooking } from "store/globalSlice";
 import { useTranslation } from "react-i18next";
+import { commonRoute } from "utils/constants";
+import { getLocalizedPath } from "utils/localizedRoute";
 
 const MyBookings = () => {
     const dispatch = useDispatch();
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
     const [tableData, setTableData] = useState({
         offset: 0,
         limit: 10,
@@ -134,7 +138,23 @@ const MyBookings = () => {
         { title: t("myBooking.table.header4") },
         { title: t("myBooking.table.header5") },
         { title: t("myBooking.table.header6") },
+        { title: t("navbar.message", "Message") },
     ];
+
+    const openChatWithProvider = (booking) => {
+        const partnerId = booking?.provider?._id || booking?.provider?.id;
+        if (!partnerId) return;
+
+        const params = new URLSearchParams({
+            partnerId: String(partnerId),
+            partnerName: String(booking?.provider?.name || ""),
+            partnerImage: String(booking?.provider?.profileImage || ""),
+        });
+
+        navigate(
+            `${getLocalizedPath(commonRoute.chat, i18n.language)}?${params.toString()}`
+        );
+    };
 
     const rowData = tableData.data?.map((item) => ({
         data: [
@@ -176,9 +196,11 @@ const MyBookings = () => {
                                 await dispatch(
                                   createBooking({
                                     providerServiceId: item.providerService || item.providerServiceId,
-                                    bookingDate: new Date(),
+                                    bookingDate: new Date().toISOString().split("T")[0],
+                                    bookingTime: "09:00",
+                                    preferredTime: "09:00",
                                     totalPrice: item.totalPrice,
-                                    note: "Repeat booking",
+                                    notes: "Repeat booking",
                                   })
                                 );
                                 dispatch(
@@ -206,6 +228,18 @@ const MyBookings = () => {
             { value: item.provider?.name ?? "-" },
             { value: formatDateTime(item.createdAt) },
             { value: formatDateTime(item.updatedAt) },
+            {
+                value: (
+                    <button
+                        type="button"
+                        className="btn btn-sm btn-outline-primary"
+                        onClick={() => openChatWithProvider(item)}
+                        disabled={!item?.provider?._id}
+                    >
+                        {t("navbar.message", "Message")}
+                    </button>
+                ),
+            },
         ],
     })) || [];
 

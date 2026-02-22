@@ -104,6 +104,7 @@ const ImageCropModal = ({
       centered
       size="lg"
       className="image-crop-modal"
+      backdropClassName="image-crop-backdrop"
     >
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>

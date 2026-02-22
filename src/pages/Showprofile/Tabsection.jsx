@@ -3,19 +3,69 @@ import VerificationSection from "./VerificationSection";
 import { FiClock, FiMessageSquare, FiCheckCircle } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
-const Tabsection = ({ url, text, activeService }) => {
+const Tabsection = ({ activeService }) => {
   const { t, i18n } = useTranslation();
 
-  let displayText = "";
-  if (text) {
-    displayText = text
-      .split(/\s/)
-      .reduce((acc, word) => (acc += word[0]), "")
-      .substring(0, 2)
-      .toUpperCase();
-  }
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang =
+    normalizedLang === "cs" ? "cz" : normalizedLang === "ru" ? "ru" : "en";
 
-  const langIsCz = (i18n.language || "").toLowerCase().startsWith("cz");
+  const resolveServiceValue = (...values) => {
+    for (const value of values) {
+      if (typeof value === "string" && value.trim()) {
+        return value.trim();
+      }
+    }
+    return "";
+  };
+
+  const serviceTitle =
+    currentLang === "ru"
+      ? resolveServiceValue(
+          activeService?.service?.ru_title,
+          activeService?.service?.title,
+          activeService?.service?.cz_title
+        )
+      : currentLang === "cz"
+      ? resolveServiceValue(
+          activeService?.service?.cz_title,
+          activeService?.service?.title,
+          activeService?.service?.ru_title
+        )
+      : resolveServiceValue(
+          activeService?.service?.title,
+          activeService?.service?.cz_title,
+          activeService?.service?.ru_title
+        );
+
+  const serviceDescription =
+    currentLang === "ru"
+      ? resolveServiceValue(
+          activeService?.service?.ru_description,
+          activeService?.service?.description,
+          activeService?.service?.cz_description
+        )
+      : currentLang === "cz"
+      ? resolveServiceValue(
+          activeService?.service?.cz_description,
+          activeService?.service?.description,
+          activeService?.service?.ru_description
+        )
+      : resolveServiceValue(
+          activeService?.service?.description,
+          activeService?.service?.cz_description,
+          activeService?.service?.ru_description
+        );
+
+  const serviceStatusRaw = String(activeService?.status || "").toLowerCase();
+  const serviceStatus =
+    serviceStatusRaw === "active"
+      ? t("showProfile.statusActive", "Active")
+      : serviceStatusRaw === "deactive"
+      ? t("showProfile.statusDeactive", "Inactive")
+      : activeService?.status || t("showProfile.statusUnknown", "N/A");
 
   const lastBooking =
     activeService?.provider?.lastBookingAt &&
@@ -28,20 +78,39 @@ const Tabsection = ({ url, text, activeService }) => {
     <div className="">
       <div className="">
         <div className="">
-          <h2 className="">{activeService?.provider?.name || t("showProfile.providerNamePlaceholder")}</h2>
+          <h2 className="">
+            {activeService?.provider?.name ||
+              t("showProfile.providerNamePlaceholder")}
+          </h2>
 
           <p>
-            <strong>{langIsCz ? "Cena" : "Price"}:</strong> CZK{activeService?.price ?? "-"}
+            <strong>{t("showProfile.priceLabel", "Price")}:</strong>{" "}
+            CZK{activeService?.price ?? "-"}
           </p>
 
           <p>
-            <strong>{langIsCz ? "Stav" : "Status"}:</strong> {activeService?.status || "N/A"}
+            <strong>{t("showProfile.statusLabel", "Status")}:</strong>{" "}
+            {serviceStatus}
           </p>
+
+          {serviceTitle && (
+            <p>
+              <strong>{t("showProfile.serviceLabel", "Service")}:</strong>{" "}
+              {serviceTitle}
+            </p>
+          )}
+
+          {serviceDescription && (
+            <p>
+              <strong>{t("showProfile.descriptionLabel", "Description")}:</strong>{" "}
+              {serviceDescription}
+            </p>
+          )}
 
           <div className="d-flex align-items-center gap-2">
             <FiCheckCircle className="text-success" />
             <span className="">
-              {langIsCz ? "3 roky zkušeností" : "3 years experience"}
+              {t("showProfile.experienceHint", "3 years experience")}
             </span>
           </div>
 
@@ -66,9 +135,7 @@ const Tabsection = ({ url, text, activeService }) => {
                 <FiMessageSquare />
                 <strong>{t("showProfile.lastReviewLabel")}</strong>
               </div>
-              <div>
-                {lastReview || t("showProfile.noReviewsDetailed")}
-              </div>
+              <div>{lastReview || t("showProfile.noReviewsDetailed")}</div>
               <div className="mt-2 text-muted" style={{ fontSize: "0.9rem" }}>
                 {t("showProfile.realExperienceNote")}
               </div>

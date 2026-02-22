@@ -1,6 +1,8 @@
 import axios from "axios";
 import { getHeaderData } from "utils/helpers";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -27,7 +29,7 @@ export const api = {
 
     return new Promise((resolve, reject) => {
       axios
-        .get(process.env.REACT_APP_API_URL + url, {
+        .get(API_URL + url, {
           headers,
           params: options.params || {},
         })
@@ -44,7 +46,7 @@ export const api = {
     headers = { ...headers };
     return new Promise((resolve, reject) => {
       axios
-        .delete(process.env.REACT_APP_API_URL + url, {
+        .delete(API_URL + url, {
           headers,
           data,
         })
@@ -71,7 +73,7 @@ export const api = {
 
     return new Promise((resolve, reject) => {
       axios
-        .post(process.env.REACT_APP_API_URL + url, data, {
+        .post(API_URL + url, data, {
           headers,
         })
         .then((res) => {
@@ -96,7 +98,32 @@ export const api = {
 
     return new Promise((resolve, reject) => {
       axios
-        .put(process.env.REACT_APP_API_URL + url, data, {
+        .put(API_URL + url, data, {
+          headers,
+        })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          if (err?.response?.data) {
+            resolve(err?.response?.data);
+          } else {
+            reject(err);
+          }
+        });
+    });
+  },
+
+  patch: (url, data = {}, header = {}) => {
+    let headers = api.header();
+    headers = { ...headers, ...header };
+    if (data instanceof FormData) {
+      delete headers["Content-Type"];
+    }
+
+    return new Promise((resolve, reject) => {
+      axios
+        .patch(API_URL + url, data, {
           headers,
         })
         .then((res) => {

@@ -1,4 +1,8 @@
 .image-crop-modal {
+  &.modal {
+    z-index: 12050 !important;
+  }
+
   .cropper-wrapper {
     position: relative;
     width: 100%;
@@ -51,4 +55,8 @@
       height: 260px;
     }
   }
+}
+
+.image-crop-backdrop {
+  z-index: 12040 !important;
 }

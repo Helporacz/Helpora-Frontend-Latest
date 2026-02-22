@@ -12,7 +12,6 @@ import {
   getAdminProfile,
   getUserProfile,
 } from "store/globalSlice";
-import { objectToFormData } from "utils/helpers";
 import Loader from "components/layouts/Loader/Loader";
 
 const ProfileDetails = ({
@@ -66,11 +65,8 @@ const ProfileDetails = ({
         ...values,
         profileImage: imageUrlToSave,
       };
-
-      const formData = objectToFormData(payload);
-
       const response = await dispatch(
-        updateProvider({ id: values.id, payload: formData })
+        updateProvider({ id: values.id, payload })
       );
 
       if (response?.status === 200) {

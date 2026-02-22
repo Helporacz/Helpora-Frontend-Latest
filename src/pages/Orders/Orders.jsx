@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import SearchInput from "components/form/SearchInput";
 import MenuOption from "components/layouts/MenuOption";
 import Table from "components/layouts/Table/Table";
@@ -8,11 +9,13 @@ import UpdateBookingStatusModal from "./UpdateBookingStatusModal";
 
 import { getBookings, throwSuccess, updateBookingStatus } from "store/globalSlice";
 import { useTranslation } from "react-i18next";
+import { commonRoute } from "utils/constants";
+import { getLocalizedPath } from "utils/localizedRoute";
 
 const Orders = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState({
     offset: 0,
     limit: 10,
@@ -121,8 +124,25 @@ const Orders = () => {
     { title: t("order.table.header4") },
     { title: t("order.table.header2") },
     { title: t("order.table.header6") },
+    { title: t("order.table.header9", "Requested Time") },
     { title: t("order.table.header7") },
+    { title: t("navbar.message", "Message") },
   ];
+
+  const openChatWithUser = (booking) => {
+    const partnerId = booking?.user?._id || booking?.user?.id;
+    if (!partnerId) return;
+
+    const params = new URLSearchParams({
+      partnerId: String(partnerId),
+      partnerName: String(booking?.user?.name || ""),
+      partnerImage: String(booking?.user?.profileImage || ""),
+    });
+
+    navigate(
+      `${getLocalizedPath(commonRoute.prociderChat, i18n.language)}?${params.toString()}`
+    );
+  };
 
   const rowData = tableData.data?.map((item) => {
     return {
@@ -143,7 +163,20 @@ const Orders = () => {
         },
         { value: `CZK${item.totalPrice}` ?? `CZK${item.service?.price}` ?? "-" },
         { value: formatDate(item.bookingDate) },
+        { value: item.bookingTime || item.preferredTime || "-" },
         { value: formatDateTime(item.updatedAt) },
+        {
+          value: (
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-primary"
+              onClick={() => openChatWithUser(item)}
+              disabled={!item?.user?._id}
+            >
+              {t("navbar.message", "Message")}
+            </button>
+          ),
+        },
       ],
     };
   }) || [];

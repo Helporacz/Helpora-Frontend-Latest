@@ -1,25 +1,39 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import {
+  deleteChatConversation,
   getChatList,
   getMessages,
-  markMessagesRead
+  markMessagesRead,
+  throwError,
+  throwSuccess,
 } from "store/globalSlice";
+import { useTranslation } from "react-i18next";
 import { getDataFromLocalStorage } from "utils/helpers";
-import "./Chat.css";
 import ChatArea from "./ChatArea";
 import Sidebar from "./Sidebar";
 
-const socket = io(process.env.REACT_APP_SOCKET_URL, {
+const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3000", {
   transports: ["websocket"],
 });
 
-const getChatId = (u1, u2) =>
-  u1 < u2 ? `${u1}_${u2}` : `${u2}_${u1}`;
+const getChatId = (u1, u2) => (u1 < u2 ? `${u1}_${u2}` : `${u2}_${u1}`);
+
+const resolvePartnerId = (chat) => {
+  const partner = chat?.partnerId;
+  if (!partner) return "";
+  if (typeof partner === "string") return partner;
+  return partner?._id || partner?.id || "";
+};
 
 const ChatBox = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [chatList, setChatList] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
@@ -32,11 +46,56 @@ const ChatBox = () => {
   const [onlineUsers, setOnlineUsers] = useState({});
   const [lastSeenData, setLastSeenData] = useState({});
   const [showChatList, setShowChatList] = useState(true);
+  const [loadingChatList, setLoadingChatList] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [deletingChat, setDeletingChat] = useState(false);
 
   const typingTimeoutRef = useRef(null);
 
   const token = getDataFromLocalStorage("token");
   const userId = localStorage.getItem("userId");
+  const quickPartnerId = String(searchParams.get("partnerId") || "").trim();
+  const quickPartnerName = String(searchParams.get("partnerName") || "").trim();
+  const quickPartnerImage = String(searchParams.get("partnerImage") || "").trim();
+
+  const fetchChatList = useCallback(
+    async ({ silent = false } = {}) => {
+      if (!token) {
+        setLoadingChatList(false);
+        return;
+      }
+
+      if (!silent) {
+        setLoadingChatList(true);
+      }
+
+      try {
+        const res = await dispatch(getChatList());
+        if (res?.success) {
+          setChatList(Array.isArray(res.chatList) ? res.chatList : []);
+        } else if (!silent) {
+          setChatList([]);
+        }
+      } catch (error) {
+        if (!silent) {
+          setChatList([]);
+        }
+      } finally {
+        if (!silent) {
+          setLoadingChatList(false);
+        }
+      }
+    },
+    [dispatch, token]
+  );
+
+  const clearSelectedChat = useCallback(() => {
+    setSelectedChat(null);
+    setMessages([]);
+    setBookingDate({});
+    setInput("");
+    setLoadingMessages(false);
+  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -45,13 +104,8 @@ const ChatBox = () => {
       socket.emit("join", String(userId));
     };
 
-    const handleDisconnect = () => {
-      console.log("Socket disconnected");
-    };
-
-    const handleConnectError = (error) => {
-      console.error("Socket connection error:", error);
-    };
+    const handleDisconnect = () => {};
+    const handleConnectError = () => {};
 
     socket.on("connect", handleConnect);
     socket.on("disconnect", handleDisconnect);
@@ -71,13 +125,13 @@ const ChatBox = () => {
   useEffect(() => {
     if (!userId) return;
 
-    socket.on("userOnline", ({ userId }) =>
-      setOnlineUsers(prev => ({ ...prev, [userId]: true }))
+    socket.on("userOnline", ({ userId: onlineUserId }) =>
+      setOnlineUsers((prev) => ({ ...prev, [onlineUserId]: true }))
     );
 
-    socket.on("userOffline", ({ userId, lastSeen }) => {
-      setOnlineUsers(prev => ({ ...prev, [userId]: false }));
-      setLastSeenData(prev => ({ ...prev, [userId]: lastSeen }));
+    socket.on("userOffline", ({ userId: offlineUserId, lastSeen }) => {
+      setOnlineUsers((prev) => ({ ...prev, [offlineUserId]: false }));
+      setLastSeenData((prev) => ({ ...prev, [offlineUserId]: lastSeen }));
     });
 
     return () => {
@@ -87,176 +141,238 @@ const ChatBox = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (!token) return;
+    fetchChatList();
+  }, [fetchChatList]);
 
-    dispatch(getChatList()).then((res) => {
-      if (res?.success) setChatList(res.chatList || []);
-    });
-  }, [dispatch, token]);
+  useEffect(() => {
+    if (!quickPartnerId || !userId) return;
 
+    if (String(quickPartnerId) === String(userId)) {
+      navigate(location.pathname, { replace: true });
+      return;
+    }
+
+    const existingChat = chatList.find(
+      (chat) => resolvePartnerId(chat) === String(quickPartnerId)
+    );
+
+    if (existingChat) {
+      setSelectedChat(existingChat);
+    } else {
+      setSelectedChat({
+        partnerId: {
+          _id: quickPartnerId,
+          name: quickPartnerName || t("chat.unknownUser", "Unknown user"),
+          profileImage: quickPartnerImage || "",
+        },
+        lastMessage: "",
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setShowChatList(false);
+    }
+
+    navigate(location.pathname, { replace: true });
+  }, [
+    quickPartnerId,
+    quickPartnerName,
+    quickPartnerImage,
+    userId,
+    chatList,
+    t,
+    navigate,
+    location.pathname,
+  ]);
 
   useEffect(() => {
     if (!selectedChat) return;
+    const activePartnerId = resolvePartnerId(selectedChat);
+    if (!activePartnerId) return;
 
-    const partnerId =
-      selectedChat.partnerId._id || selectedChat.partnerId;
+    const existingChat = chatList.find(
+      (chat) => resolvePartnerId(chat) === String(activePartnerId)
+    );
 
-    const chatId = getChatId(userId, partnerId);
+    if (existingChat && selectedChat !== existingChat) {
+      setSelectedChat(existingChat);
+    }
+  }, [chatList, selectedChat]);
 
-    socket.emit("joinChat", chatId);
+  useEffect(() => {
+    if (!selectedChat || !userId) {
+      setMessages([]);
+      setBookingDate({});
+      setLoadingMessages(false);
+      return;
+    }
 
-    dispatch(getMessages(chatId)).then((res) => {
-      if (res.success) {
-        setMessages(res.messages || []);
-        setBookingDate(res.bookingDate || {});
+    const partnerId = resolvePartnerId(selectedChat);
+    if (!partnerId) {
+      setMessages([]);
+      setBookingDate({});
+      setLoadingMessages(false);
+      return;
+    }
+
+    const chatId = getChatId(String(userId), String(partnerId));
+    let isMounted = true;
+
+    const fetchMessages = async () => {
+      setLoadingMessages(true);
+      socket.emit("joinChat", chatId);
+
+      try {
+        const res = await dispatch(getMessages(chatId));
+        if (!isMounted) return;
+        if (res?.success) {
+          setMessages(Array.isArray(res.messages) ? res.messages : []);
+          setBookingDate(res.bookingDate || {});
+        } else {
+          setMessages([]);
+          setBookingDate({});
+        }
+      } catch (error) {
+        if (isMounted) {
+          setMessages([]);
+          setBookingDate({});
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingMessages(false);
+        }
       }
-    });
 
-    socket.emit("markRead", {
-      chatId,
-      readerId: userId,
-      otherUserId: partnerId
-    });
+      socket.emit("markRead", {
+        chatId,
+        readerId: userId,
+        otherUserId: partnerId,
+      });
 
-    dispatch(markMessagesRead(chatId));
+      dispatch(markMessagesRead(chatId));
+    };
 
+    fetchMessages();
+
+    return () => {
+      isMounted = false;
+    };
   }, [selectedChat, userId, dispatch]);
-
 
   useEffect(() => {
     const handleReceiveMessage = (msg) => {
-      if (!userId || !msg) {
-        console.log("Missing userId or msg:", { userId, msg });
-        return;
-      }
+      if (!userId || !msg) return;
 
       const userIdStr = String(userId);
-      const msgSenderId = String(msg.senderId);
-      const msgReceiverId = String(msg.receiverId);
+      const msgSenderId = String(msg.senderId || "");
+      const msgReceiverId = String(msg.receiverId || "");
 
-      const isForCurrentUser = msgSenderId === userIdStr || msgReceiverId === userIdStr;
-
-      if (!isForCurrentUser) {
-        dispatch(getChatList()).then(res => {
-          if (res?.success) setChatList(res.chatList || []);
-        });
+      if (msgSenderId !== userIdStr && msgReceiverId !== userIdStr) {
+        fetchChatList({ silent: true });
         return;
       }
 
-      const partnerId = selectedChat?.partnerId?._id || selectedChat?.partnerId;
-      const partnerIdStr = partnerId ? String(partnerId) : null;
-      const currentChatId = partnerIdStr ? getChatId(userIdStr, partnerIdStr) : null;
+      const partnerId = resolvePartnerId(selectedChat);
+      const currentChatId = partnerId
+        ? getChatId(String(userId), String(partnerId))
+        : null;
 
-      if (partnerIdStr && currentChatId && msg.chatId === currentChatId) {
-        const involvedUsers = [msgSenderId, msgReceiverId];
-
-        if (
-          involvedUsers.includes(partnerIdStr) &&
-          involvedUsers.includes(userIdStr)
-        ) {
-          setMessages(prev => {
-            const filtered = prev.filter(m => !m._id?.startsWith('temp-'));
-            const exists = filtered.some(m => m._id === msg._id);
-            if (exists) {
-              console.log("Message already exists, skipping");
-              return filtered;
-            }
-            return [...filtered, msg];
-          });
-        }
-      } else if (!partnerIdStr) {
-        console.log("No chat selected, but message received - updating chat list only");
-      } else {
-        console.log("Message not for current chat, but updating chat list");
+      if (partnerId && currentChatId && msg.chatId === currentChatId) {
+        setMessages((prev) => {
+          const filtered = prev.filter(
+            (message) => !String(message?._id || "").startsWith("temp-")
+          );
+          const exists = filtered.some((message) => message._id === msg._id);
+          if (exists) return filtered;
+          return [...filtered, msg];
+        });
       }
 
-      dispatch(getChatList()).then(res => {
-        if (res?.success) setChatList(res.chatList || []);
-      });
+      fetchChatList({ silent: true });
     };
 
-    const handleMessageError = (error) => {
-      console.error("Message error:", error);
-      setMessages(prev => prev.filter(m => !m._id?.startsWith('temp-')));
+    const handleMessageError = () => {
+      setMessages((prev) =>
+        prev.filter((message) => !String(message?._id || "").startsWith("temp-"))
+      );
     };
 
     socket.on("receiveMessage", handleReceiveMessage);
     socket.on("messageError", handleMessageError);
-    
+
     return () => {
       socket.off("receiveMessage", handleReceiveMessage);
       socket.off("messageError", handleMessageError);
     };
-
-  }, [selectedChat, userId, dispatch]);
-
+  }, [selectedChat, userId, fetchChatList]);
 
   useEffect(() => {
-    socket.on("messagesRead", ({ chatId, readerId }) => {
-      setMessages(prev =>
-        prev.map(msg =>
-          msg.receiverId === readerId
-            ? { ...msg, isRead: true }
-            : msg
-        )
+    const handleChatDeleted = ({ chatId }) => {
+      const partnerId = resolvePartnerId(selectedChat);
+      const activeChatId =
+        userId && partnerId ? getChatId(String(userId), String(partnerId)) : "";
+
+      if (chatId && activeChatId && chatId === activeChatId) {
+        clearSelectedChat();
+        setShowChatList(true);
+      }
+
+      fetchChatList({ silent: true });
+    };
+
+    socket.on("chatDeleted", handleChatDeleted);
+    return () => socket.off("chatDeleted", handleChatDeleted);
+  }, [selectedChat, userId, fetchChatList, clearSelectedChat]);
+
+  useEffect(() => {
+    socket.on("messagesRead", ({ readerId }) => {
+      setMessages((prev) =>
+        prev.map((msg) => {
+          const receiverId =
+            typeof msg.receiverId === "object"
+              ? msg.receiverId?._id || msg.receiverId?.id
+              : msg.receiverId;
+          if (String(receiverId || "") === String(readerId || "")) {
+            return { ...msg, isRead: true };
+          }
+          return msg;
+        })
       );
     });
 
     return () => socket.off("messagesRead");
   }, []);
 
-
   useEffect(() => {
-    const partnerId =
-      selectedChat?.partnerId?._id || selectedChat?.partnerId;
-
-    const currentChatId = partnerId
-      ? getChatId(userId, partnerId)
-      : null;
+    const partnerId = resolvePartnerId(selectedChat);
+    const currentChatId =
+      partnerId && userId ? getChatId(String(userId), String(partnerId)) : null;
 
     socket.on("typing", ({ senderId, chatId }) => {
       if (chatId === currentChatId) {
-        setTypingUsers(prev => ({ ...prev, [senderId]: true }));
+        setTypingUsers((prev) => ({ ...prev, [senderId]: true }));
       }
     });
 
     socket.on("stopTyping", ({ senderId }) =>
-      setTypingUsers(prev => ({ ...prev, [senderId]: false }))
+      setTypingUsers((prev) => ({ ...prev, [senderId]: false }))
     );
 
     return () => {
       socket.off("typing");
       socket.off("stopTyping");
     };
-
   }, [selectedChat, userId]);
 
-
   const sendMessage = () => {
-    if (!input.trim() || !selectedChat || !userId) {
-      console.log("Cannot send: missing input, chat, or userId");
-      return;
-    }
-
-    const receiverId =
-      selectedChat.partnerId._id || selectedChat.partnerId;
-
-    if (!receiverId) {
-      console.error("Receiver ID is missing");
-      return;
-    }
+    const partnerId = resolvePartnerId(selectedChat);
+    if (!input.trim() || !partnerId || !userId) return;
 
     const messageText = input.trim();
     const senderIdStr = String(userId);
-    const receiverIdStr = String(receiverId);
-    
-    console.log("Sending message:", {
-      senderId: senderIdStr,
-      receiverId: receiverIdStr,
-      message: messageText,
-      socketConnected: socket.connected
-    });
-    
+    const receiverIdStr = String(partnerId);
+
     const tempMessage = {
       _id: `temp-${Date.now()}`,
       chatId: getChatId(senderIdStr, receiverIdStr),
@@ -266,12 +382,11 @@ const ChatBox = () => {
       isRead: false,
       createdAt: new Date(),
     };
-    
-    setMessages(prev => [...prev, tempMessage]);
+
+    setMessages((prev) => [...prev, tempMessage]);
     setInput("");
 
     if (!socket.connected) {
-      console.error("Socket not connected, attempting to connect...");
       socket.connect();
     }
 
@@ -281,37 +396,60 @@ const ChatBox = () => {
       message: messageText,
     });
 
-    console.log("Message emitted to socket");
-
     setTimeout(() => {
-      dispatch(getChatList()).then(res => {
-        if (res?.success) setChatList(res.chatList || []);
-      });
-    }, 500);
+      fetchChatList({ silent: true });
+    }, 400);
+  };
+
+  const handleDeleteChat = async () => {
+    if (deletingChat || !selectedChat || !userId) return false;
+    const partnerId = resolvePartnerId(selectedChat);
+    if (!partnerId) return false;
+
+    const chatId = getChatId(String(userId), String(partnerId));
+    setDeletingChat(true);
+
+    try {
+      const response = await dispatch(deleteChatConversation(chatId));
+      if (response?.success) {
+        dispatch(
+          throwSuccess(response?.message || "Conversation deleted successfully.")
+        );
+        clearSelectedChat();
+        setShowChatList(true);
+        fetchChatList({ silent: true });
+        return true;
+      }
+
+      dispatch(throwError(response?.message || "Failed to delete conversation."));
+      return false;
+    } catch (error) {
+      dispatch(throwError("Failed to delete conversation."));
+      return false;
+    } finally {
+      setDeletingChat(false);
+    }
   };
 
   const handleSelectChat = (chat) => {
     setSelectedChat(chat);
-
-    if (window.innerWidth < 768) {
+    if (window.matchMedia("(max-width: 767px)").matches) {
       setShowChatList(false);
     }
   };
 
-  const handleTyping = (e) => {
-    setInput(e.target.value);
+  const handleTyping = (event) => {
+    setInput(event.target.value);
 
-    if (!selectedChat) return;
+    const receiverId = resolvePartnerId(selectedChat);
+    if (!receiverId || !userId) return;
 
-    const receiverId =
-      selectedChat.partnerId._id || selectedChat.partnerId;
-
-    const chatId = getChatId(userId, receiverId);
+    const chatId = getChatId(String(userId), String(receiverId));
 
     socket.emit("typing", {
       senderId: userId,
       receiverId,
-      chatId
+      chatId,
     });
 
     clearTimeout(typingTimeoutRef.current);
@@ -320,49 +458,54 @@ const ChatBox = () => {
       socket.emit("stopTyping", {
         senderId: userId,
         receiverId,
-        chatId
+        chatId,
       });
     }, 1200);
   };
 
-  return (
-    <div className="chat-wrapper container" style={{ padding: 0 }}>
-      <div
-        className={`sidebar-container ${
-          showChatList ? "show-section" : "hide-section"
-        }`}
-      >
-        <Sidebar
-          chatList={chatList}
-          selectedChat={selectedChat}
-          setSelectedChat={handleSelectChat}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          typingUsers={typingUsers}
-          onlineUsers={onlineUsers}
-          lastSeenData={lastSeenData}
-          userId={userId}
-        />
-      </div>
+  const showSidebarOnMobile = !selectedChat || showChatList;
+  const showChatOnMobile = !!selectedChat && !showChatList;
 
-      <div
-        className={`chatarea-container ${
-          showChatList ? "hide-section" : "show-section"
-        }`}
-      >
-        <ChatArea
-          selectedChat={selectedChat}
-          messages={messages}
-          sendMessage={sendMessage}
-          input={input}
-          setInput={setInput}
-          handleTyping={handleTyping}
-          userId={userId}
-          onlineUsers={onlineUsers}
-          lastSeenData={lastSeenData}
-          bookingDate={bookingDate}
-          setShowChatList={setShowChatList}
-        />
+  return (
+    <div className="tw-mx-auto tw-h-[calc(100vh-140px)] tw-min-h-[560px] tw-w-full tw-max-w-[1420px] tw-overflow-hidden tw-rounded-[26px] tw-border tw-border-[#e4eaf4] tw-bg-gradient-to-br tw-from-[#f9fbff] tw-to-[#eef3fb] tw-shadow-[0_24px_50px_rgba(15,23,42,0.08)]">
+      <div className="tw-flex tw-h-full tw-w-full">
+        <div
+          className={`tw-h-full tw-bg-white md:tw-w-[340px] md:tw-min-w-[320px] md:tw-max-w-[360px] md:tw-border-r md:tw-border-[#e4eaf4] ${
+            showSidebarOnMobile ? "tw-block tw-w-full" : "tw-hidden md:tw-block"
+          }`}
+        >
+          <Sidebar
+            chatList={chatList}
+            selectedChat={selectedChat}
+            setSelectedChat={handleSelectChat}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            typingUsers={typingUsers}
+            onlineUsers={onlineUsers}
+            lastSeenData={lastSeenData}
+            loading={loadingChatList}
+          />
+        </div>
+
+        <div
+          className={`tw-h-full tw-flex-1 tw-bg-[#f6f8fd] ${
+            showChatOnMobile ? "tw-flex" : "tw-hidden"
+          } md:tw-flex`}
+        >
+          <ChatArea
+            selectedChat={selectedChat}
+            messages={messages}
+            sendMessage={sendMessage}
+            input={input}
+            handleTyping={handleTyping}
+            userId={userId}
+            bookingDate={bookingDate}
+            loadingMessages={loadingMessages}
+            deletingChat={deletingChat}
+            onDeleteChat={handleDeleteChat}
+            onBackToList={() => setShowChatList(true)}
+          />
+        </div>
       </div>
     </div>
   );

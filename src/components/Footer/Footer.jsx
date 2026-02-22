@@ -6,17 +6,23 @@ import { MdEmail, MdPhone } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getLocalizedPath } from "utils/localizedRoute";
+import { normalizeLanguage } from "@/lib/i18n-client";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const language = normalizeLanguage(i18n.resolvedLanguage || i18n.language || "cz");
   const disclaimer =
-    (i18n.language || "").toLowerCase().startsWith("en")
-      ? "Helpora.cz is an online marketplace connecting users with independent service providers. Helpora.cz does not employ providers or participate in payments or service delivery."
-      : "Helpora.cz je online tržiště propojující uživatele s nezávislými poskytovateli služeb. Helpora.cz není zaměstnavatelem poskytovatelů a neúčastní se plateb ani poskytování služeb.";
+    {
+      en: "Helpora.cz is an online marketplace connecting users with independent service providers. Helpora.cz does not employ providers or participate in payments or service delivery.",
+      cz: "Helpora.cz je online tržiště propojující uživatele s nezávislými poskytovateli služeb. Helpora.cz není zaměstnavatelem poskytovatelů a neúčastní se plateb ani poskytování služeb.",
+      ru: "Helpora.cz — это онлайн-маркетплейс, который соединяет пользователей с независимыми поставщиками услуг. Helpora.cz не нанимает поставщиков и не участвует в оплате или предоставлении услуг.",
+    }[language] ||
+    "Helpora.cz is an online marketplace connecting users with independent service providers. Helpora.cz does not employ providers or participate in payments or service delivery.";
 
   const disclaimerTitle =
     t("terms.disclaimerTitle") || "Platform Disclaimer";
+  const footerCompanyText = "2026 Helpora s.r.o. | IČO: 24497061 | DIČ: CZ24497061 |";
 
   return (
     <footer className="modern-footer">
@@ -211,7 +217,7 @@ const Footer = () => {
           <div className="row align-items-center">
             <div className="col-md-6 text-center text-md-start">
               <p className="footer-copyright mb-0">
-                © {new Date().getFullYear()} {t("section14.text17")}
+                {footerCompanyText}
               </p>
             </div>
             <div className="col-md-6 text-center text-md-end">

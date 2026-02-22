@@ -117,9 +117,9 @@
     "text2": "Join Our Growing",
     "text3": "Network",
     "text4": "Today",
-    "text5": "Become a founding provider and enjoy",
-    "text6": "6 months free. Then just 99 CZK/month (Early Access)",
-    "text7": " ",
+    "text5": "Get Found. Get Booked. Get Clients Today!",
+    "text6": "",
+    "text7": "",
     "text8": "Get Started Free"
   },
   "section2": {
@@ -811,7 +811,8 @@
       "header5": "Provider",
       "header8": "Booking By",
       "header6": "Order Date",
-      "header7": "Updated At"
+      "header7": "Updated At",
+      "header9": "Requested Time"
     }
   },
   "order": {
@@ -857,7 +858,9 @@
     "approvedKYC": "Approved KYC",
     "KYCApproval": "KYC Approval",
     "subscription": "Subscription",
-    "subscribers": "Subscribers"
+    "subscribers": "Subscribers",
+    "publicAds": "Public Ad Placements",
+    "rankingRequests": "Ranking Requests"
   },
   "client": {
     "heading": "Clients",
@@ -874,7 +877,21 @@
     "deleteAction": "Delete",
     "deleteConfirm": "Delete this client?",
     "deleteSuccess": "Client removed successfully.",
-    "deleteError": "Failed to delete client."
+    "deleteError": "Failed to delete client.",
+    "export": {
+      "button": "Export Emails CSV",
+      "success": "Client emails CSV downloaded.",
+      "error": "Failed to export client emails.",
+      "empty": "No client emails found to export.",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "createdAt": "Created At",
+        "lastLogin": "Last Login"
+      }
+    }
   },
   "providers": {
     "heading": "Providers",
@@ -893,10 +910,27 @@
       "header10": "Region",
       "header11": "City",
       "header12": "District",
+      "header13": "Ranking",
       "editProvider": "Edit Provider",
       "deleteProvider": "Delete Provider",
       "active": "Active",
-      "suspend": "suspend"
+      "suspend": "suspend",
+      "rankedLabel": "Ranked Provider",
+      "unranked": "Not ranked"
+    },
+    "export": {
+      "button": "Export Emails CSV",
+      "success": "Provider emails CSV downloaded.",
+      "error": "Failed to export provider emails.",
+      "empty": "No provider emails found to export.",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "createdAt": "Created At",
+        "lastLogin": "Last Login"
+      }
     }
   },
   "myBooking": {
@@ -988,6 +1022,23 @@
     }
   },
   "showProfile": {
+    "leaveComment": "Leave comment",
+    "lastBookingLabel": "Last booking",
+    "lastReviewLabel": "Last review",
+    "noBookings": "No bookings yet",
+    "noReviews": "No reviews yet",
+    "noReviewsDetailed": "No reviews yet",
+    "realExperienceNote": "Reviews from real experiences only",
+    "providerNamePlaceholder": "Provider Name",
+    "activityHeading": "Activity & Reviews",
+    "priceLabel": "Price",
+    "statusLabel": "Status",
+    "serviceLabel": "Service",
+    "descriptionLabel": "Description",
+    "experienceHint": "3 years experience",
+    "statusActive": "Active",
+    "statusDeactive": "Inactive",
+    "statusUnknown": "N/A",
     "verification": {
       "emailAndPhoneNumber": "Verified e-mail and phone number",
       "verifiedAddress": "Verified address",
@@ -1253,7 +1304,7 @@
     "planBilling": "Monthly recurring",
     "nameLabel": "Name",
     "priceLabel": "Price",
-    "priceValue": "99 CZK / month",
+    "priceValue": "Free for now (admin-managed)",
     "billingLabel": "Billing",
     "billingValue": "Monthly recurring",
     "currencyLabel": "Currency",
@@ -1327,6 +1378,63 @@
     "detailCancelAtPeriodEnd": "Cancel at period end",
     "detailPaymentStatus": "Payment status"
   },
+  "adminDashboard": {
+    "title": "Admin Dashboard",
+    "appAccess": {
+      "title": "Provider Subscription Mode",
+      "description": "Toggle whether providers must have an active Stripe subscription.",
+      "loading": "Loading current mode...",
+      "notUpdated": "Not updated yet",
+      "system": "System",
+      "lastUpdated": "Last updated {{date}} by {{user}}",
+      "proMode": "Pro Mode (Subscription Required)",
+      "freeMode": "Free Mode (No Subscription Required)",
+      "messages": {
+        "enabledSuccess": "Pro mode enabled successfully.",
+        "disabledSuccess": "Free mode enabled successfully.",
+        "updateFailed": "Failed to update app mode. Please try again."
+      }
+    },
+    "publicAds": {
+      "title": "Public Ad Placements",
+      "description": "Manage simple image ads shown across public pages.",
+      "sizeGuideTitle": "Recommended image sizes",
+      "topSize": "Top banner (desktop): 1200x180 (20:3)",
+      "sidebarSize": "Sidebar rail (desktop): 300x450 (2:3)",
+      "mobileTopSize": "Top banner (mobile): 360x120 (3:1)",
+      "topTitle": "Top Banner Ads",
+      "sidebarTitle": "Sidebar Ads",
+      "topDimensionsTitle": "Top Banner Size (Global)",
+      "sidebarDimensionsTitle": "Sidebar Size (Global)",
+      "customSizeOn": "Custom size enabled",
+      "customSizeOff": "Use default size",
+      "widthLabel": "Width",
+      "heightLabel": "Height",
+      "upload": "Upload Images",
+      "uploading": "Uploading...",
+      "dragHint": "Drag and drop ads to set display order.",
+      "empty": "No ads uploaded yet.",
+      "active": "Active",
+      "inactive": "Inactive",
+      "remove": "Remove",
+      "linkLabel": "Optional click URL",
+      "linkPlaceholder": "https://example.com",
+      "marqueeLabel": "Optional marquee text (top banner only)",
+      "marqueePlaceholder": "Big scrolling text for visibility",
+      "saving": "Saving...",
+      "messages": {
+        "saveFailed": "Failed to save public ads configuration.",
+        "invalidFile": "Please choose at least one valid image file.",
+        "maxReached": "Maximum 20 ads are allowed in this placement.",
+        "uploadFailed": "Image upload failed. Please try again.",
+        "uploadSuccess": "Ads uploaded successfully.",
+        "removeSuccess": "Ad removed successfully.",
+        "toggleSuccess": "Ad status updated successfully.",
+        "invalidUrl": "Please enter a valid http/https URL.",
+        "reorderSuccess": "Ad order updated successfully."
+      }
+    }
+  },
   "search": {
     "resultsFor": "Results for",
     "in": "in",
@@ -1347,6 +1455,17 @@
     "loginRequired": "Please log in to continue.",
     "locationNotSpecified": "Location not specified",
     "unknownProvider": "Unknown Provider",
+    "rankedProvider": "Ranked Provider",
+    "topRankedProviders": "Top Ranked Providers",
+    "availableToday": "Available today",
+    "unavailableToday": "Unavailable today",
+    "availableNow": "Available now",
+    "unavailableNow": "Unavailable now",
+    "availableHours": "Today: {{hours}}",
+    "openNow": "Open now",
+    "closedNow": "Closed now",
+    "dayOffToday": "Day off today",
+    "hoursNotSet": "Hours not set",
     "unavailable": "Unavailable",
     "showingRelated": "No exact matches. Showing related providers.",
     "fetchError": "Failed to load services. Please try again.",
@@ -1364,6 +1483,95 @@
     "backToHome": "Back to Home",
     "tryAgain": "Try Again",
     "suggestedCategories": "You might also like"
+  },
+  "topProviders": {
+    "title": "Top Providers",
+    "subtitle": "Boosted Visibility & Featured Services",
+    "featuredRibbon": "Featured",
+    "bestServiceProvider": "Best service provider",
+    "reviews": "{{count}} reviews",
+    "categoryUnavailable": "Category not specified",
+    "noProviders": "No ranked providers available yet."
+  },
+  "providerDashboard": {
+    "rankingStatusTitle": "Ranking Status",
+    "rankingStatusActive": "Active ranking: #{{position}}",
+    "rankingStatusInactive": "Not ranked right now",
+    "rankingStatusHintActive": "Your profile is featured with the \"{{badge}}\" label.",
+    "rankingStatusHintInactive": "Admins can assign your rank from the provider management panel.",
+    "rankingRequestButton": "Request ranking",
+    "rankingRequestPendingButton": "Request pending",
+    "rankingRequestLoading": "Sending request...",
+    "rankingRequestDefaultHint": "Send a request to get featured by admin.",
+    "rankingRequestPendingHint": "Your request is pending admin review.",
+    "rankingRequestApprovedHint": "Your latest request was approved.",
+    "rankingRequestDeniedHint": "Your latest request was denied. You can request again.",
+    "rankingRequestSuccess": "Ranking request sent to admin.",
+    "rankingRequestFailed": "Failed to send ranking request.",
+    "rankingRequestInvalidRank": "Suggested rank must be a positive whole number.",
+    "rankingRequestInvalidDateRange": "Preferred end time must be after preferred start time.",
+    "rankingRequestModalTitle": "Request Ranking",
+    "rankingRequestModalSubtitle": "Suggest your preferred ranking timeline for admin review.",
+    "rankingRequestModalRank": "Suggested ranking position (optional)",
+    "rankingRequestModalRankPlaceholder": "e.g. 1, 2, 3",
+    "rankingRequestModalStart": "Preferred start time (optional)",
+    "rankingRequestModalEnd": "Preferred end time (optional)",
+    "rankingRequestModalMessage": "Additional details (optional)",
+    "rankingRequestModalMessagePlaceholder": "Describe why your profile should be featured.",
+    "rankingRequestModalSubmit": "Send request"
+  },
+  "rankingRequests": {
+    "title": "Provider Ranking Requests",
+    "subtitle": "Review provider requests and approve or deny ranking access.",
+    "searchPlaceholder": "Search provider name or email",
+    "filter": {
+      "all": "All requests",
+      "pending": "Pending",
+      "approved": "Approved",
+      "denied": "Denied"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "denied": "Denied"
+    },
+    "table": {
+      "provider": "Provider",
+      "requestStatus": "Request Status",
+      "requestedAt": "Requested At",
+      "currentRank": "Current Rank",
+      "requestNote": "Request / Admin Note",
+      "actions": "Actions"
+    },
+    "actions": {
+      "approve": "Approve",
+      "approving": "Approving...",
+      "deny": "Deny",
+      "denying": "Denying...",
+      "delete": "Delete",
+      "deleting": "Deleting..."
+    },
+    "notRanked": "Not ranked",
+    "noData": "No ranking requests found.",
+    "approveModal": {
+      "title": "Approve Ranking Request",
+      "subtitle": "Set ranking details for {{name}}.",
+      "adminNote": "Admin note (optional)",
+      "adminNotePlaceholder": "Add a note for this decision",
+      "saving": "Saving...",
+      "confirm": "Approve Request"
+    },
+    "messages": {
+      "loadFailed": "Failed to load ranking requests.",
+      "approveSuccess": "Ranking request approved.",
+      "denySuccess": "Ranking request denied.",
+      "deleteSuccess": "Denied ranking request deleted.",
+      "actionFailed": "Failed to update ranking request.",
+      "deleteFailed": "Failed to delete denied ranking request.",
+      "deleteConfirm": "Delete this denied ranking request?",
+      "rankPositionRequired": "Ranking position must be a positive whole number.",
+      "invalidDateRange": "Ranking end time must be after ranking start time."
+    }
   },
   "addProvider": {
     "address": "Address",
@@ -1395,7 +1603,21 @@
     "addressValidation": "Address is required for update.",
     "addressValidation2": "Address must be at least 5 characters long.",
     "regionValidation": "Regions is required.",
-    "cityValidation": "City is required."
+    "cityValidation": "City is required.",
+    "rankingSectionTitle": "Provider Ranking",
+    "rankingSectionHint": "Enable manual featured ranking for this provider.",
+    "rankingEnabled": "Ranking enabled",
+    "rankingDisabled": "Ranking disabled",
+    "rankingPosition": "Ranking position",
+    "rankingPositionPlaceholder": "Enter rank position (1, 2, 3...)",
+    "rankingPositionRequired": "Ranking position is required when ranking is enabled.",
+    "rankingPositionInteger": "Ranking position must be a whole number.",
+    "rankingPositionPositive": "Ranking position must be greater than 0.",
+    "rankBadgeLabel": "Rank badge label (optional)",
+    "rankBadgeLabelPlaceholder": "Featured Provider",
+    "rankingStartAt": "Ranking start time (optional)",
+    "rankingEndAt": "Ranking end time (optional)",
+    "rankingDateValidation": "Ranking end time must be after start time."
   },
   "regions": {
     "heading": "Regions",
@@ -1477,6 +1699,26 @@
     "inputPlaceHolder": "Search..."
   },
   "chat": {
+    "inboxTitle": "Messages",
+    "inboxSubtitle": "Stay connected with clients and providers",
+    "unknownUser": "Unknown user",
+    "lastSeen": "Last seen",
+    "toggleStar": "Toggle star",
+    "offline": "Offline",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "bookingToday": "Booking today",
+    "bookingDaysAgo": "Booking {{count}} day ago",
+    "bookingDaysAgo_plural": "Booking {{count}} days ago",
+    "bookingScheduled": "Booking scheduled for",
+    "noBookingInfo": "No booking info",
+    "noMessagesYet": "No messages yet. Say hello!",
+    "typeMessage": "Type a message...",
+    "sendMessage": "Send message",
+    "deleteConversation": "Delete conversation",
+    "deleteConversationConfirm": "This will remove all messages in this conversation for both users.",
+    "deleting": "Deleting...",
+    "deleteNow": "Delete",
     "scanLink": "Scan link",
     "scanning": "Scanning...",
     "scanComplete": "Scan complete",
@@ -1484,7 +1726,8 @@
     "linkHidden": "Link hidden until scan",
     "openLink": "Open link",
     "externalLink": "External link",
-    "scanResultSafe": "No threats detected"
+    "scanResultSafe": "No threats detected",
+    "scanPending": "Pending"
   },
   "changePassword": {
     "heading": "Change Password",
@@ -1508,5 +1751,32 @@
   },
   "errors": {
     "loadCategories": "Failed to load categories. Please try again."
+  },
+  "availabilitySettings": {
+    "heading": "Availability Settings",
+    "description": "Set your working days and booking hours. Customers can request only these slots.",
+    "startTime": "Start time",
+    "endTime": "End time",
+    "daysLabel": "Available days",
+    "save": "Save availability",
+    "saving": "Saving...",
+    "loading": "Loading availability...",
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "validationTitle": "Validation",
+    "atLeastOneDay": "Select at least one available day.",
+    "invalidRange": "End time must be later than start time.",
+    "fullHourOnly": "Use full-hour values such as 09:00 or 17:00.",
+    "savedSuccess": "Availability updated successfully.",
+    "saveFailed": "Failed to update availability.",
+    "days": {
+      "0": "Sunday",
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday"
+    }
   }
 }

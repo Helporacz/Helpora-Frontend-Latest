@@ -30,6 +30,11 @@ const getDefaultValues = () => ({
   termsVersion: "v1",
   privacyAccepted: true,
   privacyVersion: "v1",
+  is_ranked: false,
+  ranking_position: "",
+  ranking_start_at: "",
+  ranking_end_at: "",
+  rank_badge_label: "",
 });
 
 const formatInitialPhoneValue = (value) => {
@@ -38,6 +43,20 @@ const formatInitialPhoneValue = (value) => {
   }
   const stringValue = String(value);
   return stringValue.startsWith("+") ? stringValue : `+${stringValue}`;
+};
+
+const formatDateTimeLocalValue = (value) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  const pad = (input) => String(input).padStart(2, "0");
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
 const normalizeLabel = (value) => {
@@ -316,6 +335,40 @@ const ProviderModal = ({
         : Yup.string().notRequired(),
       region: Yup.string().required(t("addProvider.regionValidation")),
       city: Yup.string().required(t("addProvider.cityValidation")),
+      is_ranked: Yup.boolean(),
+      ranking_position: Yup.number()
+        .transform((value, originalValue) =>
+          originalValue === "" || originalValue === null ? null : value
+        )
+        .nullable()
+        .when("is_ranked", {
+          is: true,
+          then: (schema) =>
+            schema
+              .required(t("addProvider.rankingPositionRequired"))
+              .integer(t("addProvider.rankingPositionInteger"))
+              .positive(t("addProvider.rankingPositionPositive")),
+          otherwise: (schema) => schema.nullable(),
+        }),
+      ranking_start_at: Yup.date()
+        .transform((value, originalValue) =>
+          originalValue === "" || originalValue === null ? null : value
+        )
+        .nullable(),
+      ranking_end_at: Yup.date()
+        .transform((value, originalValue) =>
+          originalValue === "" || originalValue === null ? null : value
+        )
+        .nullable()
+        .test(
+          "ranking-date-order",
+          t("addProvider.rankingDateValidation"),
+          function (value) {
+            const { ranking_start_at: rankingStartAt } = this.parent;
+            if (!value || !rankingStartAt) return true;
+            return new Date(value) >= new Date(rankingStartAt);
+          }
+        ),
     });
 
   const handleSave = async (values) => {
@@ -336,6 +389,29 @@ const ProviderModal = ({
       
       if (!isUpdate) {
         payload.role = "provider";
+        delete payload.is_ranked;
+        delete payload.ranking_position;
+        delete payload.ranking_start_at;
+        delete payload.ranking_end_at;
+        delete payload.rank_badge_label;
+      } else {
+        const rankingEnabled = !!values.is_ranked;
+        payload.is_ranked = rankingEnabled;
+        payload.ranking_position =
+          rankingEnabled && values.ranking_position !== ""
+            ? Number(values.ranking_position)
+            : null;
+        payload.ranking_start_at =
+          rankingEnabled && values.ranking_start_at
+            ? new Date(values.ranking_start_at).toISOString()
+            : null;
+        payload.ranking_end_at =
+          rankingEnabled && values.ranking_end_at
+            ? new Date(values.ranking_end_at).toISOString()
+            : null;
+        payload.rank_badge_label = values.rank_badge_label?.trim()
+          ? values.rank_badge_label.trim()
+          : null;
       }
 
       const response =
@@ -375,6 +451,15 @@ const ProviderModal = ({
       region: resolvedRegionId || "",
       city: resolvedCityId || "",
       district: resolvedDistrictId || "",
+      is_ranked: !!initialValues.is_ranked,
+      ranking_position:
+        initialValues.ranking_position === null ||
+        typeof initialValues.ranking_position === "undefined"
+          ? ""
+          : String(initialValues.ranking_position),
+      ranking_start_at: formatDateTimeLocalValue(initialValues.ranking_start_at),
+      ranking_end_at: formatDateTimeLocalValue(initialValues.ranking_end_at),
+      rank_badge_label: initialValues.rank_badge_label || "",
     };
   }, [initialValues, isUpdate, resolvedCityId, resolvedDistrictId, resolvedRegionId]);
 
@@ -590,6 +675,99 @@ const ProviderModal = ({
                     className="form-control"
                   />
                 </FormField>
+              )}
+
+              {isUpdate && (
+                <div className="border rounded p-3">
+                  <div className="d-flex align-items-start justify-content-between gap-3 mb-2">
+                    <div>
+                      <div className="fw-semibold">
+                        {t("addProvider.rankingSectionTitle")}
+                      </div>
+                      <div className="text-muted small">
+                        {t("addProvider.rankingSectionHint")}
+                      </div>
+                    </div>
+                    <div className="form-check form-switch m-0">
+                      <input
+                        id="provider-ranking-toggle"
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={!!values.is_ranked}
+                        onChange={(event) => {
+                          const enabled = event.target.checked;
+                          setFieldValue("is_ranked", enabled);
+                          if (!enabled) {
+                            setFieldValue("ranking_position", "");
+                            setFieldValue("ranking_start_at", "");
+                            setFieldValue("ranking_end_at", "");
+                          }
+                        }}
+                      />
+                      <label
+                        htmlFor="provider-ranking-toggle"
+                        className="form-check-label small"
+                      >
+                        {values.is_ranked
+                          ? t("addProvider.rankingEnabled")
+                          : t("addProvider.rankingDisabled")}
+                      </label>
+                    </div>
+                  </div>
+
+                  {values.is_ranked && (
+                    <div className="d-flex flex-column gap-3 mt-3">
+                      <FormField
+                        label={t("addProvider.rankingPosition")}
+                        required
+                        errorName="ranking_position"
+                      >
+                        <Field
+                          type="number"
+                          min="1"
+                          step="1"
+                          name="ranking_position"
+                          className="form-control"
+                          placeholder={t("addProvider.rankingPositionPlaceholder")}
+                        />
+                      </FormField>
+
+                      <FormField
+                        label={t("addProvider.rankBadgeLabel")}
+                        errorName="rank_badge_label"
+                      >
+                        <Field
+                          type="text"
+                          name="rank_badge_label"
+                          className="form-control"
+                          placeholder={t("addProvider.rankBadgeLabelPlaceholder")}
+                        />
+                      </FormField>
+
+                      <FormField
+                        label={t("addProvider.rankingStartAt")}
+                        errorName="ranking_start_at"
+                      >
+                        <Field
+                          type="datetime-local"
+                          name="ranking_start_at"
+                          className="form-control"
+                        />
+                      </FormField>
+
+                      <FormField
+                        label={t("addProvider.rankingEndAt")}
+                        errorName="ranking_end_at"
+                      >
+                        <Field
+                          type="datetime-local"
+                          name="ranking_end_at"
+                          className="form-control"
+                        />
+                      </FormField>
+                    </div>
+                  )}
+                </div>
               )}
 
               <div className="d-flex justify-content-end">

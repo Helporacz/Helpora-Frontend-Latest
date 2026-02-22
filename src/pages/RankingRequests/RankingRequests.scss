@@ -1,0 +1,165 @@
+.ranking-requests-page {
+  padding: 2rem;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+  }
+
+  .dashboard-subtitle {
+    color: #6c757d;
+    margin-bottom: 0;
+  }
+
+  .ranking-requests-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+    .card-header {
+      background: #eeeff0;
+      border-bottom: none;
+      padding: 1rem 1.5rem;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+      background: #fff;
+    }
+  }
+
+  .status-filter,
+  .page-size {
+    min-width: 160px;
+  }
+
+  .table-responsive {
+    max-height: 600px;
+    overflow-x: auto;
+  }
+
+  table {
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa;
+      z-index: 5;
+    }
+
+    th {
+      white-space: nowrap;
+      font-weight: 600;
+      background-color: #f8f9fa;
+    }
+
+    td {
+      vertical-align: middle;
+    }
+  }
+
+  .request-note-cell {
+    max-width: 340px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .pagination-bar {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .page-info {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+}
+
+.ranking-approve-modal {
+  .modal-content {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(22, 34, 62, 0.16);
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #eef1f6;
+  }
+
+  .modal-title {
+    font-weight: 700;
+    color: #1f2d3d;
+  }
+
+  .approve-modal-subtitle {
+    font-size: 0.95rem;
+    color: #5f6b7a;
+    margin-bottom: 1rem;
+  }
+
+  .approve-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    label.form-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #273142;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1px solid #d9dfeb;
+      box-shadow: none;
+      min-height: 44px;
+    }
+
+    .form-control:focus {
+      border-color: #4e8df8;
+      box-shadow: 0 0 0 2px rgba(78, 141, 248, 0.12);
+    }
+  }
+
+  .approve-form-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #eef1f6;
+  }
+}
+
+@media (max-width: 768px) {
+  .ranking-requests-page {
+    padding: 1rem;
+
+    .dashboard-title {
+      font-size: 1.5rem;
+    }
+
+    .status-filter,
+    .page-size {
+      width: 100%;
+    }
+
+    .pagination-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .ranking-approve-modal {
+    .approve-form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

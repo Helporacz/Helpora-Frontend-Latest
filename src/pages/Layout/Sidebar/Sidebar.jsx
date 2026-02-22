@@ -9,6 +9,34 @@ import logo from "../../../assets/images/White_Logo.png";
 import { getLocalizedPath } from "utils/localizedRoute";
 import { useTranslation } from "react-i18next";
 
+const normalizePath = (path = "") => {
+  const cleanPath = String(path || "").split("?")[0].split("#")[0];
+  if (!cleanPath) return "/";
+  if (cleanPath.length === 1) return cleanPath;
+  return cleanPath.replace(/\/+$/, "");
+};
+
+const isPathMatch = (currentPath, targetPath, exact = false) => {
+  const current = normalizePath(currentPath);
+  const target = normalizePath(targetPath);
+  if (!target || target === "/") return current === target;
+  if (exact) return current === target;
+  return current === target || current.startsWith(`${target}/`);
+};
+
+const hasMoreSpecificMenuMatch = (currentPath, currentMenu, menuList = []) => {
+  const currentMenuPath = normalizePath(currentMenu?.url);
+  if (!currentMenuPath || currentMenuPath === "/") return false;
+
+  return menuList.some((otherMenu) => {
+    if (!otherMenu?.url || otherMenu.id === currentMenu.id) return false;
+    const otherPath = normalizePath(otherMenu.url);
+    if (otherPath === currentMenuPath) return false;
+    const isChildPath = otherPath.startsWith(`${currentMenuPath}/`);
+    return isChildPath && isPathMatch(currentPath, otherPath);
+  });
+};
+
 const Sidebar = () => {
   const [showCardMenu, setShowCardMenu] = useState(false);
   const [openSubMenuId, setOpenSubMenuId] = useState(null);
@@ -18,6 +46,8 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation();
 
   const userRole = localStorage.getItem("userRole");
+  const requireProviderSubscription =
+    localStorage.getItem("requireProviderSubscription") !== "false";
   const leftMenu = [
     {
       id: 1,
@@ -50,6 +80,22 @@ const Sidebar = () => {
       url: getLocalizedPath(commonRoute.subscribers, i18n.language),
       isTrue: false,
       redirect: getLocalizedPath(commonRoute.subscribers, i18n.language),
+    },
+    {
+      id: 18,
+      title: t("sidebar.publicAds"),
+      icon: icons.promotions,
+      url: getLocalizedPath(commonRoute.publicAdPlacements, i18n.language),
+      isTrue: false,
+      redirect: getLocalizedPath(commonRoute.publicAdPlacements, i18n.language),
+    },
+    {
+      id: 19,
+      title: t("sidebar.rankingRequests"),
+      icon: icons.promotions,
+      url: getLocalizedPath(commonRoute.rankingRequests, i18n.language),
+      isTrue: false,
+      redirect: getLocalizedPath(commonRoute.rankingRequests, i18n.language),
     },
     {
       id: 5,
@@ -209,9 +255,7 @@ const Sidebar = () => {
     const currentPath = location.pathname;
     const menuWithActiveChild = leftMenu.find((menuItem) => {
       if (menuItem.subMenu) {
-        return menuItem.subMenu.some((subItem) =>
-          currentPath.includes(subItem.url)
-        );
+        return menuItem.subMenu.some((subItem) => isPathMatch(currentPath, subItem.url));
       }
       return false;
     });
@@ -226,6 +270,8 @@ const Sidebar = () => {
       t("sidebar.title2"),
       t("sidebar.title3"),
       t("sidebar.subscribers"),
+      t("sidebar.rankingRequests"),
+      t("sidebar.publicAds"),
       t("sidebar.title4"),
       t("sidebar.title5"),
       t("sidebar.title8"),
@@ -240,8 +286,9 @@ const Sidebar = () => {
       t("sidebar.title3"),
       t("sidebar.title6"),
       t("sidebar.title7"),
+      t("sidebar.title10"),
       t("sidebar.title9"),
-      t("sidebar.subscription"),
+      ...(requireProviderSubscription ? [t("sidebar.subscription")] : []),
     ],
   };
   const filteredMenu = leftMenu.filter((menuItem) =>
@@ -258,13 +305,19 @@ const Sidebar = () => {
           const { url, title, icon, menuIcon, redirect, subMenu, cardSubMenu } =
             elem;
 
-          // Check if parent menu item should be active
-          // It should be active if current path matches its URL OR any of its submenu URLs
           const currentPath = location.pathname;
+          const hasSpecificChildActive = hasMoreSpecificMenuMatch(
+            currentPath,
+            elem,
+            filteredMenu
+          );
+          const subMenuActive = !!subMenu?.some((subItem) =>
+            isPathMatch(currentPath, subItem.url)
+          );
           const isParentActive =
-            currentPath.includes(url) ||
-            (subMenu &&
-              subMenu.some((subItem) => currentPath.includes(subItem.url)));
+            subMenuActive ||
+            isPathMatch(currentPath, url, true) ||
+            (isPathMatch(currentPath, url) && !hasSpecificChildActive);
 
           return (
             <React.Fragment key={index}>
@@ -300,19 +353,23 @@ const Sidebar = () => {
               {showCardMenu && cardSubMenu && (
                 <div className="cardSubMenu-item-container" ref={ref}>
                   {cardSubMenu?.map((cElem, cIndex) => {
+                    const isCardSubMenuActive = isPathMatch(
+                      window.location.pathname,
+                      cElem?.url
+                    );
                     return (
                       <div
                         href={cElem?.href}
                         key={cIndex}
                         className={`cardSubMenu-item ${
-                          window.location.pathname.includes(cElem?.url)
+                          isCardSubMenuActive
                             ? "active-cardSubMenu-item"
                             : "inactive-cardSubMenu-item"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          if (!window.location.pathname.includes(cElem?.url)) {
+                          if (!isCardSubMenuActive) {
                             navigate(cElem?.redirect);
                           }
                         }}
@@ -323,7 +380,7 @@ const Sidebar = () => {
                             {cElem?.subTitle}
                           </div>
                         </div>
-                        {window.location.pathname.includes(cElem?.url) && (
+                        {isCardSubMenuActive && (
                           <div>
                             <img
                               src={cElem?.cardSubMenuIcon}
@@ -340,19 +397,20 @@ const Sidebar = () => {
               {openSubMenuId === elem.id && subMenu?.length > 0 && (
                 <div className="">
                   {subMenu?.map((cElem, cIndex) => {
+                    const isSubMenuActive = isPathMatch(location.pathname, cElem?.url);
                     return (
                       <div
                         href={cElem?.href}
                         key={cIndex}
                         className={`sub-menu-item ${
-                          location.pathname.includes(cElem?.url)
+                          isSubMenuActive
                             ? "active-sub-menu-item"
                             : "inactive-sub-menu-item"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          if (!location.pathname.includes(cElem?.url)) {
+                          if (!isSubMenuActive) {
                             navigate(cElem?.redirect);
                           }
                         }}

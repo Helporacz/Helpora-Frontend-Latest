@@ -45,6 +45,8 @@ export const commonRoute = {
   privacy: "/privacy",
   //dashboard
   dashboard: "/dashboard",
+  publicAdPlacements: "/dashboard/public-ads",
+  rankingRequests: "/dashboard/ranking-requests",
   dashboardType: "/dashboard/:dType",
   subscribers: "/dashboard/subscribers",
   pushNotification: "/dashboard/push-notification",

@@ -3,6 +3,7 @@ import Beauticians from "pages/Beauticians/Beauticians";
 import Category from "pages/Category/Category";
 import ChatPage from "pages/Chat/Chat";
 import Clients from "pages/Clients";
+import AdminDashboard from "pages/Dashboard/AdminDashboard";
 import Dashboard from "pages/Dashboard";
 import UserData from "pages/Dashboard/UserData";
 import NotificationPage from "pages/Homepage/Notification/NotificationPage";
@@ -21,6 +22,7 @@ import SlotManagment from "pages/SlotManagment/SlotManagment";
 import UserProfile from "pages/UserProfile";
 import AddAdmin from "pages/UserProfile/AddAdmin/AddAdmin";
 import ManageSubscription from "pages/Subscription/ManageSubscription";
+import RankingRequests from "pages/RankingRequests/RankingRequests";
 import Subscribers from "pages/Subscribers/Subscribers";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -28,9 +30,11 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { getAdminProfile, getUserProfile } from "store/globalSlice";
 import { commonRoute } from "utils/constants";
 import { getLocalizedPath } from "utils/localizedRoute";
+import ScrollToTop from "components/layouts/ScrollToTop/ScrollToTop";
 import Regions from "pages/configration/Regions";
 import City from "pages/configration/City";
 import District from "pages/configration/District";
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@/lib/i18n-client";
 
 const routeArray = [
   { layoutId: "dashboard-container", path: commonRoute.dashboard, component: <Dashboard /> },
@@ -41,6 +45,8 @@ const routeArray = [
   { layoutId: "add-category-container", path: commonRoute.category, component: <Category />, isBack: true },
   { layoutId: "clients-container", path: commonRoute.clients, component: <Clients /> },
   { layoutId: "subscribers-container", path: commonRoute.subscribers, component: <Subscribers />, headerText: "Subscribers" },
+  { layoutId: "ranking-requests-container", path: commonRoute.rankingRequests, component: <RankingRequests />, headerText: "Ranking Requests", roles: ["superAdmin"] },
+  { layoutId: "public-ads-container", path: commonRoute.publicAdPlacements, component: <AdminDashboard view="publicAds" />, roles: ["superAdmin"] },
   { layoutId: "services-container", path: commonRoute.Adminservices, component: <ViewServices /> },
   { layoutId: "admins-container", path: commonRoute.admins, component: "admin" },
   { layoutId: "my-profile-container", path: commonRoute.myProfile, component: <UserProfile />, isBack: true },
@@ -80,15 +86,19 @@ const AppRoute = () => {
     globalApis();
   }, [globalApis]);
 
-  const languages = ["en", "cz"];
-  const defaultLang = "cz";
+  const languages = SUPPORTED_LANGUAGES;
+  const defaultLang = DEFAULT_LANGUAGE;
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {languages.map((lang) =>
           routeArray.map((elem, index) => {
-            const { layoutId, isBack, headerText, isNavigate, path, to, component } = elem;
+            const { layoutId, isBack, headerText, isNavigate, path, to, component, roles } = elem;
+            if (roles?.length && !roles.includes(userRole)) {
+              return null;
+            }
             const localizedPath = getLocalizedPath(path, lang);
 
             return (

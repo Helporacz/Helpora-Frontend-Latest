@@ -1,8 +1,15 @@
 import SkeletonSubService from "components/Skeleton/SkeletonSubService";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslation } from "react-i18next";
-import { FaRegCreditCard, FaUser, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaRegCreditCard,
+  FaUser,
+  FaTimes,
+  FaEye,
+  FaEyeSlash,
+  FaStar,
+} from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
@@ -10,6 +17,8 @@ import {
   getAllCategory,
   getAllCities,
   getAllDistricts,
+  getProviderAvailabilitySlotsAPI,
+  getPublicRankedProviders,
   getProviderServicesByCategory,
   throwError,
   throwSuccess,
@@ -20,11 +29,17 @@ import BookingModal from "./BookingModel";
 import "./Subservice.scss";
 import { getLocalizedPath } from "utils/localizedRoute";
 import { CiLocationOn } from "react-icons/ci";
+import TopProvidersCarousel from "components/ranking/TopProvidersCarousel";
+import { localizeRankBadgeLabel } from "utils/rankingLabel";
 
 const SubServices = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language === "cz" ? "cz" : "en";
+  const normalizedLang = (i18n.resolvedLanguage || i18n.language || "en")
+    .toLowerCase()
+    .split("-")[0];
+  const currentLang =
+    normalizedLang === "cs" ? "cz" : normalizedLang === "ru" ? "ru" : "en";
 
   const cityDropdownRef = useRef(null);
   const districtDropdownRef = useRef(null);
@@ -57,6 +72,11 @@ const SubServices = () => {
   const [loadingDistricts, setLoadingDistricts] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [loadingTimeSlots, setLoadingTimeSlots] = useState(false);
+  const [bookingTimeMessage, setBookingTimeMessage] = useState("");
+  const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
   const [note, setNote] = useState("");
   const [selectedService, setSelectedService] = useState(null);
   const [revealedContacts, setRevealedContacts] = useState({});
@@ -69,6 +89,8 @@ const SubServices = () => {
   const [selectedCityData, setSelectedCityData] = useState(null);
   const [cityDropdownSearch, setCityDropdownSearch] = useState("");
   const [districtDropdownSearch, setDistrictDropdownSearch] = useState("");
+  const [featuredRankedProviders, setFeaturedRankedProviders] = useState([]);
+  const [featuredRankedLoading, setFeaturedRankedLoading] = useState(true);
   const navigate = useNavigate();
   const token = getDataFromLocalStorage("token");
 
@@ -313,25 +335,107 @@ const SubServices = () => {
     return clean;
   };
 
+  const resolveProviderId = (serviceItem) => {
+    const providerValue = serviceItem?.provider;
+    if (!providerValue) return "";
+    if (typeof providerValue === "string") return providerValue;
+    return providerValue?._id || providerValue?.id || "";
+  };
+
   const handleBookingClick = (service) => {
     if (!token) {
       navigate(getLocalizedPath("/sign-in", i18n.language));
     } else {
       setSelectedService(service);
+      setBookingDate("");
+      setBookingTime("");
+      setNote("");
+      setAvailableTimeSlots([]);
+      setBookingTimeMessage("");
+      setIsSubmittingBooking(false);
       setShowBookingModal(true);
     }
   };
 
+  const handleCloseBookingModal = () => {
+    setShowBookingModal(false);
+    setBookingDate("");
+    setBookingTime("");
+    setNote("");
+    setAvailableTimeSlots([]);
+    setLoadingTimeSlots(false);
+    setBookingTimeMessage("");
+    setIsSubmittingBooking(false);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchAvailableTimeSlots = async () => {
+      if (!showBookingModal || !selectedService || !bookingDate) {
+        if (isMounted) {
+          setAvailableTimeSlots([]);
+          setLoadingTimeSlots(false);
+          if (!bookingDate) {
+            setBookingTimeMessage("");
+          }
+        }
+        return;
+      }
+
+      const providerId = resolveProviderId(selectedService);
+      if (!providerId) {
+        if (isMounted) {
+          setAvailableTimeSlots([]);
+          setLoadingTimeSlots(false);
+          setBookingTimeMessage("No available hours for this date");
+        }
+        return;
+      }
+
+      setLoadingTimeSlots(true);
+      const response = await dispatch(
+        getProviderAvailabilitySlotsAPI(providerId, bookingDate)
+      );
+
+      if (!isMounted) return;
+
+      const slotsFromApi = Array.isArray(response?.timeSlots)
+        ? response.timeSlots
+        : Array.isArray(response?.slots)
+        ? response.slots
+            .map((slot) => slot?.start)
+            .filter((slot) => typeof slot === "string" && slot.trim())
+        : [];
+
+      setAvailableTimeSlots(slotsFromApi);
+      setBookingTimeMessage(
+        slotsFromApi.length ? "" : "No available hours for this date"
+      );
+      setLoadingTimeSlots(false);
+    };
+
+    fetchAvailableTimeSlots();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, showBookingModal, selectedService, bookingDate]);
+
   const confirmBooking = async () => {
     if (!selectedService) return;
+    if (isSubmittingBooking) return;
 
+    setIsSubmittingBooking(true);
     try {
       const response = await dispatch(
         createBooking({
           providerServiceId: selectedService._id,
-          bookingDate: new Date(bookingDate),
+          bookingDate,
+          bookingTime,
+          preferredTime: bookingTime,
           totalPrice: selectedService.price,
-          note,
+          notes: note,
         })
       );
 
@@ -341,11 +445,11 @@ const SubServices = () => {
         dispatch(throwError(response?.message));
       }
 
-      setShowBookingModal(false);
-      setBookingDate("");
-      setNote("");
+      handleCloseBookingModal();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmittingBooking(false);
     }
   };
 
@@ -375,6 +479,39 @@ const SubServices = () => {
 
     loadData();
   }, [fetchServices, fetchCategories]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchFeaturedRankedProviders = async () => {
+      setFeaturedRankedLoading(true);
+      const response = await dispatch(
+        getPublicRankedProviders({
+          categoryId: id,
+          limit: 10,
+        })
+      );
+
+      if (!isMounted) return;
+      if (response?.success && Array.isArray(response?.data)) {
+        setFeaturedRankedProviders(response.data);
+      } else {
+        setFeaturedRankedProviders([]);
+      }
+      setFeaturedRankedLoading(false);
+    };
+
+    if (id) {
+      fetchFeaturedRankedProviders();
+    } else {
+      setFeaturedRankedProviders([]);
+      setFeaturedRankedLoading(false);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, id, currentLang]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -633,6 +770,189 @@ const SubServices = () => {
     return "";
   };
 
+  const AVAILABILITY_TIME_PATTERN = /^([01]\d|2[0-3]):00$/;
+  const DEFAULT_PROVIDER_AVAILABILITY = {
+    startTime: "09:00",
+    endTime: "17:00",
+    workingDays: [1, 2, 3, 4, 5, 6], // Monday-Saturday
+  };
+
+  const parseTimeToMinutes = (timeValue) => {
+    const raw = String(timeValue || "").trim();
+    if (!AVAILABILITY_TIME_PATTERN.test(raw)) return null;
+    const [hour, minute] = raw.split(":").map(Number);
+    return hour * 60 + minute;
+  };
+
+  const formatMinutesToTime = (minutes) => {
+    if (!Number.isFinite(minutes)) return "";
+    const safeMinutes = Math.max(0, Math.floor(minutes));
+    const hours = Math.floor(safeMinutes / 60);
+    const mins = safeMinutes % 60;
+    return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+  };
+
+  const normalizeWorkingDays = (workingDays) => {
+    const source = Array.isArray(workingDays)
+      ? workingDays
+      : DEFAULT_PROVIDER_AVAILABILITY.workingDays;
+
+    const normalized = Array.from(
+      new Set(
+        source
+          .map((day) => Number(day))
+          .filter((day) => Number.isInteger(day) && day >= 0 && day <= 6)
+      )
+    ).sort((left, right) => left - right);
+
+    return normalized.length
+      ? normalized
+      : [...DEFAULT_PROVIDER_AVAILABILITY.workingDays];
+  };
+
+  const normalizeDefaultAvailability = (rawAvailability = {}) => {
+    const startRaw = rawAvailability?.startTime;
+    const endRaw = rawAvailability?.endTime;
+    const startMinutes = parseTimeToMinutes(startRaw);
+    const endMinutes = parseTimeToMinutes(endRaw);
+
+    if (
+      startMinutes === null ||
+      endMinutes === null ||
+      startMinutes >= endMinutes
+    ) {
+      return {
+        ...DEFAULT_PROVIDER_AVAILABILITY,
+        workingDays: normalizeWorkingDays(rawAvailability?.workingDays),
+      };
+    }
+
+    return {
+      startTime: String(startRaw).trim(),
+      endTime: String(endRaw).trim(),
+      workingDays: normalizeWorkingDays(rawAvailability?.workingDays),
+    };
+  };
+
+  const subtractUnavailableRanges = (baseRange, unavailableRanges = []) => {
+    const validExclusions = unavailableRanges
+      .map((range) => ({
+        start: parseTimeToMinutes(range?.startTime),
+        end: parseTimeToMinutes(range?.endTime),
+      }))
+      .filter((range) => range.start !== null && range.end !== null)
+      .filter((range) => range.start < range.end)
+      .sort((left, right) => left.start - right.start);
+
+    let queue = [baseRange];
+
+    validExclusions.forEach((unavailableRange) => {
+      const temp = [];
+      queue.forEach((range) => {
+        if (
+          unavailableRange.end <= range.start ||
+          unavailableRange.start >= range.end
+        ) {
+          temp.push(range);
+          return;
+        }
+
+        if (range.start < unavailableRange.start) {
+          temp.push({ start: range.start, end: unavailableRange.start });
+        }
+
+        if (range.end > unavailableRange.end) {
+          temp.push({ start: unavailableRange.end, end: range.end });
+        }
+      });
+      queue = temp;
+    });
+
+    return queue;
+  };
+
+  const getTodayProviderAvailabilityMeta = (service) => {
+    const providerDetails = service?.provider?.providerDetails || {};
+    const defaultAvailability = normalizeDefaultAvailability(
+      providerDetails.defaultAvailability
+    );
+
+    const today = new Date();
+    const dayIndex = today.getDay();
+    const nowMinutes = today.getHours() * 60 + today.getMinutes();
+    const dateKey = `${today.getFullYear()}-${String(
+      today.getMonth() + 1
+    ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+    const baseRange = {
+      start: parseTimeToMinutes(defaultAvailability.startTime),
+      end: parseTimeToMinutes(defaultAvailability.endTime),
+    };
+
+    let ranges =
+      baseRange.start !== null &&
+      baseRange.end !== null &&
+      baseRange.start < baseRange.end
+        ? [baseRange]
+        : [];
+
+    let dayOffToday = !defaultAvailability.workingDays.includes(dayIndex);
+    if (dayOffToday) {
+      ranges = [];
+    }
+
+    const overrides = Array.isArray(providerDetails?.overrides)
+      ? providerDetails.overrides
+      : [];
+    const todayOverride = overrides.find(
+      (entry) => String(entry?.date || "") === dateKey
+    );
+
+    if (todayOverride) {
+      if (todayOverride.isDayOff) {
+        dayOffToday = true;
+        ranges = [];
+      } else if (
+        !dayOffToday &&
+        Array.isArray(todayOverride.timeRanges) &&
+        todayOverride.timeRanges.length
+      ) {
+        ranges = subtractUnavailableRanges(baseRange, todayOverride.timeRanges);
+      }
+    }
+
+    const sanitizedRanges = ranges.filter(
+      (range) =>
+        Number.isFinite(range?.start) &&
+        Number.isFinite(range?.end) &&
+        range.start < range.end
+    );
+
+    const isAvailableNow = sanitizedRanges.some(
+      (range) => nowMinutes >= range.start && nowMinutes < range.end
+    );
+    const hasHours = sanitizedRanges.length > 0;
+    const isAvailableToday = !dayOffToday && hasHours;
+    const displayHours = hasHours
+      ? sanitizedRanges
+          .map(
+            (range) =>
+              `${formatMinutesToTime(range.start)} - ${formatMinutesToTime(
+                range.end
+              )}`
+          )
+          .join(", ")
+      : "";
+
+    return {
+      isAvailableNow,
+      isAvailableToday,
+      dayOffToday,
+      hasHours,
+      displayHours,
+    };
+  };
+
   const handleRevealContact = (serviceId) => {
     if (!token) {
       dispatch(
@@ -652,6 +972,45 @@ const SubServices = () => {
       [serviceId]: !prev[serviceId],
     }));
   };
+
+  const isRankedProviderService = useCallback((service) => {
+    const rankingPosition = Number(service?.provider?.ranking_position);
+    return (
+      !!service?.provider?.ranking_active &&
+      Number.isInteger(rankingPosition) &&
+      rankingPosition > 0
+    );
+  }, []);
+
+  const orderedServices = useMemo(() => {
+    const sorted = [...services];
+    sorted.sort((leftService, rightService) => {
+      const leftRanked = isRankedProviderService(leftService);
+      const rightRanked = isRankedProviderService(rightService);
+
+      if (leftRanked && !rightRanked) return -1;
+      if (!leftRanked && rightRanked) return 1;
+
+      if (leftRanked && rightRanked) {
+        const leftPosition = Number(leftService?.provider?.ranking_position);
+        const rightPosition = Number(rightService?.provider?.ranking_position);
+        if (leftPosition !== rightPosition) {
+          return leftPosition - rightPosition;
+        }
+      }
+
+      const leftName = String(leftService?.provider?.name || "").toLowerCase();
+      const rightName = String(rightService?.provider?.name || "").toLowerCase();
+      if (leftName !== rightName) {
+        return leftName.localeCompare(rightName);
+      }
+
+      const leftCreatedAt = new Date(leftService?.createdAt || 0).getTime();
+      const rightCreatedAt = new Date(rightService?.createdAt || 0).getTime();
+      return rightCreatedAt - leftCreatedAt;
+    });
+    return sorted;
+  }, [services, isRankedProviderService]);
 
   if (loading) {
     return <SkeletonSubService />;
@@ -684,6 +1043,12 @@ const SubServices = () => {
             </div>
           </div>
         )}
+
+        <TopProvidersCarousel
+          providers={featuredRankedProviders}
+          loading={featuredRankedLoading}
+          className="subservices-top-providers"
+        />
 
         {/* Search Section */}
         <div className="search-section mb-4">
@@ -906,7 +1271,7 @@ const SubServices = () => {
 
         <div>
           {services.length > 0 ? (
-            services.map((service) => {
+            orderedServices.map((service) => {
               // --- Data Preparation ---
               const displayTitle =
                 currentLang === "cz"
@@ -956,6 +1321,14 @@ const SubServices = () => {
                 service?.priceTo
               );
               const priceTypeLabel = getPriceTypeLabel(service?.priceType);
+              const isRankedProvider = isRankedProviderService(service);
+              const rankingPosition = Number(service?.provider?.ranking_position);
+              const rankingBadgeLabel = localizeRankBadgeLabel(
+                service?.provider?.rank_badge_label,
+                t,
+                t("search.rankedProvider", "Ranked Provider")
+              );
+              const availabilityMeta = getTodayProviderAvailabilityMeta(service);
 
               return (
                 <div
@@ -1053,6 +1426,27 @@ const SubServices = () => {
                               {service.provider?.name ||
                                 t("search.unknownProvider", "Unknown Provider")}
                             </span>
+                            {isRankedProvider && (
+                              <span
+                                className="badge"
+                                style={{
+                                  fontSize: "0.7rem",
+                                  padding: "3px 8px",
+                                  borderRadius: "999px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "5px",
+                                  marginLeft: "4px",
+                                  background:
+                                    "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+                                  color: "#111827",
+                                  fontWeight: 700,
+                                }}
+                              >
+                                <FaStar />
+                                #{rankingPosition} {rankingBadgeLabel}
+                              </span>
+                            )}
                             <span
                               className="badge video-badge"
                               style={{
@@ -1069,6 +1463,71 @@ const SubServices = () => {
                             >
                               <i className="fas fa-shield-alt"></i>
                               {t("section42.text17", "Verified")}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              marginTop: "10px",
+                              display: "flex",
+                              flexWrap: "wrap",
+                              alignItems: "center",
+                              gap: "8px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "6px",
+                                borderRadius: "999px",
+                                padding: "4px 10px",
+                                fontWeight: 700,
+                                fontSize: "0.76rem",
+                                letterSpacing: "0.02em",
+                                border: availabilityMeta.isAvailableToday
+                                  ? "1px solid #86efac"
+                                  : "1px solid #fecaca",
+                                backgroundColor: availabilityMeta.isAvailableToday
+                                  ? "#dcfce7"
+                                  : "#fee2e2",
+                                color: availabilityMeta.isAvailableToday
+                                  ? "#166534"
+                                  : "#991b1b",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  width: "7px",
+                                  height: "7px",
+                                  borderRadius: "50%",
+                                  backgroundColor: availabilityMeta.isAvailableToday
+                                    ? "#22c55e"
+                                    : "#ef4444",
+                                }}
+                              />
+                              {availabilityMeta.isAvailableToday
+                                ? t("search.availableToday", "Available today")
+                                : t("search.unavailableToday", "Unavailable today")}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "0.84rem",
+                                color: "#4b5563",
+                                fontWeight: 600,
+                              }}
+                            >
+                              {availabilityMeta.dayOffToday
+                                ? t("search.dayOffToday", "Day off today")
+                                : availabilityMeta.hasHours
+                                ? `${t("search.availableHours", {
+                                    hours: availabilityMeta.displayHours,
+                                    defaultValue: "Today: {{hours}}",
+                                  })} · ${
+                                    availabilityMeta.isAvailableNow
+                                      ? t("search.openNow", "Open now")
+                                      : t("search.closedNow", "Closed now")
+                                  }`
+                                : t("search.hoursNotSet", "Hours not set")}
                             </span>
                           </div>
                         </div>
@@ -1406,6 +1865,7 @@ const SubServices = () => {
             </div>
           )}
         </div>
+
       </div>
 
       {showBookingModal && (
@@ -1413,9 +1873,15 @@ const SubServices = () => {
           today={new Date().toISOString().split("T")[0]}
           bookingDate={bookingDate}
           setBookingDate={setBookingDate}
+          bookingTime={bookingTime}
+          setBookingTime={setBookingTime}
+          availableTimeSlots={availableTimeSlots}
+          isLoadingSlots={loadingTimeSlots}
+          isSubmitting={isSubmittingBooking}
+          noSlotsMessage={bookingTimeMessage || "No available hours for this date"}
           note={note}
           setNote={setNote}
-          onClose={() => setShowBookingModal(false)}
+          onClose={handleCloseBookingModal}
           onConfirm={confirmBooking}
         />
       )}

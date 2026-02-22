@@ -108,15 +108,15 @@
     "text2": "Připojte se k naší rostoucí",
     "text3": "síti",
     "text4": "ještě dnes",
-    "text5": "Staňte se poskytovatelem a využijte",
-    "text6": "6 měsíců zdarma/ poté 99 Kč měsíčně ",
-    "text7": " ",
+    "text5": "Buďte vidět. Získejte rezervace. Získejte klienty ještě dnes!",
+    "text6": "",
+    "text7": "",
     "text8": "Začít zdarma"
   },
   "section2": {
     "text1": "Prohlédněte si populární kategorie služeb",
     "text2": "Vyberte si ze široké škály domácích, kosmetických, fitness a dětských služeb – vše na jednom místě.",
-    "text3": "Najít pomoc nyní"
+    "text3": "Vyhledat"
   },
   "section3": {
     "text1": "Prémiové domácí služby poskytované s péčí",
@@ -784,7 +784,8 @@
       "header5": "poskytovatel",
       "header6": "Datum objednávky",
       "header7": "Aktualizováno v",
-      "header8": "Rezervace By"
+      "header8": "Rezervace By",
+      "header9": "Požadovaný čas"
     }
   },
   "order": {
@@ -830,7 +831,9 @@
     "approvedKYC": "Schváleno KYC",
     "KYCApproval": "Schválení KYC",
     "subscription": "Předplatné",
-    "subscribers": "Předplatitelé"
+    "subscribers": "Předplatitelé",
+    "publicAds": "Umístění veřejných reklam",
+    "rankingRequests": "Žádosti o pořadí"
   },
   "client": {
     "heading": "Klienti",
@@ -847,7 +850,21 @@
     "deleteAction": "Smazat",
     "deleteConfirm": "Smazat tohoto klienta?",
     "deleteSuccess": "Klient byl úspěšně odstraněn.",
-    "deleteError": "Smazání klienta se nezdařilo."
+    "deleteError": "Smazání klienta se nezdařilo.",
+    "export": {
+      "button": "Export e-mailů CSV",
+      "success": "CSV e-mailů klientů bylo staženo.",
+      "error": "Export e-mailů klientů se nezdařil.",
+      "empty": "Nebyly nalezeny žádné e-maily klientů pro export.",
+      "columns": {
+        "name": "Jméno",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "status": "Stav",
+        "createdAt": "Vytvořeno",
+        "lastLogin": "Poslední přihlášení"
+      }
+    }
   },
   "providers": {
     "heading": "Poskytovatelé",
@@ -866,10 +883,27 @@
       "header10": "Region",
       "header11": "Město",
       "header12": "Okres",
+      "header13": "Pořadí",
       "editProvider": "Upravit poskytovatele",
       "deleteProvider": "Smazat poskytovatele",
       "active": "Aktivní",
-      "suspend": "pozastavit"
+      "suspend": "pozastavit",
+      "rankedLabel": "Doporučený poskytovatel",
+      "unranked": "Bez pořadí"
+    },
+    "export": {
+      "button": "Export e-mailů CSV",
+      "success": "CSV e-mailů poskytovatelů bylo staženo.",
+      "error": "Export e-mailů poskytovatelů se nezdařil.",
+      "empty": "Nebyly nalezeny žádné e-maily poskytovatelů pro export.",
+      "columns": {
+        "name": "Jméno",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "status": "Stav",
+        "createdAt": "Vytvořeno",
+        "lastLogin": "Poslední přihlášení"
+      }
     }
   },
   "myBooking": {
@@ -961,6 +995,23 @@
     }
   },
   "showProfile": {
+    "leaveComment": "Zanechat komentář",
+    "lastBookingLabel": "Poslední rezervace",
+    "lastReviewLabel": "Poslední recenze",
+    "noBookings": "Zatím žádné rezervace",
+    "noReviews": "Zatím žádné recenze",
+    "noReviewsDetailed": "Zatím žádné recenze",
+    "realExperienceNote": "Recenze pouze ze skutečných zkušeností",
+    "providerNamePlaceholder": "Jméno poskytovatele",
+    "activityHeading": "Aktivita a recenze",
+    "priceLabel": "Cena",
+    "statusLabel": "Stav",
+    "serviceLabel": "Služba",
+    "descriptionLabel": "Popis",
+    "experienceHint": "3 roky zkušeností",
+    "statusActive": "Aktivní",
+    "statusDeactive": "Neaktivní",
+    "statusUnknown": "N/A",
     "verification": {
       "emailAndPhoneNumber": "Ověřený e-mail a telefonní číslo",
       "verifiedAddress": "Ověřená adresa",
@@ -1081,7 +1132,7 @@
     "description": "Měsíční předplatné pro poskytovatele služeb na platformě helpora.cz. Předplatné umožňuje vytvořit a udržovat aktivní profil, zobrazovat se ve vyhledávání a být přímo kontaktován zákazníky. Předplatné se automaticky obnovuje každý měsíc a lze jej kdykoliv zrušit. Platforma helpora.cz nezaručuje konkrétní počet poptávek ani zakázek.",
     "nameLabel": "Název",
     "priceLabel": "Cena",
-    "priceValue": "99 Kč / měsíc",
+    "priceValue": "Nyní zdarma (spravováno administrátorem)",
     "billingLabel": "Fakturace",
     "billingValue": "Měsíční opakovaná",
     "currencyLabel": "Měna",
@@ -1136,6 +1187,63 @@
     "detailTrialEnd": "Konec zkušební doby",
     "detailCancelAtPeriodEnd": "Zrušit na konci období",
     "detailPaymentStatus": "Stav platby"
+  },
+  "adminDashboard": {
+    "title": "Administrátorský dashboard",
+    "appAccess": {
+      "title": "Režim předplatného poskytovatelů",
+      "description": "Přepněte, zda poskytovatelé musí mít aktivní předplatné Stripe.",
+      "loading": "Načítání aktuálního režimu...",
+      "notUpdated": "Zatím neaktualizováno",
+      "system": "Systém",
+      "lastUpdated": "Naposledy aktualizováno {{date}} uživatelem {{user}}",
+      "proMode": "Pro režim (předplatné vyžadováno)",
+      "freeMode": "Bezplatný režim (předplatné není vyžadováno)",
+      "messages": {
+        "enabledSuccess": "Pro režim byl úspěšně zapnut.",
+        "disabledSuccess": "Bezplatný režim byl úspěšně zapnut.",
+        "updateFailed": "Režim aplikace se nepodařilo aktualizovat. Zkuste to prosím znovu."
+      }
+    },
+    "publicAds": {
+      "title": "Umístění veřejných reklam",
+      "description": "Spravujte jednoduché obrázkové reklamy zobrazené na veřejných stránkách.",
+      "sizeGuideTitle": "Doporučené rozměry obrázků",
+      "topSize": "Horní banner (desktop): 1200x180 (20:3)",
+      "sidebarSize": "Pravý panel (desktop): 300x450 (2:3)",
+      "mobileTopSize": "Horní banner (mobil): 360x120 (3:1)",
+      "topTitle": "Reklamy v horním banneru",
+      "sidebarTitle": "Reklamy v bočním panelu",
+      "topDimensionsTitle": "Velikost horního banneru (globálně)",
+      "sidebarDimensionsTitle": "Velikost bočního panelu (globálně)",
+      "customSizeOn": "Vlastní velikost zapnuta",
+      "customSizeOff": "Použít výchozí velikost",
+      "widthLabel": "Šířka",
+      "heightLabel": "Výška",
+      "upload": "Nahrát obrázky",
+      "uploading": "Nahrávání...",
+      "dragHint": "Přetažením změňte pořadí zobrazení reklam.",
+      "empty": "Zatím nejsou nahrané žádné reklamy.",
+      "active": "Aktivní",
+      "inactive": "Neaktivní",
+      "remove": "Odebrat",
+      "linkLabel": "Volitelný URL odkaz",
+      "linkPlaceholder": "https://example.com",
+      "marqueeLabel": "Volitelný běžící text (jen horní banner)",
+      "marqueePlaceholder": "Velký posuvný text pro lepší viditelnost",
+      "saving": "Ukládání...",
+      "messages": {
+        "saveFailed": "Uložení konfigurace veřejných reklam se nezdařilo.",
+        "invalidFile": "Vyberte alespoň jeden platný obrázek.",
+        "maxReached": "V tomto umístění je povoleno maximálně 20 reklam.",
+        "uploadFailed": "Nahrání obrázku se nezdařilo. Zkuste to prosím znovu.",
+        "uploadSuccess": "Reklamy byly úspěšně nahrány.",
+        "removeSuccess": "Reklama byla úspěšně odebrána.",
+        "toggleSuccess": "Stav reklamy byl úspěšně aktualizován.",
+        "invalidUrl": "Zadejte prosím platnou URL adresu s http/https.",
+        "reorderSuccess": "Pořadí reklam bylo úspěšně aktualizováno."
+      }
+    }
   },
   "privacy": {
     "title": "Zásady ochrany osobních údajů",
@@ -1320,6 +1428,17 @@
     "loginRequired": "Pro pokračování se prosím přihlaste.",
     "locationNotSpecified": "Lokalita není uvedena",
     "unknownProvider": "Neznámý poskytovatel",
+    "rankedProvider": "Doporučený poskytovatel",
+    "topRankedProviders": "Top doporučení poskytovatelé",
+    "availableToday": "Dostupný dnes",
+    "unavailableToday": "Nedostupný dnes",
+    "availableNow": "Dostupný nyní",
+    "unavailableNow": "Nedostupný nyní",
+    "availableHours": "Dnes: {{hours}}",
+    "openNow": "Otevřeno nyní",
+    "closedNow": "Nyní zavřeno",
+    "dayOffToday": "Dnes má volno",
+    "hoursNotSet": "Pracovní hodiny nejsou nastaveny",
     "unavailable": "Nedostupné",
     "showingRelated": "Nebyly nalezeny žádné přesné shody. Zobrazuji podobné poskytovatele.",
     "fetchError": "Nepodařilo se načíst služby. Zkuste to prosím znovu.",
@@ -1337,6 +1456,95 @@
     "backToHome": "Zpět na hlavní stránku",
     "tryAgain": "Zkusit znovu",
     "suggestedCategories": "Mohlo by se vám také líbit"
+  },
+  "topProviders": {
+    "title": "Top poskytovatelé",
+    "subtitle": "Zvýšená viditelnost a doporučené služby",
+    "featuredRibbon": "Doporučeno",
+    "bestServiceProvider": "Nejlepší poskytovatel služeb",
+    "reviews": "{{count}} hodnocení",
+    "categoryUnavailable": "Kategorie není uvedena",
+    "noProviders": "Zatím nejsou dostupní žádní doporučení poskytovatelé."
+  },
+  "providerDashboard": {
+    "rankingStatusTitle": "Stav pořadí",
+    "rankingStatusActive": "Aktivní pořadí: #{{position}}",
+    "rankingStatusInactive": "Momentálně bez pořadí",
+    "rankingStatusHintActive": "Váš profil je zvýrazněn štítkem \"{{badge}}\".",
+    "rankingStatusHintInactive": "Administrátor může vaše pořadí nastavit v přehledu poskytovatelů.",
+    "rankingRequestButton": "Požádat o pořadí",
+    "rankingRequestPendingButton": "Žádost čeká",
+    "rankingRequestLoading": "Odesílání žádosti...",
+    "rankingRequestDefaultHint": "Pošlete žádost a admin může váš profil zvýraznit.",
+    "rankingRequestPendingHint": "Vaše žádost čeká na schválení administrátorem.",
+    "rankingRequestApprovedHint": "Vaše poslední žádost byla schválena.",
+    "rankingRequestDeniedHint": "Vaše poslední žádost byla zamítnuta. Můžete požádat znovu.",
+    "rankingRequestSuccess": "Žádost o pořadí byla odeslána.",
+    "rankingRequestFailed": "Žádost o pořadí se nepodařilo odeslat.",
+    "rankingRequestInvalidRank": "Navržená pozice musí být kladné celé číslo.",
+    "rankingRequestInvalidDateRange": "Požadovaný konec musí být po požadovaném začátku.",
+    "rankingRequestModalTitle": "Požádat o pořadí",
+    "rankingRequestModalSubtitle": "Navrhněte preferovanou pozici a období pro schválení administrátorem.",
+    "rankingRequestModalRank": "Navržená pozice v pořadí (volitelné)",
+    "rankingRequestModalRankPlaceholder": "např. 1, 2, 3",
+    "rankingRequestModalStart": "Požadovaný začátek (volitelné)",
+    "rankingRequestModalEnd": "Požadovaný konec (volitelné)",
+    "rankingRequestModalMessage": "Další podrobnosti (volitelné)",
+    "rankingRequestModalMessagePlaceholder": "Popište, proč by měl být váš profil zvýrazněn.",
+    "rankingRequestModalSubmit": "Odeslat žádost"
+  },
+  "rankingRequests": {
+    "title": "Žádosti poskytovatelů o pořadí",
+    "subtitle": "Zkontrolujte žádosti poskytovatelů a schvalte nebo zamítněte pořadí.",
+    "searchPlaceholder": "Hledat podle jména nebo e-mailu",
+    "filter": {
+      "all": "Všechny žádosti",
+      "pending": "Čekající",
+      "approved": "Schválené",
+      "denied": "Zamítnuté"
+    },
+    "status": {
+      "pending": "Čekající",
+      "approved": "Schválené",
+      "denied": "Zamítnuté"
+    },
+    "table": {
+      "provider": "Poskytovatel",
+      "requestStatus": "Stav žádosti",
+      "requestedAt": "Požádáno",
+      "currentRank": "Aktuální pořadí",
+      "requestNote": "Poznámka žádosti / admina",
+      "actions": "Akce"
+    },
+    "actions": {
+      "approve": "Schválit",
+      "approving": "Schvaluje se...",
+      "deny": "Zamítnout",
+      "denying": "Zamítá se...",
+      "delete": "Smazat",
+      "deleting": "Mazání..."
+    },
+    "notRanked": "Bez pořadí",
+    "noData": "Nebyly nalezeny žádné žádosti o pořadí.",
+    "approveModal": {
+      "title": "Schválit žádost o pořadí",
+      "subtitle": "Nastavte detaily pořadí pro {{name}}.",
+      "adminNote": "Poznámka administrátora (volitelné)",
+      "adminNotePlaceholder": "Přidejte poznámku k tomuto rozhodnutí",
+      "saving": "Ukládání...",
+      "confirm": "Schválit žádost"
+    },
+    "messages": {
+      "loadFailed": "Nepodařilo se načíst žádosti o pořadí.",
+      "approveSuccess": "Žádost o pořadí byla schválena.",
+      "denySuccess": "Žádost o pořadí byla zamítnuta.",
+      "deleteSuccess": "Zamítnutá žádost o pořadí byla smazána.",
+      "actionFailed": "Aktualizace žádosti o pořadí se nezdařila.",
+      "deleteFailed": "Zamítnutou žádost o pořadí se nepodařilo smazat.",
+      "deleteConfirm": "Smazat tuto zamítnutou žádost o pořadí?",
+      "rankPositionRequired": "Pozice v pořadí musí být kladné celé číslo.",
+      "invalidDateRange": "Konec zvýraznění musí být po začátku."
+    }
   },
   "addProvider": {
     "address": "adresa",
@@ -1367,7 +1575,21 @@
     "addressValidation": "Adresa je povinná pro aktualizaci.",
     "addressValidation2": "Adresa musí mít alespoň 5 znaků.",
     "regionValidation": "Region je povinný.",
-    "cityValidation": "Město je povinné."
+    "cityValidation": "Město je povinné.",
+    "rankingSectionTitle": "Pořadí poskytovatele",
+    "rankingSectionHint": "Zapněte ruční zvýraznění tohoto poskytovatele.",
+    "rankingEnabled": "Pořadí zapnuto",
+    "rankingDisabled": "Pořadí vypnuto",
+    "rankingPosition": "Pozice v pořadí",
+    "rankingPositionPlaceholder": "Zadejte pozici (1, 2, 3...)",
+    "rankingPositionRequired": "Při zapnutém pořadí je pozice povinná.",
+    "rankingPositionInteger": "Pozice musí být celé číslo.",
+    "rankingPositionPositive": "Pozice musí být větší než 0.",
+    "rankBadgeLabel": "Popisek štítku (volitelné)",
+    "rankBadgeLabelPlaceholder": "Doporučený poskytovatel",
+    "rankingStartAt": "Začátek zvýraznění (volitelné)",
+    "rankingEndAt": "Konec zvýraznění (volitelné)",
+    "rankingDateValidation": "Konec zvýraznění musí být po začátku."
   },
   "regions": {
     "heading": "Regiony",
@@ -1449,6 +1671,26 @@
     "inputPlaceHolder": "Hledat..."
   },
   "chat": {
+    "inboxTitle": "Zpravy",
+    "inboxSubtitle": "Zustante ve spojeni s klienty a poskytovateli",
+    "unknownUser": "Neznamy uzivatel",
+    "lastSeen": "Naposledy online",
+    "toggleStar": "Pripnout konverzaci",
+    "offline": "Offline",
+    "today": "Dnes",
+    "yesterday": "Vcera",
+    "bookingToday": "Rezervace dnes",
+    "bookingDaysAgo": "Rezervace pred {{count}} dnem",
+    "bookingDaysAgo_plural": "Rezervace pred {{count}} dny",
+    "bookingScheduled": "Rezervace naplanovana na",
+    "noBookingInfo": "Bez informaci o rezervaci",
+    "noMessagesYet": "Zatim zadne zpravy. Napis pozdrav.",
+    "typeMessage": "Napis zpravu...",
+    "sendMessage": "Odeslat zpravu",
+    "deleteConversation": "Smazat konverzaci",
+    "deleteConversationConfirm": "Tato akce smaze vsechny zpravy v teto konverzaci pro oba uzivatele.",
+    "deleting": "Mazani...",
+    "deleteNow": "Smazat",
     "scanLink": "Skenovat odkaz",
     "scanning": "Skenov?n?...",
     "scanComplete": "Sken dokon?en",
@@ -1456,7 +1698,8 @@
     "linkHidden": "Odkaz je skryt? do dokon?en? skenu",
     "openLink": "Otev??t odkaz",
     "externalLink": "Extern? odkaz",
-    "scanResultSafe": "Nebyly zji?t?ny hrozby"
+    "scanResultSafe": "Nebyly zji?t?ny hrozby",
+    "scanPending": "Ceka na kontrolu"
   },
   "changePassword": {
     "heading": "Změna hesla",
@@ -1480,5 +1723,32 @@
   },
   "errors": {
     "loadCategories": "Nepodařilo se načíst kategorie. Zkuste to prosím znovu."
+  },
+  "availabilitySettings": {
+    "heading": "Nastavení dostupnosti",
+    "description": "Nastavte své pracovní dny a hodiny rezervací. Zákazníci mohou vybírat pouze z těchto časů.",
+    "startTime": "Čas začátku",
+    "endTime": "Čas konce",
+    "daysLabel": "Dostupné dny",
+    "save": "Uložit dostupnost",
+    "saving": "Ukládání...",
+    "loading": "Načítání dostupnosti...",
+    "successTitle": "Úspěch",
+    "errorTitle": "Chyba",
+    "validationTitle": "Ověření",
+    "atLeastOneDay": "Vyberte alespoň jeden dostupný den.",
+    "invalidRange": "Čas konce musí být později než čas začátku.",
+    "fullHourOnly": "Používejte celé hodiny, například 09:00 nebo 17:00.",
+    "savedSuccess": "Dostupnost byla úspěšně aktualizována.",
+    "saveFailed": "Dostupnost se nepodařilo uložit.",
+    "days": {
+      "0": "Neděle",
+      "1": "Pondělí",
+      "2": "Úterý",
+      "3": "Středa",
+      "4": "Čtvrtek",
+      "5": "Pátek",
+      "6": "Sobota"
+    }
   }
 }

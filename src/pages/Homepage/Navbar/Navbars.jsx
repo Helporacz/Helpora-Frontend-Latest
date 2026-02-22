@@ -22,7 +22,7 @@ import { getLocalizedPath } from "utils/localizedRoute";
 import NotificationDropdown from "../Notification/NotificationDropdown";
 import "./Navbars.scss";
 
-const socket = io(process.env.REACT_APP_SOCKET_URL, {
+const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3000", {
   transports: ["websocket"],
 });
 

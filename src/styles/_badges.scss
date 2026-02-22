@@ -1,4 +1,4 @@
-@import "./tokens";
+@use "./tokens";
 
 /* Base badge */
 .hp-badge {
@@ -15,19 +15,19 @@
 
 /* Variants */
 .hp-badge--kyc {
-  background: $hp-gradient-brand;
-  color: $hp-white;
+  background: tokens.$hp-gradient-brand;
+  color: tokens.$hp-white;
   border: 1px solid rgba(255, 255, 255, 0.20);
 }
 
 .hp-badge--featured {
   background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-  color: $hp-white;
+  color: tokens.$hp-white;
 }
 
 .hp-badge--toprated {
   background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-  color: $hp-white;
+  color: tokens.$hp-white;
 }
 
 .hp-badge svg {

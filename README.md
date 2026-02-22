@@ -16,7 +16,7 @@
 ## Quick start
 
 1. `npm install`
-2. `npm start`
+2. `npm run dev`
 
 The app runs on the port defined in `frontend/.env` (default is `3001`).
 
@@ -25,10 +25,10 @@ The app runs on the port defined in `frontend/.env` (default is `3001`).
 Create or update `frontend/.env`:
 
 ```
-REACT_APP_API_URL=http://localhost:3000/api/v1
-REACT_APP_SOCKET_URL=http://localhost:3000
-REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
-REACT_APP_MAP_API=your_google_maps_key_here
+VITE_API_URL=http://localhost:3000/api/v1
+VITE_SOCKET_URL=http://localhost:3000
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
+VITE_MAP_API=your_google_maps_key_here
 PORT=3001
 ```
 
@@ -40,6 +40,12 @@ Routes are localized with `/{lang}` where `lang` is `cz` (default) or `en`.
 - `/{lang}/subscription/manage`
 - `/{lang}/subscription/success`
 - `/{lang}/dashboard/subscribers`
+
+## Tailwind CSS
+
+- Tailwind is configured and available globally via `src/index.css`.
+- Use `tw-` prefixed utilities (example: `tw-flex tw-items-center tw-gap-2`).
+- Prefixing avoids collisions with existing Bootstrap utility classes.
 
 ## Notes
 

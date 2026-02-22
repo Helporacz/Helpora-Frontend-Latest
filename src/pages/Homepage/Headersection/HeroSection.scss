@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   background-size: contain;
+  contain: layout paint style;
 }
 
 // Background Images with Smooth Transitions
@@ -30,6 +31,12 @@
     opacity: 0;
     transition: opacity 1.5s ease-in-out, transform 0.5s ease-out;
     transform: scale(1.1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+
+    &.loading-placeholder {
+      background: #0d1117;
+    }
 
     &.active {
       opacity: 1;
@@ -67,9 +74,10 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.3;
+    filter: blur(64px);
+    opacity: 0.2;
     animation: float 20s ease-in-out infinite;
+    will-change: transform;
 
     &.orb-1 {
       width: 500px;
@@ -98,6 +106,12 @@
       transform: translate(-50%, -50%);
       animation-delay: 10s;
     }
+  }
+}
+
+.hero-wrapper.is-hidden {
+  .gradient-orbs .orb {
+    animation-play-state: paused;
   }
 }
 
@@ -531,6 +545,25 @@
 
   .gradient-orbs .orb {
     filter: blur(60px);
+  }
+}
+
+@media (max-width: 992px) {
+  .gradient-orbs {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backgrounds .hero-bg,
+  .hero-badge,
+  .hero-title,
+  .hero-subtitle,
+  .gradient-orbs .orb,
+  .city-tag {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }
 

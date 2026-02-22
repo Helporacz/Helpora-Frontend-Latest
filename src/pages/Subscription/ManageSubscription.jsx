@@ -6,6 +6,7 @@ import { api } from "services";
 import { throwError } from "store/globalSlice";
 import { commonRoute } from "utils/constants";
 import { getLocalizedPath } from "utils/localizedRoute";
+import { normalizeLanguage } from "@/lib/i18n-client";
 
 const ManageSubscription = () => {
   const { t, i18n } = useTranslation();
@@ -14,6 +15,7 @@ const ManageSubscription = () => {
   const [statusData, setStatusData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
+  const currentLang = normalizeLanguage(i18n.resolvedLanguage || i18n.language || "cz");
 
   // Robust translator: tries subscription.* first, then subscribers.*, then plain fallback text
   const tr = useCallback(
@@ -65,7 +67,8 @@ const ManageSubscription = () => {
   const formatAmount = (amount, currency) => {
     if (!amount || !currency) return "-";
     try {
-      return new Intl.NumberFormat(i18n.language === "cz" ? "cs-CZ" : "en-US", {
+      const numberLocale = currentLang === "cz" ? "cs-CZ" : currentLang === "ru" ? "ru-RU" : "en-US";
+      return new Intl.NumberFormat(numberLocale, {
         style: "currency",
         currency: currency.toUpperCase(),
       }).format(amount / 100);

@@ -26,18 +26,21 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { commonRoute } from "utils/constants";
 import { getDataFromLocalStorage } from "utils/helpers";
 import { getLocalizedPath } from "utils/localizedRoute";
+import ScrollToTop from "components/layouts/ScrollToTop/ScrollToTop";
 import Forgotpassword from "pages/Auth/Forgotpassword/Forgotpassword";
 import Forgots from "pages/Auth/Forgot/Forgots";
 import Resetpassword from "pages/Auth/ResetPassword/ResetPassword";
 import ResetPasswordUser from "pages/Auth/ResetPassword/ResetPasswordUser";
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@/lib/i18n-client";
 
 const authRoute = () => {
-  const languages = ["en", "cz"];
-  const defaultLang = "cz";
+  const languages = SUPPORTED_LANGUAGES;
+  const defaultLang = DEFAULT_LANGUAGE;
   const token = getDataFromLocalStorage("token");
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {languages.map((lang) => {
 
@@ -144,7 +147,7 @@ const authRoute = () => {
 
         <Route
           path="*"
-          element={<Navigate to={defaultLang === "cz" ? "/" : "/en"} replace />}
+          element={<Navigate to={getLocalizedPath(commonRoute.home, defaultLang)} replace />}
         />
       </Routes>
     </BrowserRouter>

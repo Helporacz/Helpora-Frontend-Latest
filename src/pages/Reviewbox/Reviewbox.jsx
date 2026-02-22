@@ -75,6 +75,9 @@ const Reviewbox = () => {
                       src={displayImage}
                       alt={displayName}
                       className="avatar-img"
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
                       onError={(e) => {
                         e.target.src =
                           item._id % 2 === 0 ? avatartMale : avatartFemale;

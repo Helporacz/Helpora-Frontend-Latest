@@ -1,15 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Button from "components/form/Button";
 import SearchInput from "components/form/SearchInput";
 import Table from "components/layouts/Table/Table";
 import UserProfileLayout from "components/layouts/UserProfileLayout";
-import { getAllClient, deleteClient, throwSuccess, throwError } from "store/globalSlice";
+import {
+  getAllClient,
+  getClientEmailsForExportData,
+  deleteClient,
+  throwSuccess,
+  throwError,
+} from "store/globalSlice";
 import { useTranslation } from "react-i18next";
 import { titleCaseString } from "utils/helpers";
+import { buildCsv, downloadCsv } from "utils/csvExport";
 
 const ViewClients = () => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [tableData, setTableData] = useState({
     offset: 0,
@@ -23,6 +31,7 @@ const ViewClients = () => {
     data: [],
   });
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isExportingEmails, setIsExportingEmails] = useState(false);
 
   const fetchTableData = useCallback(async () => {
     try {
@@ -70,6 +79,73 @@ const ViewClients = () => {
     const role = localStorage.getItem("userRole");
     setIsSuperAdmin(role === "superAdmin");
   }, []);
+
+  const formatCsvDate = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toISOString();
+  };
+
+  const handleExportClientEmails = async () => {
+    if (!isSuperAdmin || isExportingEmails) return;
+    setIsExportingEmails(true);
+    try {
+      const response = await dispatch(getClientEmailsForExportData());
+      if (response?.status && response.status !== 200) {
+        dispatch(
+          throwError(
+            response?.message ||
+              t("client.export.error", "Failed to export client emails.")
+          )
+        );
+        return;
+      }
+      const rows = Array.isArray(response?.rows) ? response.rows : [];
+
+      if (!rows.length) {
+        dispatch(
+          throwError(t("client.export.empty", "No client emails found to export."))
+        );
+        return;
+      }
+
+      const headers = [
+        t("client.export.columns.name", "Name"),
+        t("client.export.columns.email", "Email"),
+        t("client.export.columns.phone", "Phone"),
+        t("client.export.columns.status", "Status"),
+        t("client.export.columns.createdAt", "Created At"),
+        t("client.export.columns.lastLogin", "Last Login"),
+      ];
+
+      const csvRows = rows.map((row) => [
+        row?.name || "",
+        row?.email || "",
+        row?.phoneNumber || "",
+        row?.isActive
+          ? t("providers.table.active", "Active")
+          : t("providers.table.suspend", "Suspend"),
+        formatCsvDate(row?.createdAt),
+        formatCsvDate(row?.lastLogin),
+      ]);
+
+      const csvContent = buildCsv(headers, csvRows);
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-");
+      downloadCsv(`clients-emails-${timestamp}.csv`, csvContent);
+
+      dispatch(
+        throwSuccess(t("client.export.success", "Client emails CSV downloaded."))
+      );
+    } catch (error) {
+      console.error("Error exporting client emails:", error);
+      dispatch(
+        throwError(t("client.export.error", "Failed to export client emails."))
+      );
+    } finally {
+      setIsExportingEmails(false);
+    }
+  };
 
   const header = [
     { title: t("client.table.header1") },
@@ -172,6 +248,16 @@ const ViewClients = () => {
                 setTableData((prev) => ({ ...prev, search: e.target.value }))
               }
             />
+            {isSuperAdmin && (
+              <Button
+                btnText={t("client.export.button", "Export Emails CSV")}
+                btnStyle="BO"
+                iconType="L-Download"
+                onClick={handleExportClientEmails}
+                btnLoading={isExportingEmails}
+                disabled={isExportingEmails}
+              />
+            )}
           </div>
         </div>
 

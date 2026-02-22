@@ -144,20 +144,27 @@ const AddAdmin = () => {
         ...values,
         profileImage: imageUrlToSave,
       };
-      const formData = objectToFormData(payload);
 
       let response = "";
       if (userRole === "superAdmin") {
+        const formData = objectToFormData(payload);
         response = await dispatch(updateAdminProfile(formData));
       } else {
+        const providerPayload = {
+          name: payload.name,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
+          profileImage: payload.profileImage,
+        };
         response = await dispatch(
-          updateProvider({ id: userId, payload: formData })
+          updateProvider({ id: userId, payload: providerPayload })
         );
       }
 
       if (response?.status === 200) {
         dispatch(throwSuccess("Profile Updated Successfully"));
         setNewProfileFile(null);
+        setImgData(imageUrlToSave || null);
 
         // Refresh Redux state so Header updates immediately
         if (userRole === "superAdmin") {

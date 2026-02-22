@@ -131,6 +131,12 @@ export const userLogin =
 
         const subscriptionStatus = res?.subscription?.status || "inactive";
         const subscriptionActive = !!res?.subscriptionActive;
+        const requireProviderSubscription =
+          role === "provider"
+            ? typeof res?.requireProviderSubscription === "boolean"
+              ? res.requireProviderSubscription
+              : true
+            : true;
 
         storeLocalStorageData({
           token,
@@ -138,6 +144,7 @@ export const userLogin =
             ? {
                 subscriptionStatus,
                 subscriptionActive,
+                requireProviderSubscription,
                 subscriptionCurrentPeriodEnd:
                   res?.subscription?.currentPeriodEnd || null,
               }
@@ -152,9 +159,14 @@ export const userLogin =
             "subscriptionActive",
             subscriptionActive ? "true" : "false"
           );
+          localStorage.setItem(
+            "requireProviderSubscription",
+            requireProviderSubscription ? "true" : "false"
+          );
         } else {
           localStorage.removeItem("subscriptionStatus");
           localStorage.removeItem("subscriptionActive");
+          localStorage.removeItem("requireProviderSubscription");
         }
         dispatch(setUserState(JSON.stringify({ token, userId })));
         dispatch(throwSuccess(`${capitalize(expectedRole)} Login Successful.`));
@@ -258,6 +270,32 @@ export const getAllClient = () => {
   };
 };
 
+// export provider emails data (super admin only, full dataset)
+export const getProviderEmailsForExportData = () => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/user/admin/export-provider-emails`);
+      return res.data; // { count, rows }
+    } catch (error) {
+      console.error("Error fetching provider export data:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+// export client emails data (super admin only, full dataset)
+export const getClientEmailsForExportData = () => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/user/admin/export-client-emails`);
+      return res.data; // { count, rows }
+    } catch (error) {
+      console.error("Error fetching client export data:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
 // delete client (super admin only)
 export const deleteClient = (id) => {
   return async (dispatch) => {
@@ -324,6 +362,69 @@ export const getAllCategoryName = () => {
       return await dispatch(handelResponse(res));
     } catch (error) {
       console.error("Error fetching providers:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getPublicRankedProviders = (params = {}) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/user/rankedProviders`, { params });
+      return res;
+    } catch (error) {
+      console.error("Error fetching ranked providers:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const submitProviderRankingRequest = (payload = {}) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.post(`/user/ranking-request`, payload);
+      return res;
+    } catch (error) {
+      console.error("Error submitting ranking request:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getAdminRankingRequests = (params = {}) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/user/admin/ranking-requests`, { params });
+      return res;
+    } catch (error) {
+      console.error("Error fetching ranking requests:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const reviewAdminRankingRequest = (providerId, payload = {}) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.patch(
+        `/user/admin/ranking-requests/${providerId}`,
+        payload
+      );
+      return res;
+    } catch (error) {
+      console.error("Error reviewing ranking request:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const deleteAdminRankingRequest = (providerId) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.delete(`/user/admin/ranking-requests/${providerId}`);
+      return res;
+    } catch (error) {
+      console.error("Error deleting ranking request:", error);
       return dispatch(handelCatch(error));
     }
   };
@@ -656,9 +757,21 @@ export const markMessagesRead = (chatId) => {
   return async (dispatch) => {
     try {
       const res = await api.put(`/chat/${chatId}/read-all`);
-      return res.data;
+      return res;
     } catch (error) {
       console.error("Error:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+// delete chat conversation
+export const deleteChatConversation = (chatId) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.delete(`/chat/${chatId}`);
+      return res;
+    } catch (error) {
       return dispatch(handelCatch(error));
     }
   };
@@ -719,6 +832,32 @@ export const fetchWeekSlotsAPI = (providerId, startDate, endDate) => {
   };
 };
 
+export const getProviderDefaultAvailabilityAPI = (providerId) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/slot/${providerId}/default-availability`);
+      return res;
+    } catch (error) {
+      console.error("Error fetching provider default availability:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getProviderAvailabilitySlotsAPI = (providerId, date) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/slot/${providerId}/availability`, {
+        params: { date },
+      });
+      return res;
+    } catch (error) {
+      console.error("Error fetching provider available slots:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
 // get provider Unavailability
 export const fetchUnavailabilityAPI = (providerId) => {
   return async (dispatch) => {
@@ -748,7 +887,7 @@ export const saveDefaultAvailabilityAPI = (providerId, values) => {
 };
 
 // override default availability
-export const overrideAvailabilityAPI = (providerId) => {
+export const overrideAvailabilityAPI = (providerId, overrideData) => {
   return async (dispatch) => {
     try {
       const res = await api.post(`/slot/${providerId}/override`, overrideData);
@@ -991,6 +1130,66 @@ export const getAdminSummary = (params = {}) => {
       return res;
     } catch (error) {
       console.error("Error fetching admin summary:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getAdminAppAccessSetting = () => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/dashboard/admin/app-access`);
+      return res;
+    } catch (error) {
+      console.error("Error fetching app access setting:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const updateAdminAppAccessSetting = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.patch(`/dashboard/admin/app-access`, payload);
+      return res;
+    } catch (error) {
+      console.error("Error updating app access setting:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getAdminPublicAdsConfig = () => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/dashboard/admin/public-ads`);
+      return res;
+    } catch (error) {
+      console.error("Error fetching admin public ads config:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const updateAdminPublicAdsConfig = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await api.patch(`/dashboard/admin/public-ads`, payload);
+      return res;
+    } catch (error) {
+      console.error("Error updating admin public ads config:", error);
+      return dispatch(handelCatch(error));
+    }
+  };
+};
+
+export const getPublicAdsConfig = () => {
+  return async (dispatch) => {
+    try {
+      const res = await api.get(`/dashboard/public-ads`);
+      return res;
+    } catch (error) {
+      console.error("Error fetching public ads config:", error);
       return dispatch(handelCatch(error));
     }
   };

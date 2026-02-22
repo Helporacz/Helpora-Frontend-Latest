@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   createBooking,
+  getProviderAvailabilitySlotsAPI,
   getProviderServiceById
 } from "store/globalSlice";
 import { getDataFromLocalStorage } from "utils/helpers";
@@ -16,6 +17,11 @@ const ServiceDetails = () => {
   const [service, setService] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [loadingTimeSlots, setLoadingTimeSlots] = useState(false);
+  const [bookingTimeMessage, setBookingTimeMessage] = useState("");
+  const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
   const [note, setNote] = useState("");
   const [messagePopup, setMessagePopup] = useState({
     show: false,
@@ -29,15 +35,46 @@ const ServiceDetails = () => {
     if (!token) {
       navigate("/sign-in");
     } else {
+      setBookingDate("");
+      setBookingTime("");
+      setAvailableTimeSlots([]);
+      setBookingTimeMessage("");
+      setNote("");
+      setDateError("");
+      setTimeError("");
+      setIsSubmittingBooking(false);
       setShowModal(true);
     }
   };
 
   const [dateError, setDateError] = useState("");
+  const [timeError, setTimeError] = useState("");
+
+  const resolveProviderId = (providerServiceData) => {
+    const providerValue = providerServiceData?.provider;
+    if (!providerValue) return "";
+    if (typeof providerValue === "string") return providerValue;
+    return providerValue?._id || providerValue?.id || "";
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setBookingDate("");
+    setBookingTime("");
+    setAvailableTimeSlots([]);
+    setLoadingTimeSlots(false);
+    setBookingTimeMessage("");
+    setNote("");
+    setDateError("");
+    setTimeError("");
+    setIsSubmittingBooking(false);
+  };
 
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     setBookingDate(selectedDate);
+    setBookingTime("");
+    setTimeError("");
 
     if (selectedDate && selectedDate < today) {
       setDateError("Booking date must be today or a future date");
@@ -46,7 +83,20 @@ const ServiceDetails = () => {
     }
   };
 
+  const handleTimeChange = (e) => {
+    const selectedTime = e.target.value;
+    setBookingTime(selectedTime);
+
+    if (!selectedTime) {
+      setTimeError("Please select a booking time");
+    } else {
+      setTimeError("");
+    }
+  };
+
   const confirmBooking = async () => {
+    if (isSubmittingBooking) return;
+
     if (!bookingDate) {
       setDateError("Please select a booking date");
       return;
@@ -57,14 +107,29 @@ const ServiceDetails = () => {
       return;
     }
 
+    if (!bookingTime) {
+      setTimeError("Please select a booking time");
+      return;
+    }
+
+    if (!availableTimeSlots.length) {
+      setTimeError(bookingTimeMessage || "No available hours for this date");
+      return;
+    }
+
     setDateError("");
+    setTimeError("");
+    setIsSubmittingBooking(true);
 
     try {
       const response = await dispatch(
         createBooking({
           providerServiceId: service._id,
-          bookingDate: new Date(bookingDate),
+          bookingDate,
+          bookingTime,
+          preferredTime: bookingTime,
           totalPrice: service.price,
+          notes: note,
         })
       );
       if (response?.status === 200) {
@@ -74,9 +139,7 @@ const ServiceDetails = () => {
           message: "Booking successfully!",
           type: "success",
         });
-        setShowModal(false);
-        setBookingDate("");
-        setNote("");
+        handleCloseModal();
       } else {
         setMessagePopup({
           show: true,
@@ -94,6 +157,8 @@ const ServiceDetails = () => {
         message: "Booking failed! Please try again.",
         type: "error",
       });
+    } finally {
+      setIsSubmittingBooking(false);
     }
   };
 
@@ -109,6 +174,60 @@ const ServiceDetails = () => {
     };
     fetchService();
   }, [dispatch, id]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchAvailableTimeSlots = async () => {
+      if (!showModal || !bookingDate || !service) {
+        if (isMounted) {
+          setAvailableTimeSlots([]);
+          setLoadingTimeSlots(false);
+          if (!bookingDate) {
+            setBookingTimeMessage("");
+          }
+        }
+        return;
+      }
+
+      const providerId = resolveProviderId(service);
+      if (!providerId) {
+        if (isMounted) {
+          setAvailableTimeSlots([]);
+          setLoadingTimeSlots(false);
+          setBookingTimeMessage("No available hours for this date");
+        }
+        return;
+      }
+
+      setLoadingTimeSlots(true);
+      const response = await dispatch(
+        getProviderAvailabilitySlotsAPI(providerId, bookingDate)
+      );
+
+      if (!isMounted) return;
+
+      const slotsFromApi = Array.isArray(response?.timeSlots)
+        ? response.timeSlots
+        : Array.isArray(response?.slots)
+        ? response.slots
+            .map((slot) => slot?.start)
+            .filter((slot) => typeof slot === "string" && slot.trim())
+        : [];
+
+      setAvailableTimeSlots(slotsFromApi);
+      setBookingTimeMessage(
+        slotsFromApi.length ? "" : "No available hours for this date"
+      );
+      setLoadingTimeSlots(false);
+    };
+
+    fetchAvailableTimeSlots();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, showModal, bookingDate, service]);
 
   if (!service) return <p>Loading...</p>;
   const today = new Date().toISOString().split("T")[0];
@@ -270,123 +389,133 @@ const ServiceDetails = () => {
 
           {/* Booking Modal */}
           {showModal && (
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100vw",
-                height: "100vh",
-                backgroundColor: "rgba(0,0,0,0.6)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 99,
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: "white",
-                  padding: "30px",
-                  borderRadius: "10px",
-                  width: "400px",
-                  maxWidth: "90%",
-                  textAlign: "center",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-                }}
-              >
-                <h3 style={{ marginBottom: "10px", color: "#333" }}>
+            <div className="tw-fixed tw-inset-0 tw-z-[999] tw-flex tw-items-center tw-justify-center tw-bg-black/60 tw-p-4">
+              <div className="tw-w-full tw-max-w-[440px] tw-rounded-2xl tw-border tw-border-slate-200 tw-bg-white tw-p-6 tw-shadow-2xl">
+                <h3 className="tw-text-center tw-text-2xl tw-font-semibold tw-text-slate-900">
                   Book Service
                 </h3>
-                <p style={{ fontSize: "14px", color: "#555" }}>
+                <p className="tw-mt-1 tw-text-center tw-text-sm tw-text-slate-600">
                   Select a booking date and add a note for the provider.
                 </p>
 
-                <div
-                  style={{
-                    marginTop: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
-                    textAlign: "left",
-                  }}
-                >
-                  <label>
-                    <strong>Booking Date:</strong>
+                <div className="tw-mt-5 tw-space-y-3 tw-text-left">
+                  <label
+                    htmlFor="service-details-booking-date"
+                    className="tw-block tw-text-sm tw-font-semibold tw-text-slate-800"
+                  >
+                    Booking Date:
                   </label>
                   <input
+                    id="service-details-booking-date"
                     type="date"
                     min={today}
                     value={bookingDate}
                     onChange={handleDateChange}
-                    style={{
-                      padding: "10px",
-                      borderRadius: "5px",
-                      border: dateError
-                        ? "1px solid #dc3545"
-                        : "1px solid #ccc",
-                      width: "100%",
-                    }}
+                    className={`tw-block tw-h-11 tw-w-full tw-rounded-xl tw-border tw-bg-white tw-px-3 tw-text-sm tw-text-slate-900 focus:tw-outline-none ${
+                      dateError
+                        ? "tw-border-red-500 focus:tw-border-red-500"
+                        : "tw-border-slate-300 focus:tw-border-brand-green"
+                    }`}
                   />
                   {dateError && (
-                    <div
-                      className="text-danger mt-1"
-                      style={{ fontSize: "14px" }}
-                    >
+                    <div className="tw-text-sm tw-font-medium tw-text-red-600">
                       {dateError}
                     </div>
                   )}
 
-                  <label>
-                    <strong>Note (optional):</strong>
+                  <label
+                    htmlFor="service-details-booking-time"
+                    className="tw-block tw-text-sm tw-font-semibold tw-text-slate-800 tw-pt-1"
+                  >
+                    Booking Time:
+                  </label>
+                  <select
+                    id="service-details-booking-time"
+                    value={bookingTime}
+                    onChange={handleTimeChange}
+                    className={`tw-block tw-h-11 tw-w-full tw-rounded-xl tw-border tw-bg-white tw-px-3 tw-text-sm tw-text-slate-900 focus:tw-outline-none ${
+                      timeError
+                        ? "tw-border-red-500 focus:tw-border-red-500"
+                        : "tw-border-slate-300 focus:tw-border-brand-green"
+                    } ${
+                      !bookingDate || loadingTimeSlots || !availableTimeSlots.length
+                        ? "tw-cursor-not-allowed tw-bg-slate-100 tw-text-slate-500"
+                        : "tw-cursor-pointer"
+                    }`}
+                    disabled={
+                      !bookingDate ||
+                      loadingTimeSlots ||
+                      !availableTimeSlots.length
+                    }
+                  >
+                    <option value="">
+                      {!bookingDate
+                        ? "Select booking date first"
+                        : loadingTimeSlots
+                        ? "Loading available hours..."
+                        : !availableTimeSlots.length
+                        ? bookingTimeMessage || "No available hours for this date"
+                        : "Select booking time"}
+                    </option>
+                    {availableTimeSlots.map((slot) => (
+                      <option key={slot} value={slot}>
+                        {slot}
+                      </option>
+                    ))}
+                  </select>
+                  {bookingDate && !loadingTimeSlots && !availableTimeSlots.length && (
+                    <div className="tw-text-sm tw-text-slate-500">
+                      {bookingTimeMessage || "No available hours for this date"}
+                    </div>
+                  )}
+                  {timeError && (
+                    <div className="tw-text-sm tw-font-medium tw-text-red-600">
+                      {timeError}
+                    </div>
+                  )}
+
+                  <label
+                    htmlFor="service-details-booking-note"
+                    className="tw-block tw-text-sm tw-font-semibold tw-text-slate-800 tw-pt-1"
+                  >
+                    Note (optional):
                   </label>
                   <textarea
+                    id="service-details-booking-note"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Enter any note for provider..."
                     rows="3"
-                    style={{
-                      padding: "10px",
-                      borderRadius: "5px",
-                      border: "1px solid #ccc",
-                      width: "100%",
-                    }}
+                    className="tw-block tw-w-full tw-rounded-xl tw-border tw-border-slate-300 tw-bg-white tw-px-3 tw-py-2.5 tw-text-sm tw-text-slate-900 focus:tw-border-brand-green focus:tw-outline-none"
                   />
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "25px",
-                  }}
-                >
+                <div className="tw-mt-6 tw-flex tw-items-center tw-justify-between tw-gap-3">
                   <button
-                    onClick={() => setShowModal(false)}
-                    style={{
-                      backgroundColor: "#dc3545",
-                      color: "white",
-                      border: "none",
-                      padding: "10px 20px",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                    }}
+                    type="button"
+                    onClick={handleCloseModal}
+                    disabled={isSubmittingBooking}
+                    className="tw-inline-flex tw-h-10 tw-items-center tw-justify-center tw-rounded-lg tw-border tw-border-slate-300 tw-bg-white tw-px-4 tw-text-sm tw-font-semibold tw-text-slate-700 tw-transition hover:tw-bg-slate-50 disabled:tw-cursor-not-allowed disabled:tw-opacity-60"
                   >
                     Cancel
                   </button>
                   <button
+                    type="button"
                     onClick={confirmBooking}
-                    disabled={!bookingDate}
-                    style={{
-                      backgroundColor: !bookingDate ? "#6c757d" : "#28a745",
-                      color: "white",
-                      border: "none",
-                      padding: "10px 20px",
-                      borderRadius: "5px",
-                      cursor: !bookingDate ? "not-allowed" : "pointer",
-                    }}
+                    disabled={!bookingDate || !bookingTime || isSubmittingBooking}
+                    className="tw-inline-flex tw-h-10 tw-items-center tw-justify-center tw-rounded-lg tw-bg-[#112d58] tw-px-4 tw-text-sm tw-font-semibold tw-text-white tw-transition hover:tw-bg-[#0b2142] disabled:tw-cursor-not-allowed disabled:tw-bg-slate-400"
                   >
-                    Confirm
+                    {isSubmittingBooking ? (
+                      <>
+                        <span
+                          className="tw-mr-2 tw-inline-block tw-h-4 tw-w-4 tw-animate-spin tw-rounded-full tw-border-2 tw-border-white tw-border-t-transparent"
+                          aria-hidden="true"
+                        />
+                        Confirming...
+                      </>
+                    ) : (
+                      "Confirm"
+                    )}
                   </button>
                 </div>
               </div>

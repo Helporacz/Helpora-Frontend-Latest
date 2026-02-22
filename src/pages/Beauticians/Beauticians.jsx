@@ -10,11 +10,15 @@ import AddProviderModal from "pages/Provider/AddProvider";
 import {
   deleteProvider,
   getAllProvider,
+  getProviderEmailsForExportData,
+  throwError,
   throwSuccess,
   toggleProviderStatus,
 } from "store/globalSlice";
 import { icons } from "utils/constants";
 import { titleCaseString } from "utils/helpers";
+import { localizeRankBadgeLabel } from "utils/rankingLabel";
+import { buildCsv, downloadCsv } from "utils/csvExport";
 import "./Beauticians.scss";
 import { useTranslation } from "react-i18next";
 
@@ -27,6 +31,8 @@ const Beauticians = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [updateProviderData, setUpdateProviderData] = useState(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isExportingEmails, setIsExportingEmails] = useState(false);
   const [tableData, setTableData] = useState({
     offset: 0,
     limit: 10,
@@ -68,6 +74,10 @@ const Beauticians = () => {
     fetchTableData();
   }, [fetchTableData]);
 
+  useEffect(() => {
+    setIsSuperAdmin(localStorage.getItem("userRole") === "superAdmin");
+  }, []);
+
   const formatDateTime = (date) => {
     if (!date) return "-";
 
@@ -92,6 +102,7 @@ const Beauticians = () => {
     { title: t("providers.table.header11") },
     { title: t("providers.table.header12") },
     { title: t("providers.table.header8") },
+    { title: t("providers.table.header13") },
     { title: t("providers.table.header9") },
     { title: t("providers.table.header5") },
   ];
@@ -117,6 +128,9 @@ const Beauticians = () => {
         district,
         lastLogin,
         isActiveProvider,
+        is_ranked,
+        ranking_position,
+        rank_badge_label,
       } = elem;
       const displayRegion =
         currentLang === "cz" ? region?.nameCs : region?.nameEn;
@@ -154,6 +168,26 @@ const Beauticians = () => {
           { value: displayDistrict || "-" },
           {
             value: formatDateTime(lastLogin) || "0",
+          },
+          {
+            value: is_ranked && Number(ranking_position) > 0 ? (
+              <div className="d-flex flex-column">
+                <span className="badge bg-warning text-dark fw-semibold">
+                  #{ranking_position}
+                </span>
+                <small className="text-muted mt-1">
+                  {localizeRankBadgeLabel(
+                    rank_badge_label,
+                    t,
+                    t("providers.table.rankedLabel")
+                  )}
+                </small>
+              </div>
+            ) : (
+              <span className="text-muted">
+                {t("providers.table.unranked")}
+              </span>
+            ),
           },
           {
             value: (
@@ -244,6 +278,80 @@ const Beauticians = () => {
     setTableData((prev) => ({ ...prev, offset: 0, loading: true }));
     fetchTableData();
   };
+
+  const formatCsvDate = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toISOString();
+  };
+
+  const handleExportProviderEmails = async () => {
+    if (!isSuperAdmin || isExportingEmails) return;
+    setIsExportingEmails(true);
+    try {
+      const response = await dispatch(getProviderEmailsForExportData());
+      if (response?.status && response.status !== 200) {
+        dispatch(
+          throwError(
+            response?.message ||
+              t("providers.export.error", "Failed to export provider emails.")
+          )
+        );
+        return;
+      }
+      const rows = Array.isArray(response?.rows) ? response.rows : [];
+
+      if (!rows.length) {
+        dispatch(
+          throwError(
+            t("providers.export.empty", "No provider emails found to export.")
+          )
+        );
+        return;
+      }
+
+      const headers = [
+        t("providers.export.columns.name", "Name"),
+        t("providers.export.columns.email", "Email"),
+        t("providers.export.columns.phone", "Phone"),
+        t("providers.export.columns.status", "Status"),
+        t("providers.export.columns.createdAt", "Created At"),
+        t("providers.export.columns.lastLogin", "Last Login"),
+      ];
+
+      const csvRows = rows.map((row) => [
+        row?.name || "",
+        row?.email || "",
+        row?.phoneNumber || "",
+        row?.isActive
+          ? t("providers.table.active", "Active")
+          : t("providers.table.suspend", "Suspend"),
+        formatCsvDate(row?.createdAt),
+        formatCsvDate(row?.lastLogin),
+      ]);
+
+      const csvContent = buildCsv(headers, csvRows);
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-");
+      downloadCsv(`providers-emails-${timestamp}.csv`, csvContent);
+
+      dispatch(
+        throwSuccess(
+          t("providers.export.success", "Provider emails CSV downloaded.")
+        )
+      );
+    } catch (error) {
+      console.error("Error exporting provider emails:", error);
+      dispatch(
+        throwError(
+          t("providers.export.error", "Failed to export provider emails.")
+        )
+      );
+    } finally {
+      setIsExportingEmails(false);
+    }
+  };
+
   return (
     <div id="providers-container" className="mt-3">
       {isDeletePopup && deleteId && (
@@ -294,12 +402,24 @@ const Beauticians = () => {
                 setTableData((prev) => ({ ...prev, search: e.target.value }))
               }
             />
-            <Button
-              btnText={t("providers.addButton")}
-              btnStyle="PLO"
-              leftIcon={<img src={icons.addSquareBlack} alt="add-provider" />}
-              onClick={() => setShowAddModal(true)}
-            />
+            <div className="d-flex align-items-center gap-2 flex-wrap">
+              {isSuperAdmin && (
+                <Button
+                  btnText={t("providers.export.button", "Export Emails CSV")}
+                  btnStyle="BO"
+                  iconType="L-Download"
+                  onClick={handleExportProviderEmails}
+                  btnLoading={isExportingEmails}
+                  disabled={isExportingEmails}
+                />
+              )}
+              <Button
+                btnText={t("providers.addButton")}
+                btnStyle="PLO"
+                leftIcon={<img src={icons.addSquareBlack} alt="add-provider" />}
+                onClick={() => setShowAddModal(true)}
+              />
+            </div>
           </div>
         </div>
 

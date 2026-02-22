@@ -47,6 +47,9 @@ const Extrapage = () => {
                 src={imagssds}
                 alt="Service"
                 className="service-image img-fluid rounded"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
               />
             </div>
           </div>
