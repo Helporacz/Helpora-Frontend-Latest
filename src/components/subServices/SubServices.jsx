@@ -91,8 +91,40 @@ const SubServices = () => {
   const [districtDropdownSearch, setDistrictDropdownSearch] = useState("");
   const [featuredRankedProviders, setFeaturedRankedProviders] = useState([]);
   const [featuredRankedLoading, setFeaturedRankedLoading] = useState(true);
+  const [availabilityClock, setAvailabilityClock] = useState(() => new Date());
   const navigate = useNavigate();
   const token = getDataFromLocalStorage("token");
+
+  useEffect(() => {
+    const updateClock = () => setAvailabilityClock(new Date());
+
+    updateClock();
+
+    const now = Date.now();
+    const millisecondsUntilNextMinute = 60000 - (now % 60000);
+    let minuteIntervalId = null;
+
+    const syncTimeoutId = window.setTimeout(() => {
+      updateClock();
+      minuteIntervalId = window.setInterval(updateClock, 60000);
+    }, millisecondsUntilNextMinute);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        updateClock();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearTimeout(syncTimeoutId);
+      if (minuteIntervalId) {
+        window.clearInterval(minuteIntervalId);
+      }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -877,7 +909,7 @@ const SubServices = () => {
       providerDetails.defaultAvailability
     );
 
-    const today = new Date();
+    const today = availabilityClock instanceof Date ? availabilityClock : new Date();
     const dayIndex = today.getDay();
     const nowMinutes = today.getHours() * 60 + today.getMinutes();
     const dateKey = `${today.getFullYear()}-${String(
