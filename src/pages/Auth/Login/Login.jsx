@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { FiMail, FiLock, FiLogIn } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
 import "./Login.scss";
-import { throwError, throwSuccess, userLogin } from "store/globalSlice";
+import { throwError, userLogin } from "store/globalSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getLocalizedPath } from "utils/localizedRoute";
@@ -28,15 +28,39 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await dispatch(userLogin(values, "provider"));
+      const response = await dispatch(userLogin(values));
 
       if (response?.status === 200) {
-        if (response?.subscriptionActive === false) {
-          navigate(getLocalizedPath(commonRoute.pricing, i18n.language));
-        } else {
+        const activeRole = String(
+          response?.user?.role || localStorage.getItem("userRole") || ""
+        )
+          .trim()
+          .toLowerCase();
+        const isProvider = activeRole === "provider";
+
+        if (isProvider) {
+          const requireProviderSubscription =
+            typeof response?.requireProviderSubscription === "boolean"
+              ? response.requireProviderSubscription
+              : localStorage.getItem("requireProviderSubscription") !== "false";
+          const providerSubscriptionActive =
+            typeof response?.subscriptionActive === "boolean"
+              ? response.subscriptionActive
+              : localStorage.getItem("subscriptionActive") === "true";
+          const canAccessProviderDashboard = requireProviderSubscription
+            ? providerSubscriptionActive
+            : true;
+
+          if (!canAccessProviderDashboard) {
+            navigate(getLocalizedPath(commonRoute.pricing, i18n.language));
+            return;
+          }
+
           navigate(getLocalizedPath(commonRoute.dashboard, i18n.language));
+          return;
         }
-        dispatch(throwSuccess(t("section29.text5")));
+
+        navigate(getLocalizedPath(commonRoute.home, i18n.language));
       } else if (
         response?.status === 403 &&
         response?.message === "Account is suspended"

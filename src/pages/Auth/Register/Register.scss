@@ -197,6 +197,39 @@
   margin-bottom: 24px;
 }
 
+.role-selector {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-option.active {
+  border-color: #0d6b38;
+  background: rgba(13, 107, 56, 0.08);
+}
+
+.role-option input {
+  margin: 0;
+}
+
+.role-option span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
 .form-label {
   display: flex;
   align-items: center;

@@ -34,7 +34,11 @@ import ScrollToTop from "components/layouts/ScrollToTop/ScrollToTop";
 import Regions from "pages/configration/Regions";
 import City from "pages/configration/City";
 import District from "pages/configration/District";
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@/lib/i18n-client";
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  getStoredLanguage,
+} from "@/lib/i18n-client";
 
 const routeArray = [
   { layoutId: "dashboard-container", path: commonRoute.dashboard, component: <Dashboard /> },
@@ -88,6 +92,7 @@ const AppRoute = () => {
 
   const languages = SUPPORTED_LANGUAGES;
   const defaultLang = DEFAULT_LANGUAGE;
+  const preferredLang = getStoredLanguage(defaultLang);
 
   return (
     <BrowserRouter>
@@ -124,7 +129,11 @@ const AppRoute = () => {
           path="*"
           element={
             <Navigate
-              to={getLocalizedPath(commonRoute.dashboard, defaultLang)}
+              to={getLocalizedPath(
+                commonRoute.dashboard,
+                preferredLang,
+                defaultLang
+              )}
               replace
             />
           }

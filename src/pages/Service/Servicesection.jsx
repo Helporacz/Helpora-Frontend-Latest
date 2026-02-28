@@ -130,15 +130,13 @@ const Servicesection = () => {
                   //   )
                   // }
                   onClick={() => {
-                    if (category?.serviceCount > 0) {
-                      navigate(
-                        getLocalizedPath(
-                          `/categories/${slugify(slugSource)}/${category._id}`,
-                          i18n.language
-                        )
-                      );
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
+                    navigate(
+                      getLocalizedPath(
+                        `/categories/${slugify(slugSource)}/${category._id}`,
+                        i18n.language
+                      )
+                    );
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >

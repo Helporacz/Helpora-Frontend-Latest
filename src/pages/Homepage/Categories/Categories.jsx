@@ -109,15 +109,13 @@ const Categories = () => {
                 <div
                   className="category-card-modern position-relative overflow-hidden rounded-4 shadow-hover cursor-pointer h-100"
                   onClick={() => {
-                    if (count > 0) {
-                      navigate(
-                        getLocalizedPath(
-                          `/categories/${slugify(slugSource)}/${category._id}`,
-                          i18n.language
-                        )
-                      );
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
+                    navigate(
+                      getLocalizedPath(
+                        `/categories/${slugify(slugSource)}/${category._id}`,
+                        i18n.language
+                      )
+                    );
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
                   <LazyBackgroundImage

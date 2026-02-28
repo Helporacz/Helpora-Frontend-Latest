@@ -13,6 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
+  becomeProviderAccount,
   createBooking,
   getAllCategory,
   getAllCities,
@@ -20,6 +21,7 @@ import {
   getProviderAvailabilitySlotsAPI,
   getPublicRankedProviders,
   getProviderServicesByCategory,
+  switchAccountRole,
   throwError,
   throwSuccess,
 } from "store/globalSlice";
@@ -31,6 +33,45 @@ import { getLocalizedPath } from "utils/localizedRoute";
 import { CiLocationOn } from "react-icons/ci";
 import TopProvidersCarousel from "components/ranking/TopProvidersCarousel";
 import { localizeRankBadgeLabel } from "utils/rankingLabel";
+
+const USER_ROLE = "user";
+const PROVIDER_ROLE = "provider";
+
+const normalizeRole = (role = "") => {
+  const normalized = String(role || "").trim().toLowerCase();
+  if (!normalized) return "";
+  if (normalized === USER_ROLE) return USER_ROLE;
+  if (
+    normalized === PROVIDER_ROLE ||
+    normalized === "serviceprovider" ||
+    normalized === "service_provider"
+  ) {
+    return PROVIDER_ROLE;
+  }
+  return normalized;
+};
+
+const normalizeRoles = (roles = [], fallbackRole = USER_ROLE) => {
+  const source = Array.isArray(roles) ? roles : [];
+  const set = new Set();
+
+  source.forEach((entry) => {
+    const normalized = normalizeRole(entry);
+    if (normalized === USER_ROLE || normalized === PROVIDER_ROLE) {
+      set.add(normalized);
+    }
+  });
+
+  const normalizedFallback = normalizeRole(fallbackRole);
+  if (normalizedFallback === PROVIDER_ROLE) {
+    set.add(USER_ROLE);
+    set.add(PROVIDER_ROLE);
+  } else {
+    set.add(USER_ROLE);
+  }
+
+  return [USER_ROLE, PROVIDER_ROLE].filter((entry) => set.has(entry));
+};
 
 const SubServices = () => {
   const dispatch = useDispatch();
@@ -92,8 +133,21 @@ const SubServices = () => {
   const [featuredRankedProviders, setFeaturedRankedProviders] = useState([]);
   const [featuredRankedLoading, setFeaturedRankedLoading] = useState(true);
   const [availabilityClock, setAvailabilityClock] = useState(() => new Date());
+  const [providerCtaLoading, setProviderCtaLoading] = useState(false);
   const navigate = useNavigate();
   const token = getDataFromLocalStorage("token");
+
+  const activeSessionRole =
+    normalizeRole(localStorage.getItem("userRole")) || USER_ROLE;
+  const storedRoles = (() => {
+    try {
+      const parsedRoles = JSON.parse(localStorage.getItem("userRoles") || "[]");
+      return normalizeRoles(parsedRoles, activeSessionRole);
+    } catch (error) {
+      return normalizeRoles([], activeSessionRole);
+    }
+  })();
+  const hasProviderCapability = storedRoles.includes(PROVIDER_ROLE);
 
   useEffect(() => {
     const updateClock = () => setAvailabilityClock(new Date());
@@ -653,6 +707,58 @@ const SubServices = () => {
   const handleClearAllFilters = () => {
     handleClearCity();
     handleClearDistrict();
+  };
+
+  const handleEmptyStateProviderCTA = async () => {
+    if (!token) {
+      navigate(getLocalizedPath("/sign-up", i18n.language));
+      return;
+    }
+
+    if (activeSessionRole === PROVIDER_ROLE) {
+      navigate(getLocalizedPath("/dashboard", i18n.language));
+      return;
+    }
+
+    setProviderCtaLoading(true);
+    try {
+      if (!hasProviderCapability) {
+        dispatch(
+          throwSuccess(
+            t(
+              "profileDetails.completeProviderAddressFirst",
+              "Complete your provider address details from profile before switching."
+            )
+          )
+        );
+        navigate(getLocalizedPath("/user/profile", i18n.language));
+        return;
+      }
+
+      const switchResponse = await dispatch(switchAccountRole(PROVIDER_ROLE));
+      if (switchResponse?.status === 200) {
+        dispatch(
+          throwSuccess(
+            t("profileDetails.switchedToProvider", "Switched to provider mode.")
+          )
+        );
+        navigate(getLocalizedPath("/dashboard", i18n.language));
+      } else {
+        dispatch(
+          throwError(
+            switchResponse?.message ||
+              t("profileDetails.roleActionFailed", "Unable to update role.")
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Provider CTA action failed:", error);
+      dispatch(
+        throwError(t("profileDetails.roleActionFailed", "Unable to update role."))
+      );
+    } finally {
+      setProviderCtaLoading(false);
+    }
   };
   const handleCityInputFocus = () => {
     setIsCityInputFocused(true);
@@ -1827,70 +1933,55 @@ const SubServices = () => {
               );
             })
           ) : (
-            // Empty State (Kept exactly as previous)
-            <div
-              className="empty-state text-center"
-              style={{
-                padding: "60px 20px",
-                backgroundColor: "#fff",
-                borderRadius: "16px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
-                marginTop: "20px",
-              }}
-            >
-              <div
-                className="empty-state-icon mb-4"
-                style={{ opacity: "0.2", transform: "scale(0.9)" }}
-              >
+            <div className="empty-state tw-mt-5 tw-rounded-2xl tw-bg-white tw-px-5 tw-py-14 tw-text-center tw-shadow-sm tw-ring-1 tw-ring-slate-200">
+              <div className="empty-state-icon tw-mb-4 tw-scale-90 tw-opacity-20">
                 <i className="fas fa-search fa-5x"></i>
               </div>
-              <h3 className="mb-3" style={{ fontWeight: "700", color: "#333" }}>
-                {t("search.noServicesAvailableYet", "No services available yet")}
+              <h3 className="tw-mb-3 tw-text-2xl tw-font-bold tw-text-slate-800">
+                {t("search.noProvidersYet", "No providers yet")}
               </h3>
-              <p
-                className="text-muted mb-5"
-                style={{ maxWidth: "500px", margin: "0 auto", fontSize: "1.1rem" }}
-              >
+              <p className="tw-mx-auto tw-mb-6 tw-max-w-xl tw-text-base tw-text-slate-500">
                 {searchCity || searchDistrict
-                  ? `${t("search.noResultsInCity", "No services found")} ${t(
+                  ? `${t("search.noProvidersYet", "No providers yet")} ${t(
                     "search.in",
                     "in"
                   )} "${decodeURIComponent(searchCity || "")}${searchDistrict ? `, ${decodeURIComponent(searchDistrict)}` : ""
                   }".`
                   : t(
-                    "search.noResultsInCategory",
-                    "No services found in this category."
+                    "search.noProvidersInCategory",
+                    "No providers yet in this category."
                   )}
               </p>
-              <div className="d-flex justify-content-center gap-3">
+              <div className="tw-flex tw-flex-wrap tw-justify-center tw-gap-3">
                 {isSearchMode && (
                   <button
-                    className="px-4 py-2"
-                    style={{
-                      border: "1px solid #132c4e",
-                      borderRadius: "50px",
-                      padding: "10px 24px",
-                      fontWeight: "600",
-                      background: "transparent",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
+                    className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-border tw-border-[#132c4e] tw-bg-transparent tw-px-6 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-[#132c4e] hover:tw-bg-[#f2f6fc]"
                     onClick={handleClearAllFilters}
                   >
-                    <FaTimes className="me-2" />
+                    <FaTimes />
                     {t("search.clearAllFilters", "Clear All Filters")}
                   </button>
                 )}
                 <button
-                  className="btn btn-outline-primary"
-                  onClick={() => navigate(getLocalizedPath("/", i18n.language))}
-                  style={{
-                    borderRadius: "50px",
-                    padding: "10px 24px",
-                    fontWeight: "600",
-                  }}
+                  className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-bg-emerald-600 tw-px-6 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-white tw-shadow-sm hover:tw-bg-emerald-700 disabled:tw-cursor-not-allowed disabled:tw-opacity-70"
+                  onClick={handleEmptyStateProviderCTA}
+                  disabled={providerCtaLoading}
                 >
-                  <i className="fas fa-home me-2"></i>
+                  <i className="fas fa-user-plus"></i>
+                  {providerCtaLoading
+                    ? t("search.becomeProviderProcessing", "Processing...")
+                    : token && activeSessionRole === PROVIDER_ROLE
+                    ? t(
+                        "search.goToProviderDashboard",
+                        "Go to provider dashboard"
+                      )
+                    : t("search.becomeProviderCta", "Become a provider")}
+                </button>
+                <button
+                  className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-border tw-border-blue-500 tw-bg-transparent tw-px-6 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-blue-600 hover:tw-bg-blue-50"
+                  onClick={() => navigate(getLocalizedPath("/", i18n.language))}
+                >
+                  <i className="fas fa-home"></i>
                   {t("search.backToHome", "Back to Home")}
                 </button>
               </div>

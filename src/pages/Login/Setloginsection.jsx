@@ -176,7 +176,9 @@ const Setloginsection = () => {
                               onClick={() =>
                                 navigate(
                                   getLocalizedPath(
-                                    commonRoute.register,
+                                    loginRole === "provider"
+                                      ? commonRoute.signUp
+                                      : commonRoute.register,
                                     i18n.language
                                   )
                                 )

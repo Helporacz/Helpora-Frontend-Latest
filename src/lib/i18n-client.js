@@ -4,6 +4,8 @@ import { initReactI18next } from "react-i18next";
 
 const DEFAULT_LANGUAGE = "cz";
 const SUPPORTED_LANGUAGES = ["en", "cz", "ru"];
+const PRIMARY_LANGUAGE_STORAGE_KEY = "helporaLng";
+const LEGACY_LANGUAGE_STORAGE_KEY = "i18nextLng";
 const LANGUAGE_ALIASES = {
   cs: "cz",
 };
@@ -12,6 +14,39 @@ const normalizeLanguage = (language = "") => {
   const baseLanguage = language.toLowerCase().split(/[-_]/)[0];
   return LANGUAGE_ALIASES[baseLanguage] || baseLanguage;
 };
+
+const readStoredLanguage = () => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  const storageKeys = [PRIMARY_LANGUAGE_STORAGE_KEY, LEGACY_LANGUAGE_STORAGE_KEY];
+  for (const storageKey of storageKeys) {
+    const normalized = normalizeLanguage(window.localStorage.getItem(storageKey) || "");
+    if (SUPPORTED_LANGUAGES.includes(normalized)) {
+      return normalized;
+    }
+  }
+
+  return "";
+};
+
+const persistLanguage = (language) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const normalized = normalizeLanguage(language);
+  if (!SUPPORTED_LANGUAGES.includes(normalized)) {
+    return;
+  }
+
+  window.localStorage.setItem(PRIMARY_LANGUAGE_STORAGE_KEY, normalized);
+  window.localStorage.setItem(LEGACY_LANGUAGE_STORAGE_KEY, normalized);
+};
+
+const getStoredLanguage = (fallbackLanguage = DEFAULT_LANGUAGE) =>
+  readStoredLanguage() || fallbackLanguage;
 
 const localeModules = import.meta.glob("../locales/*/*.json", {
   eager: true,
@@ -60,8 +95,8 @@ const getInitialLanguage = () => {
     return pathLanguage;
   }
 
-  const storedLanguage = normalizeLanguage(window.localStorage.getItem("i18nextLng") || "");
-  if (SUPPORTED_LANGUAGES.includes(storedLanguage)) {
+  const storedLanguage = readStoredLanguage();
+  if (storedLanguage) {
     return storedLanguage;
   }
 
@@ -108,11 +143,22 @@ i18n.on("languageChanged", (language) => {
   }
 
   if (SUPPORTED_LANGUAGES.includes(normalizedLanguage)) {
+    persistLanguage(normalizedLanguage);
     syncHtmlLanguage(normalizedLanguage);
   }
 });
 
-syncHtmlLanguage(normalizeLanguage(i18n.language || DEFAULT_LANGUAGE));
+const initialNormalizedLanguage = normalizeLanguage(i18n.language || DEFAULT_LANGUAGE);
+persistLanguage(initialNormalizedLanguage);
+syncHtmlLanguage(initialNormalizedLanguage);
 
-export { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, normalizeLanguage };
+export {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  PRIMARY_LANGUAGE_STORAGE_KEY,
+  LEGACY_LANGUAGE_STORAGE_KEY,
+  normalizeLanguage,
+  persistLanguage,
+  getStoredLanguage,
+};
 export default i18n;

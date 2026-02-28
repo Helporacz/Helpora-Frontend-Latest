@@ -12,7 +12,6 @@ import Becomeprovider from "pages/Homepage/Headersection/Becomeprovider";
 import Bookservice from "pages/Homepage/Headersection/Bookservice";
 import Homepage from "pages/Homepage/Homepage";
 import NotificationPage from "pages/Homepage/Notification/NotificationPage";
-import Setlogin from "pages/Login/Setlogin";
 import MainLayout from "pages/MainLayout/MainLayout";
 import Privacy from "pages/Privacy/Privacy";
 import MyBookings from "pages/MyBookings/MyBookings";
@@ -31,12 +30,17 @@ import Forgotpassword from "pages/Auth/Forgotpassword/Forgotpassword";
 import Forgots from "pages/Auth/Forgot/Forgots";
 import Resetpassword from "pages/Auth/ResetPassword/ResetPassword";
 import ResetPasswordUser from "pages/Auth/ResetPassword/ResetPasswordUser";
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@/lib/i18n-client";
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  getStoredLanguage,
+} from "@/lib/i18n-client";
 
 const authRoute = () => {
   const languages = SUPPORTED_LANGUAGES;
   const defaultLang = DEFAULT_LANGUAGE;
   const token = getDataFromLocalStorage("token");
+  const preferredLang = getStoredLanguage(defaultLang);
 
   return (
     <BrowserRouter>
@@ -48,7 +52,7 @@ const authRoute = () => {
             <Route key={lang}>
               <Route
                 path={getLocalizedPath(commonRoute.logins, lang)}
-                element={<Setlogin />}
+                element={<Login />}
               />
               <Route
                 path={getLocalizedPath(commonRoute.register, lang)}
@@ -96,6 +100,7 @@ const authRoute = () => {
 
           return (
             <Route key={lang} path={pathPrefix} element={<MainLayout />}>
+              <Route index element={<Homepage />} />
               <Route path={commonRoute.home.slice(1)} element={<Homepage />} />
               <Route
                 path={commonRoute.becomeprovider.slice(1)}
@@ -129,25 +134,92 @@ const authRoute = () => {
                 element={<Showprofile />}
               />
 
-              {token && (
-                <>
-                  <Route
-                    path={commonRoute.myBookings.slice(1)}
-                    element={<MyBookings />}
+              <Route
+                path={commonRoute.myBookings.slice(1)}
+                element={
+                  token ? (
+                    <MyBookings />
+                  ) : (
+                    <Navigate
+                      to={getLocalizedPath(commonRoute.login, lang)}
+                      replace
+                    />
+                  )
+                }
+              />
+              <Route
+                path="chat"
+                element={
+                  token ? (
+                    <ChatPage />
+                  ) : (
+                    <Navigate
+                      to={getLocalizedPath(commonRoute.login, lang)}
+                      replace
+                    />
+                  )
+                }
+              />
+              <Route
+                path="user/profile"
+                element={
+                  token ? (
+                    <Profile />
+                  ) : (
+                    <Navigate
+                      to={getLocalizedPath(commonRoute.login, lang)}
+                      replace
+                    />
+                  )
+                }
+              />
+              <Route
+                path="user/profile/:id"
+                element={
+                  token ? (
+                    <AddAdmin />
+                  ) : (
+                    <Navigate
+                      to={getLocalizedPath(commonRoute.login, lang)}
+                      replace
+                    />
+                  )
+                }
+              />
+              <Route
+                path="notifications"
+                element={
+                  token ? (
+                    <NotificationPage />
+                  ) : (
+                    <Navigate
+                      to={getLocalizedPath(commonRoute.login, lang)}
+                      replace
+                    />
+                  )
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Navigate
+                    to={getLocalizedPath(commonRoute.home, lang)}
+                    replace
                   />
-                  <Route path="chat" element={<ChatPage />} />
-                  <Route path="user/profile" element={<Profile />} />
-                  <Route path="user/profile/:id" element={<AddAdmin />} />
-                  <Route path="notifications" element={<NotificationPage />} />
-                </>
-              )}
+                }
+              />
             </Route>
           );
         })}
 
         <Route
           path="*"
-          element={<Navigate to={getLocalizedPath(commonRoute.home, defaultLang)} replace />}
+          element={
+            <Navigate
+              to={getLocalizedPath(commonRoute.home, preferredLang, defaultLang)}
+              replace
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

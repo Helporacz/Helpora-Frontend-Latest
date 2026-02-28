@@ -7,7 +7,12 @@ import MainLayout from "pages/MainLayout/MainLayout";
 import ScrollToTop from "components/layouts/ScrollToTop/ScrollToTop";
 import { commonRoute } from "utils/constants";
 import { getLocalizedPath } from "utils/localizedRoute";
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, normalizeLanguage } from "@/lib/i18n-client";
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  normalizeLanguage,
+  getStoredLanguage,
+} from "@/lib/i18n-client";
 
 const ProviderSubscriptionRoute = () => {
   const languages = SUPPORTED_LANGUAGES;
@@ -15,11 +20,16 @@ const ProviderSubscriptionRoute = () => {
 
   const PricingRedirect = () => {
     const { pathname } = useLocation();
-    const lang = normalizeLanguage(pathname.split("/")[1] || "");
-    const targetLang = languages.includes(lang) && lang !== defaultLang ? lang : defaultLang;
+    const pathLang = normalizeLanguage(pathname.split("/")[1] || "");
+    const storedLang = getStoredLanguage(defaultLang);
+    const targetLang = languages.includes(pathLang)
+      ? pathLang
+      : languages.includes(storedLang)
+      ? storedLang
+      : defaultLang;
     return (
       <Navigate
-        to={getLocalizedPath(commonRoute.pricing, targetLang)}
+        to={getLocalizedPath(commonRoute.pricing, targetLang, defaultLang)}
         replace
       />
     );

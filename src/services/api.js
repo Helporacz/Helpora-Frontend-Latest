@@ -13,6 +13,7 @@ axios.interceptors.response.use(
       localStorage.removeItem("helpora");
       localStorage.removeItem("userId");
       localStorage.removeItem("userRole");
+      localStorage.removeItem("userRoles");
     }
 
     return Promise.reject(error);

@@ -2,7 +2,11 @@ import moment from "moment";
 import i18n from "@/lib/i18n-client";
 
 export function getHeaderData() {
-  const currentLang = i18n.language || localStorage.getItem("i18nextLng") || "cz";
+  const currentLang =
+    i18n.language ||
+    localStorage.getItem("helporaLng") ||
+    localStorage.getItem("i18nextLng") ||
+    "cz";
   
   let header = {
     "Content-Type": "application/json",

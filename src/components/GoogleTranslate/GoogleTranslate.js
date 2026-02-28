@@ -6,7 +6,12 @@ import ukFlag from "../flags/uk.svg";
 import czFlag from "../flags/cz.svg";
 import ruFlag from "../flags/ru.svg";
 import "./Translatedropdown.scss";
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, normalizeLanguage } from "@/lib/i18n-client";
+import {
+  DEFAULT_LANGUAGE,
+  SUPPORTED_LANGUAGES,
+  normalizeLanguage,
+  persistLanguage,
+} from "@/lib/i18n-client";
 
 const LANGUAGE_OPTIONS = [
   { code: "en", label: "English", flag: ukFlag },
@@ -52,16 +57,17 @@ const GoogleTranslate = () => {
   }, []);
 
   const changeLang = (lang) => {
-    i18n.changeLanguage(lang);
-    localStorage.setItem("i18nextLng", lang);
+    const normalizedLanguage = normalizeLanguage(lang);
+    i18n.changeLanguage(normalizedLanguage);
+    persistLanguage(normalizedLanguage);
     
     const pathSegments = location.pathname.split("/").filter(Boolean);
     if (nonDefaultLanguages.includes(pathSegments[0])) {
       pathSegments.shift();
     }
 
-    if (lang !== defaultLang) {
-      pathSegments.unshift(lang);
+    if (normalizedLanguage !== defaultLang) {
+      pathSegments.unshift(normalizedLanguage);
     }
 
     const newPath = "/" + pathSegments.join("/");

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "services";
-import { storeLocalStorageData } from "utils/helpers";
+import { getDataFromLocalStorage, storeLocalStorageData } from "utils/helpers";
 
 const initialState = {
   userState: null,
@@ -19,6 +19,136 @@ const initialState = {
   fetchSubServiceType: [],
   productCategoryList: [],
   beauticianPhoneNumber: "",
+};
+
+const USER_ROLE = "user";
+const PROVIDER_ROLE = "provider";
+const PROVIDER_ROLE_ALIASES = new Set([
+  PROVIDER_ROLE,
+  "serviceprovider",
+  "service_provider",
+]);
+
+const normalizeRole = (role = "") => {
+  const normalized = String(role || "").trim().toLowerCase();
+  if (!normalized) return "";
+  if (normalized === USER_ROLE) return USER_ROLE;
+  if (PROVIDER_ROLE_ALIASES.has(normalized)) return PROVIDER_ROLE;
+  return normalized;
+};
+
+const normalizeRolesArray = (roles = [], fallbackRole = USER_ROLE) => {
+  const source = Array.isArray(roles) ? roles : [];
+  const set = new Set();
+
+  source.forEach((entry) => {
+    const normalized = normalizeRole(entry);
+    if (normalized === USER_ROLE || normalized === PROVIDER_ROLE) {
+      set.add(normalized);
+    }
+  });
+
+  const normalizedFallbackRole = normalizeRole(fallbackRole);
+  if (normalizedFallbackRole === PROVIDER_ROLE) {
+    set.add(USER_ROLE);
+    set.add(PROVIDER_ROLE);
+  } else {
+    set.add(USER_ROLE);
+  }
+
+  return [USER_ROLE, PROVIDER_ROLE].filter((entry) => set.has(entry));
+};
+
+const updateHelporaStorage = (patch = {}, keysToRemove = []) => {
+  const current = getDataFromLocalStorage();
+  const next =
+    current && typeof current === "object" && !Array.isArray(current)
+      ? { ...current, ...patch }
+      : { ...patch };
+
+  keysToRemove.forEach((key) => {
+    delete next[key];
+  });
+
+  localStorage.helpora = JSON.stringify(next);
+};
+
+const persistAuthSession = ({
+  token = "",
+  user = {},
+  subscription = null,
+  subscriptionActive,
+  requireProviderSubscription,
+}) => {
+  const activeRole = normalizeRole(user?.role) || USER_ROLE;
+  const availableRoles = normalizeRolesArray(user?.roles, activeRole);
+  const userId = user?._id || localStorage.getItem("userId") || "";
+
+  const providerStatus = subscription?.status || "inactive";
+  const providerActuallyActive = ["active", "trialing"].includes(providerStatus);
+  const requireProviderSub =
+    activeRole === PROVIDER_ROLE
+      ? typeof requireProviderSubscription === "boolean"
+        ? requireProviderSubscription
+        : true
+      : true;
+  const providerSubscriptionActive =
+    activeRole === PROVIDER_ROLE
+      ? typeof subscriptionActive === "boolean"
+        ? subscriptionActive
+        : requireProviderSub
+        ? providerActuallyActive
+        : true
+      : true;
+
+  const sessionPatch = {
+    ...(token ? { token } : {}),
+    userRole: activeRole,
+    userRoles: availableRoles,
+    ...(activeRole === PROVIDER_ROLE
+      ? {
+          subscriptionStatus: providerStatus,
+          subscriptionActive: providerSubscriptionActive,
+          requireProviderSubscription: requireProviderSub,
+          subscriptionCurrentPeriodEnd: subscription?.currentPeriodEnd || null,
+        }
+      : {}),
+  };
+
+  updateHelporaStorage(sessionPatch, [
+    ...(activeRole === PROVIDER_ROLE
+      ? []
+      : [
+          "subscriptionStatus",
+          "subscriptionActive",
+          "requireProviderSubscription",
+          "subscriptionCurrentPeriodEnd",
+        ]),
+  ]);
+
+  if (userId) {
+    localStorage.setItem("userId", userId);
+  }
+  localStorage.setItem("userRole", activeRole);
+  localStorage.setItem("userRoles", JSON.stringify(availableRoles));
+
+  if (activeRole === PROVIDER_ROLE) {
+    localStorage.setItem("subscriptionStatus", providerStatus);
+    localStorage.setItem(
+      "subscriptionActive",
+      providerSubscriptionActive ? "true" : "false"
+    );
+    localStorage.setItem(
+      "requireProviderSubscription",
+      requireProviderSub ? "true" : "false"
+    );
+  } else {
+    localStorage.removeItem("subscriptionStatus");
+    localStorage.removeItem("subscriptionActive");
+    localStorage.removeItem("requireProviderSubscription");
+  }
+
+  return { activeRole, availableRoles, userId };
 };
 
 const globalSlice = createSlice({
@@ -102,74 +232,66 @@ export const login = (formData) => async (dispatch) => {
 
 //user login
 export const userLogin =
-  (formData, expectedRole = "user") =>
+  (formData, expectedRole = "") =>
   async (dispatch) => {
     try {
-      const res = await api.post("/auth/Signin", formData);
+      const normalizedExpectedRole = normalizeRole(expectedRole);
+      const hasRoleConstraint = [USER_ROLE, PROVIDER_ROLE].includes(
+        normalizedExpectedRole
+      );
+      const authPayload = hasRoleConstraint
+        ? {
+            ...formData,
+            requestedRole: normalizedExpectedRole,
+            role: normalizedExpectedRole,
+          }
+        : { ...formData };
+
+      const res = await api.post("/auth/Signin", authPayload);
       const response = await dispatch(handelResponse(res));
 
       if (response?.status === 200) {
-        const role = res?.user?.role;
-
-        // Only allow login if role matches expectedRole (normalized + provider aliases)
-        const normalizeRole = (r) => String(r || "").trim().toLowerCase();
-        const roleNorm = normalizeRole(role);
-        const expectedNorm = normalizeRole(expectedRole);
-        const providerAliases = new Set(["provider", "serviceprovider", "service_provider"]);
-        const roleOk =
-          expectedNorm === "provider"
-            ? providerAliases.has(roleNorm)
-            : roleNorm === expectedNorm;
-        if (!roleOk) {
-          return { status: 403, message: `Only ${expectedRole}s can login here.` };
+        const role = normalizeRole(res?.user?.role) || USER_ROLE;
+        if (hasRoleConstraint) {
+          const roleOk =
+            normalizedExpectedRole === PROVIDER_ROLE
+              ? role === PROVIDER_ROLE
+              : role === USER_ROLE;
+          if (!roleOk) {
+            return {
+              status: 403,
+              message: `Only ${normalizedExpectedRole}s can login here.`,
+            };
+          }
         }
 
-        const token = res?.token;
-        const userId = res?.user?._id;
-        const capitalize = (str) =>
-          str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+        const token = res?.token || "";
+        const userId = res?.user?._id || "";
+        const roles = normalizeRolesArray(res?.user?.roles, role);
+        const roleLabel = role === PROVIDER_ROLE ? "Provider" : "User";
 
-        const subscriptionStatus = res?.subscription?.status || "inactive";
-        const subscriptionActive = !!res?.subscriptionActive;
-        const requireProviderSubscription =
-          role === "provider"
-            ? typeof res?.requireProviderSubscription === "boolean"
-              ? res.requireProviderSubscription
-              : true
-            : true;
-
-        storeLocalStorageData({
+        const sessionState = persistAuthSession({
           token,
-          ...(role === "provider"
-            ? {
-                subscriptionStatus,
-                subscriptionActive,
-                requireProviderSubscription,
-                subscriptionCurrentPeriodEnd:
-                  res?.subscription?.currentPeriodEnd || null,
-              }
-            : {}),
+          user: {
+            ...(res?.user || {}),
+            role,
+            roles,
+          },
+          subscription: res?.subscription,
+          subscriptionActive: res?.subscriptionActive,
+          requireProviderSubscription: res?.requireProviderSubscription,
         });
-
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("userRole", role);
-        if (role === "provider") {
-          localStorage.setItem("subscriptionStatus", subscriptionStatus);
-          localStorage.setItem(
-            "subscriptionActive",
-            subscriptionActive ? "true" : "false"
-          );
-          localStorage.setItem(
-            "requireProviderSubscription",
-            requireProviderSubscription ? "true" : "false"
-          );
-        } else {
-          localStorage.removeItem("subscriptionStatus");
-          localStorage.removeItem("subscriptionActive");
-          localStorage.removeItem("requireProviderSubscription");
-        }
-        dispatch(setUserState(JSON.stringify({ token, userId })));
-        dispatch(throwSuccess(`${capitalize(expectedRole)} Login Successful.`));
+        dispatch(
+          setUserState(
+            JSON.stringify({
+              token,
+              userId: sessionState.userId || userId,
+              role: sessionState.activeRole,
+              roles: sessionState.availableRoles,
+            })
+          )
+        );
+        dispatch(throwSuccess(`${roleLabel} Login Successful.`));
       }
 
       return response;
@@ -177,6 +299,73 @@ export const userLogin =
       return dispatch(handelCatch(error));
     }
   };
+
+export const switchAccountRole = (targetRole = USER_ROLE) => async (dispatch) => {
+  try {
+    const normalizedTargetRole = normalizeRole(targetRole);
+    if (![USER_ROLE, PROVIDER_ROLE].includes(normalizedTargetRole)) {
+      return { status: 400, message: "Invalid role selected." };
+    }
+
+    const res = await api.post("/auth/switch-role", {
+      role: normalizedTargetRole,
+      requestedRole: normalizedTargetRole,
+    });
+    const response = await dispatch(handelResponse(res));
+
+    if (response?.status === 200) {
+      const role = normalizeRole(res?.user?.role) || normalizedTargetRole;
+      const roles = normalizeRolesArray(res?.user?.roles, role);
+      const token = res?.token || "";
+      const userId = res?.user?._id || localStorage.getItem("userId") || "";
+
+      const sessionState = persistAuthSession({
+        token,
+        user: {
+          ...(res?.user || {}),
+          role,
+          roles,
+        },
+        subscription: res?.subscription,
+        subscriptionActive: res?.subscriptionActive,
+        requireProviderSubscription: res?.requireProviderSubscription,
+      });
+
+      dispatch(
+        setUserState(
+          JSON.stringify({
+            token,
+            userId: sessionState.userId || userId,
+            role: sessionState.activeRole,
+            roles: sessionState.availableRoles,
+          })
+        )
+      );
+    }
+
+    return response;
+  } catch (error) {
+    return dispatch(handelCatch(error));
+  }
+};
+
+export const becomeProviderAccount = (payload = {}) => async (dispatch) => {
+  try {
+    const res = await api.post("/user/become-provider", payload);
+    const response = await dispatch(handelResponse(res));
+
+    if (response?.status === 200) {
+      const currentRole = normalizeRole(localStorage.getItem("userRole")) || USER_ROLE;
+      const roles = normalizeRolesArray(res?.data?.roles, currentRole);
+      localStorage.setItem("userRoles", JSON.stringify(roles));
+      updateHelporaStorage({ userRoles: roles });
+    }
+
+    return response;
+  } catch (error) {
+    return dispatch(handelCatch(error));
+  }
+};
 
 export const forgetPassword = (data) => async (dispatch) => {
   try {
