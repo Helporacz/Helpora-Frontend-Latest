@@ -30,6 +30,7 @@ import clean from "../../assets/images/clean.jpg";
 import BookingModal from "./BookingModel";
 import "./Subservice.scss";
 import { getLocalizedPath } from "utils/localizedRoute";
+import { commonRoute } from "utils/constants";
 import { CiLocationOn } from "react-icons/ci";
 import TopProvidersCarousel from "components/ranking/TopProvidersCarousel";
 import { localizeRankBadgeLabel } from "utils/rankingLabel";
@@ -430,7 +431,7 @@ const SubServices = () => {
 
   const handleBookingClick = (service) => {
     if (!token) {
-      navigate(getLocalizedPath("/sign-in", i18n.language));
+      navigate(getLocalizedPath(commonRoute.login, i18n.language));
     } else {
       setSelectedService(service);
       setBookingDate("");
@@ -1101,7 +1102,7 @@ const SubServices = () => {
           )
         )
       );
-      navigate(getLocalizedPath("/sign-in", i18n.language));
+      navigate(getLocalizedPath(commonRoute.login, i18n.language));
       return;
     }
 

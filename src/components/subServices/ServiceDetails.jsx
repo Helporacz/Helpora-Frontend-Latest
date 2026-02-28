@@ -1,5 +1,6 @@
 import MessagePopup from "components/layouts/MessagePopup/MessagePopup";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -7,11 +8,14 @@ import {
   getProviderAvailabilitySlotsAPI,
   getProviderServiceById
 } from "store/globalSlice";
+import { commonRoute } from "utils/constants";
 import { getDataFromLocalStorage } from "utils/helpers";
+import { getLocalizedPath } from "utils/localizedRoute";
 import clean from "../../assets/images/clean.jpg";
 import "./Subservice.scss";
 
 const ServiceDetails = () => {
+  const { i18n } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch();
   const [service, setService] = useState(null);
@@ -33,7 +37,7 @@ const ServiceDetails = () => {
   const token = getDataFromLocalStorage("token");
   const handleBookingClick = () => {
     if (!token) {
-      navigate("/sign-in");
+      navigate(getLocalizedPath(commonRoute.login, i18n.language));
     } else {
       setBookingDate("");
       setBookingTime("");
