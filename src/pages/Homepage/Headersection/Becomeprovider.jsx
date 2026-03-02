@@ -35,6 +35,12 @@ const Becomeprovider = () => {
         <li className="becomeli">
           {t("section15.text4")}{" "}
         </li>
+        <li className="becomeli">
+          {t(
+            "section15.text19",
+            "After signing in, you can switch between User and Provider roles anytime from your profile settings."
+          )}
+        </li>
       </ul>
       <h1 className="titlesbecome">{t("section15.text5")}</h1>
       <ul className="becomeul">

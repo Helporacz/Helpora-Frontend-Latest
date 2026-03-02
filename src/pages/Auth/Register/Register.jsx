@@ -341,7 +341,7 @@ const Register = () => {
                                   setFilteredDistricts([]);
                                 }}
                               />
-                              <span>{t("section20.buyerRole", "Buyer")}</span>
+                              <span>{t("section20.buyerRole", "User")}</span>
                             </label>
                           </div>
                           <ErrorMessage

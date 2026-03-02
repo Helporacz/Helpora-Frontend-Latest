@@ -1429,9 +1429,9 @@ const SubServices = () => {
                 service?.provider?.phoneNumber || service?.provider?.phone;
               const providerEmail = service?.provider?.email || "";
               const providerAddress =
-                service?.provider?.kycAddress ||
                 service?.provider?.address ||
                 service?.provider?.providerDetails?.address ||
+                service?.provider?.kycAddress ||
                 "";
 
               const locationLabel =
